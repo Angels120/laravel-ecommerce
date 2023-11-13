@@ -1,0 +1,70 @@
+#toast-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    padding: 20px;
+    z-index: 11111;
+    position: fixed;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+  }
+  #toast-box.show {
+    animation-name: fade-in;
+  }
+
+  #toast-box.hide {
+    animation-name: fade-out;
+  }
+
+  .mainText {
+    width: 410px;
+    font-weight: 500;
+    border-radius: 5px;
+    font-size: 15px;
+    color: #ffffff;
+    padding: 20px;
+    margin: 5px 0;
+    justify-content: space-between;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    background-color: #198754;
+  }
+
+  #toast-error-box {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    align-items: flex-end;
+    flex-direction: column;
+    padding: 20px;
+    z-index: 11111;
+    position: fixed;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in-out;
+  }
+
+  #toast-error-box.show {
+    animation-name: fade-in;
+  }
+
+  #toast-error-box.hide {
+    animation-name: fade-out;
+  }
+
+  .mainErrorText {
+    width: 410px;
+    font-weight: 500;
+    border-radius: 5px;
+    font-size: 15px;
+    color: white;
+    padding: 20px;
+    margin: 5px 0;
+    justify-content: space-between;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    background-color: rgb(225, 126, 126);
+  }
