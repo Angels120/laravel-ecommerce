@@ -43,6 +43,7 @@
                                         </div>
 
                                         <div class="card-body">
+
                                             <table class="display table data-table" style="width:100%" id="datatable-crud">
                                                 <thead>
                                                     <tr>

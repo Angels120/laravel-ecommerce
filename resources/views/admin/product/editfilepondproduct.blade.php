@@ -122,32 +122,18 @@
                     <div class="card" style="width: 100%;">
                         <div class="card-body" style="box-shadow: 0 0 10px rgba(135, 128, 128, 0.2);">
                             <div class="row my-6">
-                                <div class="col-lg-6">
-                                    <h5>Product Images</h5>
-                                    {{-- <input class="form-control" name="image[]" type="file" id="EditProduct_images"> --}}
-                                    <input type="file" name="image[]"
-                                    class="filepond filepond-input-multiple" multiple
-                                    data-allow-reorder="true" data-max-file-size="3MB"
-                                    data-max-files="5">                                </div>
-                                <div class="col-lg-6">
-                                    <!-- New card for storing images, side by side with the file input -->
-                                    <div class="card" style="width: 100%;">
-                                        <div class="card-body" style="box-shadow: 0 0 10px rgba(135, 128, 128, 0.2);">
-                                            <div class="row my-6">
-                                                <div id="Editimage" class="col-6">
-                                                    <!-- New div for storing images -->
-                                                    <div id="ImageContainer"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="col-lg-12">
+                                    <h5>
+                                        Product Images
+                                    </h5>
+                                    <input name="image[]" id="EditProduct_images" type="file"
+                                        class="filepond filepond-input-multiple w-100" multiple
+                                        data-allow-reorder="true" data-max-file-size="3MB" data-max-files="5">
                                 </div>
                             </div>
                             <div class="invalid-feedback" id="EditProductImagesError"></div>
                         </div>
                     </div>
-
-
                     <div class="d-flex gap-2">
                         <div class="card" style="width: 50%;">
                             <div class="card-body" style="box-shadow: 0 0 10px rgba(135, 128, 128, 0.2);">
@@ -305,15 +291,9 @@
                 },
                 success: function(response) {
                     console.log(response)
+                    initializeFilePond(response.image);
                     var productDescription = response.description;
-                    var imageNames = response.image;
-                var imageContainer = $('#ImageContainer');
-                imageContainer.empty();
-                // Display images in the modal
-                imageNames.forEach(function(imageName) {
-                    var imageUrl = "{{ asset('uploads/products/') }}/" + imageName;
-                    imageContainer.append('<img src="' + imageUrl + '" alt="Product Image" style="width: 70px; height: 50px;">');
-                });
+                    console.log(response);
                     initializeEditor('#Editeditor', productDescription);
                     $('#ideditProduct').val(response.id);
                     $('#Editname').val(response.name);
@@ -348,6 +328,33 @@
             });
         });
     });
+
+    function initializeFilePond(imageUrls) {
+        console.log(imageUrls);
+
+        const filePondElement = document.querySelector('#EditProduct_images');
+
+        if (Array.isArray(imageUrls)) {
+
+            const filePondInstance = FilePond.create(filePondElement, {
+                files: imageUrls.map(imageUrls => ({
+                    source: imageUrls,
+                    options: {
+                        type: 'local',
+                    }
+                })),
+                server: {
+                    url: 'uploads/products'
+                },
+                allowReorder: true,
+                allowMultiple: true,
+                allowReplace: true,
+                instantUpload: true,
+            });
+        } else {
+            console.error('Image URLs are not provided or not in array format.');
+        }
+    }
 </script>
 {{-- For CkEditor DAta Retrive --}}
 <script>

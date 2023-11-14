@@ -9,11 +9,7 @@
                         <div class="col-12">
                             <div class="page-title-box d-sm-flex align-items-center justify-content-between">
                                 <h4 class="mb-sm-0">Product</h4>
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">List</a></li>
-                                    </ol>
-                                </div>
+
                             </div>
                         </div>
                     </div>
@@ -43,7 +39,7 @@
 
                                         </div>
                                         <div class="card-body">
-                                            <table  id="datatable-crud" class="table nowrap align-middle list-data-table" style="width:100%">
+                                            <table id="datatable-crud" class="table nowrap align-middle data-table" style="width:100%">
                                                 <thead>
                                                     <tr>
                                                         <th>SN</th>
@@ -51,6 +47,8 @@
                                                         <th>Product Slug</th>
                                                         <th>Category</th>
                                                         <th>Sub Category</th>
+                                                        <th>Stock</th>
+                                                        <th>Price</th>
                                                         <th>Discount</th>
                                                         <th>Product Images</th>
                                                         <th>Status</th>
@@ -106,16 +104,10 @@
 
     <script>
         $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
             $('#datatable-crud').DataTable({
                 processing: true,
                 serverSide: true,
-                url: "{{ route('admin.brands.index') }}",
+                url: "{{ route('admin.products.index') }}",
                 columns: [{
                         data: 'id',
                     },
@@ -136,14 +128,21 @@
 
                     },
                     {
+                        data: 'stock',
+
+                    },
+                    {
+                        data: 'price',
+
+                    },
+                    {
                         data: 'discount',
 
                     },
                     {
-                        data: 'images',
+                        data: 'image',
 
                     },
-
                     {
                         data: 'status',
                     },
@@ -156,8 +155,11 @@
                 ]
             });
 
-
         });
+    </script>
+
+
+    <script>
 
         function confirmDelete(button) {
             const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');

@@ -74,7 +74,7 @@ class CategoryController extends Controller
         $validatedData = $request->validated();
 
         $category = Category::create($validatedData);
-        $category->category_slug = \Str::slug($category->category_name);
+        $category->category_slug = Str::slug($category->category_name);
         $category->save();
         return response()->json(['message' => 'Category Created Successfully', 'data' => $category], 201);
     }

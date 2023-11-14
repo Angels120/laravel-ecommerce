@@ -1,4 +1,4 @@
-{{-- Add Brand --}}
+{{-- Add Product --}}
 <div class="modal fade" id="AddProduct" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
@@ -63,7 +63,7 @@
                                     <div class="col-lg-12 mt-2">
                                         <label for="category" class="control-label mb-1">Category<span
                                                 class="ms-1 text-danger">*</span></label>
-                                        <select id="category_id" class="js-example-basic-singleEdit" name="category_id">
+                                        <select id="category_id" class="js-example-basic-singleEdit1" name="category_id">
                                             <option class="" value="">Select Category</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}">
@@ -77,7 +77,7 @@
                                         <div class="col-lg-12 mt-2">
                                             <label for="subcategory" class="control-label mb-1">Sub Category<span
                                                     class="ms-1 text-danger">*</span></label>
-                                            <select id="sub_categories_id" class="js-example-basic-singleEdit"
+                                            <select id="sub_categories_id" class="js-example-basic-singleEdit1"
                                                 name="sub_categories_id">
                                                 <option class="" value="">Select Sub-Category</option>
                                                 @foreach ($subcategories as $subcategory)
@@ -92,7 +92,7 @@
                                     <div id="brand-select" class="d-none">
                                         <div class="col-lg-12 mt-2">
                                             <label for="brand" class="control-label mb-1">Brand</label>
-                                            <select id="brand_id" class="js-example-basic-singleEdit" name="brands_id">
+                                            <select id="brand_id" class="js-example-basic-singleEdit1" name="brands_id">
                                                 <option class="" value="">Select Brands</option>
                                                 @foreach ($brands as $brand)
                                                     <option value="{{ $brand->id }}">
@@ -147,7 +147,7 @@
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="product-discount-addon">Nrs</span>
                                             <input type="text" name="price" class="form-control"
-                                                id="product-discount-input" placeholder="Enter Price">
+                                                id="product-price" placeholder="Enter Price">
                                         </div>
                                         <div class="invalid-feedback" id="ProductPriceError"></div>
                                     </div>
@@ -156,7 +156,7 @@
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="product-discount-addon">%</span>
                                             <input type="text" name="discount" class="form-control"
-                                                id="product-discount-input" placeholder="Enter discount">
+                                                id="product-discount" placeholder="Enter discount">
                                         </div>
                                     </div>
                                 </div>
@@ -171,7 +171,7 @@
                                     <div class="col-lg-12 mt-2">
                                         <label for="name" class="control-label mb-1">In Stock<span
                                                 class="ms-1 text-danger">*</span></label>
-                                        <input id="name" name="stock" type="text" class="form-control"
+                                        <input id="stock" name="stock" type="text" class="form-control"
                                             value="{{ old('name') }}" placeholder="Stocks">
                                         <div class="invalid-feedback" id="ProductStockError"></div>
                                     </div>
@@ -207,7 +207,7 @@
 
 <script>
     $(document).ready(function() {
-        $('.js-example-basic-singleEdit').select2({
+        $('.js-example-basic-singleEdit1').select2({
             dropdownParent: $('#AddProduct')
         });
     });
@@ -299,8 +299,7 @@
                     console.log(error);
                     document.getElementById('ProductNameError').style.display = "none";
                     document.getElementById('ProductCategoryError').style.display = "none";
-                    document.getElementById('ProductSubCategoryError').style.display =
-                        "none";
+                    document.getElementById('ProductSubCategoryError').style.display ="none";
                     document.getElementById('ProductBrandError').style.display = "none";
                     document.getElementById('ProductImagesError').style.display = "none";
                     document.getElementById('ProductPriceError').style.display = "none";
