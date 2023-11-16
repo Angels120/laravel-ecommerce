@@ -177,8 +177,9 @@
                                     </div>
                                     <div class="col-lg-12 mt-2">
                                         <label for="name" class="control-label mb-1">Available Sizes</label>
-                                        <select id="sizes" class="form-select" name="sizes">
-                                            <option value="S" selected>Small</option>
+                                        <select id="sizes" class="form-select" multiple="multiple" name="sizes">
+                                            <option class="" value=""selected>Select Sizes</option>
+                                            <option value="S" >Small</option>
                                             <option value="M">Medium</option>
                                             <option value="L">Large</option>
                                             <option value="XL">Extra Large</option>
@@ -212,6 +213,7 @@
         });
     });
 </script>
+
 
 {{-- ckeditor for description --}}
 <script>

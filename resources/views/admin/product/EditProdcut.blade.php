@@ -122,22 +122,22 @@
                     <div class="card" style="width: 100%;">
                         <div class="card-body" style="box-shadow: 0 0 10px rgba(135, 128, 128, 0.2);">
                             <div class="row my-6">
-                                <div class="col-lg-6">
+                                <div class="col-lg-12">
                                     <h5>Product Images</h5>
                                     {{-- <input class="form-control" name="image[]" type="file" id="EditProduct_images"> --}}
-                                    <input type="file" name="image[]"
-                                    class="filepond filepond-input-multiple" multiple
-                                    data-allow-reorder="true" data-max-file-size="3MB"
-                                    data-max-files="5">                                </div>
-                                <div class="col-lg-6">
-                                    <!-- New card for storing images, side by side with the file input -->
-                                    <div class="card" style="width: 100%;">
-                                        <div class="card-body" style="box-shadow: 0 0 10px rgba(135, 128, 128, 0.2);">
-                                            <div class="row my-6">
-                                                <div id="Editimage" class="col-6">
-                                                    <!-- New div for storing images -->
-                                                    <div id="ImageContainer"></div>
-                                                </div>
+                                    <input type="file" name="image[]" class="filepond filepond-input-multiple"
+                                        multiple data-allow-reorder="true" data-max-file-size="3MB"
+                                        data-max-files="5">
+                                </div>
+                            </div>
+                            <div class="col-lg-12 mt-4">
+                                <!-- New card for storing images, side by side with the file input -->
+                                <div class="card" style="width: 100%;">
+                                    <div class="card-body" style="box-shadow: 0 0 10px rgba(135, 128, 128, 0.2);">
+                                        <div class="row my-6">
+                                            <div id="Editimage" class="col-6">
+                                                <div id="ImageContainer"></div>
+
                                             </div>
                                         </div>
                                     </div>
@@ -218,6 +218,33 @@
     </div>
 </div>
 
+<div class="modal fade zoomIn" id="deleteProductImages" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="box-shadow: 0 0 10px rgba(18, 16, 16, 0.2);">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    id="btn-close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mt-2 text-center">
+                    <lord-icon src="https://cdn.lordicon.com/gsqxdxog.json" trigger="loop"
+                        colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
+                    <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                        <h4>Are you Sure ?</h4>
+                        <p class="text-muted mx-4 mb-0">Are you Sure You want to Remove this Image for this Product?
+                            This cannot be undo!</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                    <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn w-sm btn-danger " id="deleteProductImagesButton">Yes, Delete
+                        It!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 {{-- Edit Verification for Prodcut --}}
 <script>
@@ -284,12 +311,6 @@
 </script>
 
 
-
-
-
-
-
-
 {{-- ---------------------- show edit for Product  -------------------- --}}
 <script>
     $(document).ready(function() {
@@ -300,6 +321,7 @@
             $.ajax({
                 type: 'GET',
                 url: "{{ route('admin.product.edit') }}",
+
                 data: {
                     id: id
                 },
@@ -307,13 +329,61 @@
                     console.log(response)
                     var productDescription = response.description;
                     var imageNames = response.image;
-                var imageContainer = $('#ImageContainer');
-                imageContainer.empty();
-                // Display images in the modal
-                imageNames.forEach(function(imageName) {
-                    var imageUrl = "{{ asset('uploads/products/') }}/" + imageName;
-                    imageContainer.append('<img src="' + imageUrl + '" alt="Product Image" style="width: 70px; height: 50px;">');
-                });
+                    var imageContainer = $('#ImageContainer');
+                    imageContainer.empty();
+
+                    var imagesRow = $('<div class="d-flex flex-wrap"></div>');
+                    imageNames.forEach(function(imageName) {
+                        var imageUrl = "{{ asset('uploads/products/') }}/" +
+                            imageName;
+                        var imageDiv = $(
+                            `<div class="image-container position-relative d-inline-block m-2">
+             <img src="${imageUrl}" alt="Product Image" style="width: 100px; height: 100px; border: 1px solid #ddd; border-radius: 4px;">
+             <button type="button" class="close position-absolute top-0 end-0 mt-2">
+            <span aria-hidden="true">&times;</span>
+                </button>
+                    </div>`
+                        );
+
+                        imagesRow.append(imageDiv);
+                        imageDiv.find('.close').on('click', function() {
+                            $('#deleteProductImages').modal('show');
+
+                            // Event handler for "Yes, Delete It!" button click
+                            $('#deleteProductImagesButton').on('click',
+                                function() {
+                                    $.ajax({
+                                        type: 'DELETE',
+                                        url: '{{ route('admin.product.image.unlink') }}',
+                                        headers: {
+                                            'X-CSRF-TOKEN': $(
+                                                'meta[name="csrf-token"]'
+                                                ).attr(
+                                                'content')
+                                        },
+                                        data: {
+                                            productId: id,
+                                            image: imageName
+                                        }, // Pass the necessary data
+                                        success: function(
+                                            response) {
+                                            // Handle success
+                                            imageDiv
+                                            .remove();
+                                            $('#deleteProductImages').modal('hide');
+                                        },
+                                        error: function(error) {
+                                            // Handle error
+                                            console.log(
+                                                'Error removing image'
+                                            );
+                                        }
+                                    });
+
+                                });
+                        });
+                    });
+                    imageContainer.append(imagesRow);
                     initializeEditor('#Editeditor', productDescription);
                     $('#ideditProduct').val(response.id);
                     $('#Editname').val(response.name);

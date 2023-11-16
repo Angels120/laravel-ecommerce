@@ -39,6 +39,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web'])->group(function
     Route::get('/products', [ProductController::class,'index'])->name('products.index');
     Route::post('/products/create', [ProductController::class,'store'])->name('product.create');
     Route::get('/products/edit', [ProductController::class,'edit'])->name('product.edit');
+    Route::delete('/products/edit/images', [ProductController::class,'unlinkimageedit'])->name('product.image.unlink');
     Route::post('/products/update', [ProductController::class, 'update'])->name('product.update');
     Route::delete('/products/delete/{id}', [ProductController::class,'destroy'])->name('product.delete');
     Route::get('get-subcategories/{id}', [ProductController::class,'getSubcategories'])->name('subcategories.get');

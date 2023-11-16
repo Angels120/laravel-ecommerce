@@ -26,4 +26,20 @@ class Product extends Model
     {
         return $this->belongsTo(Brand::class,'brands_id');
     }
+    public function removeImage($imageName)
+{
+    $images = $this->image;
+
+    // Find the index of the image to remove
+    $index = array_search($imageName, $images);
+
+    if ($index !== false) {
+        array_splice($images, $index, 1);
+
+        // Update the images column in the database
+        $this->update(['image' => $images]);
+    }
+}
+
+
 }

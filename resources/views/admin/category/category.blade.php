@@ -141,7 +141,7 @@
             $('.data-table').on("click", ".delete", function() {
                 var categoryId = $(this).data('id');
                 const deleteUrl = "{{ route('admin.category.delete', ['id' => ':id']) }}";
-                urlWithId = deleteUrl.replace(':id', brandId);
+                urlWithId = deleteUrl.replace(':id', categoryId);
                 $('#deleteCategoryButton').data('category-id', categoryId);
                 $('#deleteCategory').modal('show');
             });

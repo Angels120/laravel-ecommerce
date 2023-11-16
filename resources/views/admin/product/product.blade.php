@@ -71,7 +71,7 @@
         </div>
     </div>
     <!-- Modal -->
-    <div class="modal fade zoomIn" id="deleteCategory" tabindex="-1" aria-hidden="true">
+    <div class="modal fade zoomIn" id="deleteProduct" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -89,7 +89,7 @@
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                         <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn w-sm btn-danger " id="deleteCategoryButton">Yes, Delete
+                        <button type="button" class="btn w-sm btn-danger " id="deleteProductButton">Yes, Delete
                             It!</button>
                     </div>
                 </div>
@@ -158,36 +158,38 @@
         });
     </script>
 
+<script>
+    var urlWithId = "";
+    $(document).ready(function() {
 
-    <script>
-
-        function confirmDelete(button) {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            const id = $(button).data("id"); // Retrieve data-id from the clicked button
-            const deleteUrl = "{{ route('admin.category.delete', ['id' => ':id']) }}";
-            const urlWithId = deleteUrl.replace(':id', id);
-            $('#deleteCategory').modal('show');
-            $('#deleteCategoryButton').on('click', function() {
-                console.log('clicked')
-                $.ajax({
-                    type: 'DELETE',
-                    url: urlWithId,
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
-                    },
-                    success: function(response) {
-                        showToast(response.message);
-                        $('#datatable-crud').DataTable().ajax.reload();
-                        $('#successAlertContainer').html(successAlert);
-                    },
-                    error: function(error) {
-                        showErrorToast(error);
-                    },
-                });
-                $('#deleteCategory').modal('hide');
+        $('.data-table').on("click", ".delete", function() {
+            var productId = $(this).data('id');
+            const deleteUrl = "{{ route('admin.product.delete', ['id' => ':id']) }}";
+            urlWithId = deleteUrl.replace(':id', productId);
+            $('#deleteProductButton').data('product-id', productId);
+            $('#deleteProduct').modal('show');
+        });
+        $('#deleteProductButton').click(function() {
+            var productId = $(this).data('product-id');
+            $.ajax({
+                type: 'DELETE',
+                url: urlWithId,
+                data: {
+                    _token: '{{ csrf_token() }}',
+                },
+                success: function(response) {
+                    showToast(response.message);
+                    $('#deleteProduct').modal('hide');
+                    $('#datatable-crud').DataTable().ajax.reload();
+                    $('#successAlertContainer').html(successAlert);
+                },
+                error: function(error) {
+                    console.error('Delete error:', error);
+                }
             });
+        });
+    });
+</script>
 
-        }
-    </script>
 
 @endsection
