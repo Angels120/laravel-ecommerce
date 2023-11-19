@@ -64,17 +64,23 @@ class ProductController extends Controller
                     return $row->price ?? '';
                 })
                 ->editColumn('image', function ($row) {
-                    $images = $row->image; // No need for json_decode
+                    $images = $row->image;
 
                     if (!empty($images) && is_array($images)) {
                         $imageHtml = '';
 
                         foreach ($images as $index => $image) {
                             $imagePath = public_path('uploads/products/' . $image);
+
                             if (file_exists($imagePath)) {
                                 $imageUrl = asset('uploads/products/' . $image);
                                 $imageHtml .= '<img src="' . $imageUrl . '" alt="Image" style="width: 70px; height: 50px;">';
-                                if ($index < count($images) - 1) {
+
+                                // Add a line break after every 2 images
+                                if (($index + 1) % 2 == 0 && $index < count($images) - 1) {
+                                    $imageHtml .= '<br>';
+                                } elseif ($index < count($images) - 1) {
+                                    // Add a separator after each image (except the last one)
                                     $imageHtml .= '<span style="border-right: 2px solid black; height: 100%; margin-left: 10px;"></span>';
                                 }
                             } else {
@@ -88,14 +94,15 @@ class ProductController extends Controller
                     }
                 })
 
+
                 ->editColumn('status', function ($row) {
                     $status = ($row->status == 0) ? 1 : 0;
                     $buttonColorClass = ($row->status == 0) ? 'btn-danger' : 'btn-success';
                     $buttonText = ($row->status == 0) ? 'Inactive' : 'Active';
 
-                    return '<form action="' . '" method="POST">
+                    return '<form action="' . route('admin.product.status.update', ['id' => $row->id]) . '" method="POST">
                                 ' . csrf_field() . '
-                                <div class="btn btn-sm ' . $buttonColorClass . '">' . $buttonText . '</div>
+                                <button type="submit" class="btn btn-sm btn-status ' . $buttonColorClass . '">' . $buttonText . '</button>
                             </form>';
                 })
                 ->editColumn('action', function ($row) {
@@ -165,7 +172,9 @@ class ProductController extends Controller
                 }
             }
         }
+        $sizes = [];
         $validatedData['images'] = $arrProductImages;
+        $validatedData['sizes'] = $sizes;
         Product::create([
             'name' => $request->name,
             'slug' => Str::slug($request->input('name')),
@@ -179,7 +188,7 @@ class ProductController extends Controller
             'price' => $request->price,
             'featured' => $request->featured,
             'discount' => $request->discount,
-            'sizes' => $request->sizes,
+            'sizes' => $sizes,
         ]);
         return response()->json(['message' => 'Product Created successfully']);
     }
@@ -224,6 +233,13 @@ class ProductController extends Controller
     }
 
 
+    public function updateStatus($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->status = ($product->status == 0) ? 1 : 0;
+        $product->save();
+        return response()->json(['message' => 'Product Status updated successfully',200]);
+    }
 
     /**
      * Update the specified resource in storage.

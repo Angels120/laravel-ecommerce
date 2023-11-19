@@ -191,7 +191,7 @@
                                     </div>
                                     <div class="col-lg-12 mt-2">
                                         <label for="name" class="control-label mb-1">Available Sizes</label>
-                                        <select id="Editsizes" class="form-select" name="sizes">
+                                        <select id="Editsizes" class="form-select" multiple name="sizes">
                                             <option value="S" selected>Small</option>
                                             <option value="M">Medium</option>
                                             <option value="L">Large</option>
@@ -309,6 +309,13 @@
         });
     });
 </script>
+
+<script>
+    $(document).ready(function () {
+      $(".chosen-select").chosen();
+   });
+
+  </script>
 
 
 {{-- ---------------------- show edit for Product  -------------------- --}}

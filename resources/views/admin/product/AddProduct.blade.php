@@ -63,7 +63,7 @@
                                     <div class="col-lg-12 mt-2">
                                         <label for="category" class="control-label mb-1">Category<span
                                                 class="ms-1 text-danger">*</span></label>
-                                        <select id="category_id" class="js-example-basic-singleEdit1" name="category_id">
+                                        <select id="category_id" class="chosen-select form-select" name="category_id">
                                             <option class="" value="">Select Category</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}">
@@ -77,7 +77,7 @@
                                         <div class="col-lg-12 mt-2">
                                             <label for="subcategory" class="control-label mb-1">Sub Category<span
                                                     class="ms-1 text-danger">*</span></label>
-                                            <select id="sub_categories_id" class="js-example-basic-singleEdit1"
+                                            <select id="sub_categories_id" class="js-example-basic-singleEdit1 form-select"
                                                 name="sub_categories_id">
                                                 <option class="" value="">Select Sub-Category</option>
                                                 @foreach ($subcategories as $subcategory)
@@ -92,7 +92,7 @@
                                     <div id="brand-select" class="d-none">
                                         <div class="col-lg-12 mt-2">
                                             <label for="brand" class="control-label mb-1">Brand</label>
-                                            <select id="brand_id" class="js-example-basic-singleEdit1" name="brands_id">
+                                            <select id="brand_id" class="js-example-basic-singleEdit1 form-select" name="brands_id">
                                                 <option class="" value="">Select Brands</option>
                                                 @foreach ($brands as $brand)
                                                     <option value="{{ $brand->id }}">
@@ -177,8 +177,7 @@
                                     </div>
                                     <div class="col-lg-12 mt-2">
                                         <label for="name" class="control-label mb-1">Available Sizes</label>
-                                        <select id="sizes" class="form-select" multiple="multiple" name="sizes">
-                                            <option class="" value=""selected>Select Sizes</option>
+                                        <select id="sizes" class="chosen-select form-select" multiple name="sizes">
                                             <option value="S" >Small</option>
                                             <option value="M">Medium</option>
                                             <option value="L">Large</option>
@@ -243,6 +242,12 @@
     });
 </script>
 <script>
+    $(document).ready(function () {
+      $(".chosen-select").chosen();
+   });
+
+  </script>
+<script>
     $(document).ready(function() {
         $('#category_id').change(function() {
             var categoryId = $(this).val();
@@ -274,6 +279,7 @@
         });
     });
 </script>
+
 
 <script>
     $(document).ready(function() {

@@ -25,6 +25,8 @@
  <script src="{{ asset('admin_asset/js/plugins.js') }}"></script>
 
   {{-- ck editor --}}
+
+
   <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 
   {{-- <script src="{{ asset('admin_asset/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script> --}}
@@ -78,6 +80,9 @@
    <!-- Select2 -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
+   {{-- Choosen Select --}}
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.proto.js"></script>
 
 
 </body>

@@ -14,6 +14,8 @@
       <link rel="stylesheet" href="{{ asset('admin_asset/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css') }}">
     <!-- jsvectormap css -->
     <link href="{{ asset('admin_asset/libs/jsvectormap/css/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.css">
+
 
     <!--Swiper slider css-->
     <link href="{{ asset('admin_asset/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css" />
@@ -74,6 +76,44 @@
     }
 
     .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: #405189;
+        margin-top: 6px;
+        margin-left: 3px;
+    }
+
+</style>
+<style>
+      /* Customize Chosen single select */
+      .chosen-container-single .chosen-single {
+        background-color: #fff !important;
+        border: 1px solid #d7d8d9 !important;
+        height: 37px !important;
+    }
+
+    .chosen-container-single .chosen-single .chosen-single div {
+        height: 26px !important;
+        position: absolute !important;
+        top: 5px !important;
+        right: 1px !important;
+        width: 20px !important;
+    }
+
+    .chosen-container-single .chosen-single .chosen-single span {
+        color: #444 !important;
+        margin-top: 3px !important;
+        line-height: normal !important; /* Add this line to adjust the line height */
+    }
+    /* Customize Chosen multiple select */
+    .chosen-container-multi .chosen-choices {
+        background-color: white;
+        border: 1px solid rgb(170, 170, 170);
+        border-radius: 20px;
+        cursor: text;
+        height: 30px; /* Adjust the height as needed */
+        padding: 3px; /* Adjust the padding as needed */
+    }
+
+    .chosen-container-multi .chosen-choices .search-choice {
         background-color: #405189;
         margin-top: 6px;
         margin-left: 3px;

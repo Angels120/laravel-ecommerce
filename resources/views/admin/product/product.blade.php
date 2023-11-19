@@ -39,23 +39,26 @@
 
                                         </div>
                                         <div class="card-body">
-                                            <table id="datatable-crud" class="table nowrap align-middle data-table" style="width:100%">
+                                            <div class="table-responsive">
+                                                <table id="datatable-crud" class="table nowrap align-middle data-table" style="width:100%; overflow-x: auto;">
+
                                                 <thead>
                                                     <tr>
                                                         <th>SN</th>
                                                         <th>Product Name</th>
+                                                        <th>Product Images</th>
                                                         <th>Product Slug</th>
                                                         <th>Category</th>
                                                         <th>Sub Category</th>
                                                         <th>Stock</th>
                                                         <th>Price</th>
                                                         <th>Discount</th>
-                                                        <th>Product Images</th>
                                                         <th>Status</th>
                                                         <th>Action</th>
                                                     </tr>
                                                 </thead>
                                             </table>
+                                        </div>
                                         </div>
                                     </div>
                                 </div><!-- end card -->
@@ -102,6 +105,7 @@
     @include('admin.product.EditProdcut')
     @include('admin.product.AddProduct')
 
+
     <script>
         $(document).ready(function() {
             $('#datatable-crud').DataTable({
@@ -113,6 +117,10 @@
                     },
                     {
                         data: 'name',
+
+                    },
+                    {
+                        data: 'image',
 
                     },
                     {
@@ -137,10 +145,6 @@
                     },
                     {
                         data: 'discount',
-
-                    },
-                    {
-                        data: 'image',
 
                     },
                     {
@@ -191,5 +195,31 @@
     });
 </script>
 
+<script>
+
+$(document).on('click', '.btn-status', function (e) {
+    e.preventDefault();
+
+    var form = $(this).closest('form');
+    var url = form.attr('action');
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: form.serialize(),
+        success: function (response) {
+            showToast(response.message);
+            // You can add additional logic here if needed
+            // For example, updating the button color and text based on the new status
+
+            // Reload the DataTable after successful status update
+            $('#datatable-crud').DataTable().ajax.reload();
+        },
+        error: function (error) {
+            console.error('Error updating status:', error);
+        }
+    });
+});
+</script>
 
 @endsection
