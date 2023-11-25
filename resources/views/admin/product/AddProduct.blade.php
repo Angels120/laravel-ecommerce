@@ -63,7 +63,7 @@
                                     <div class="col-lg-12 mt-2">
                                         <label for="category" class="control-label mb-1">Category<span
                                                 class="ms-1 text-danger">*</span></label>
-                                        <select id="category_id" class="chosen-select form-select" name="category_id">
+                                        <select id="category_id" class="js-example-basic-singleEdit1 form-select" name="category_id">
                                             <option class="" value="">Select Category</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}">
@@ -177,7 +177,7 @@
                                     </div>
                                     <div class="col-lg-12 mt-2">
                                         <label for="name" class="control-label mb-1">Available Sizes</label>
-                                        <select id="sizes" class="chosen-select form-select" multiple name="sizes">
+                                        <select id="sizes" class="js-example-basic-singleEdit1 form-select" multiple name="sizes[]">
                                             <option value="S" >Small</option>
                                             <option value="M">Medium</option>
                                             <option value="L">Large</option>
@@ -203,15 +203,15 @@
     </div>
 </div>
 
-
-
 <script>
     $(document).ready(function() {
+        var dropdownParentEl = $('#AddProduct > .modal-dialog > .modal-content');
         $('.js-example-basic-singleEdit1').select2({
-            dropdownParent: $('#AddProduct')
+            dropdownParent: dropdownParentEl
         });
     });
 </script>
+
 
 
 {{-- ckeditor for description --}}
@@ -241,12 +241,7 @@
         });
     });
 </script>
-<script>
-    $(document).ready(function () {
-      $(".chosen-select").chosen();
-   });
 
-  </script>
 <script>
     $(document).ready(function() {
         $('#category_id').change(function() {

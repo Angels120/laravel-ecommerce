@@ -139,6 +139,7 @@ class ProductController extends Controller
     {
 
 
+
         $request->validate([
             'name' => 'required',
             'image.*' => 'required',
