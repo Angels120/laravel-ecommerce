@@ -16,12 +16,8 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-        // dd('here');
         $categories = Category::get();
         $subcategories = SubCategory::get();
         $brands = Brand::get();
@@ -76,11 +72,10 @@ class ProductController extends Controller
                                 $imageUrl = asset('uploads/products/' . $image);
                                 $imageHtml .= '<img src="' . $imageUrl . '" alt="Image" style="width: 70px; height: 50px;">';
 
-                                // Add a line break after every 2 images
                                 if (($index + 1) % 2 == 0 && $index < count($images) - 1) {
                                     $imageHtml .= '<br>';
                                 } elseif ($index < count($images) - 1) {
-                                    // Add a separator after each image (except the last one)
+
                                     $imageHtml .= '<span style="border-right: 2px solid black; height: 100%; margin-left: 10px;"></span>';
                                 }
                             } else {
@@ -137,11 +132,9 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
-
-
         $request->validate([
             'name' => 'required',
+            'image' => 'required|array',
             'image.*' => 'required',
             'category_id' => 'required',
             'sub_categories_id' => 'required',
@@ -174,7 +167,7 @@ class ProductController extends Controller
             }
         }
         $sizes = [];
-        $validatedData['images'] = $arrProductImages;
+        $validatedData['image'] = $arrProductImages;
         $validatedData['sizes'] = $sizes;
         Product::create([
             'name' => $request->name,
@@ -252,6 +245,8 @@ class ProductController extends Controller
 
         $request->validate([
             'name' => 'required',
+            // 'image' => 'required|array',
+            // 'image.*' => 'required',
             'category_id' => 'required',
             'sub_categories_id' => 'required',
             'brands_id' => 'nullable',
@@ -278,8 +273,10 @@ class ProductController extends Controller
                 }
             }
         }
+        // $validatedData['image'] = $arrProductImages;
         $validatedData = [
             'name' => $request->name,
+            'slug' => Str::slug($request->input('name')),
             'image' => $arrProductImages,
             'description' => $request->description,
             'category_id' => $request->category_id,

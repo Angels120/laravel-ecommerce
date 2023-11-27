@@ -40,25 +40,26 @@
                                         </div>
                                         <div class="card-body">
                                             <div class="table-responsive">
-                                                <table id="datatable-crud" class="table nowrap align-middle data-table" style="width:100%; overflow-x: auto;">
+                                                <table id="datatable-crud" class="table nowrap align-middle data-table"
+                                                    style="width:100%; overflow-x: auto;">
 
-                                                <thead>
-                                                    <tr>
-                                                        <th>SN</th>
-                                                        <th>Product Name</th>
-                                                        <th>Product Images</th>
-                                                        <th>Product Slug</th>
-                                                        <th>Category</th>
-                                                        <th>Sub Category</th>
-                                                        <th>Stock</th>
-                                                        <th>Price</th>
-                                                        <th>Discount</th>
-                                                        <th>Status</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                            </table>
-                                        </div>
+                                                    <thead>
+                                                        <tr>
+                                                            <th>SN</th>
+                                                            <th>Product Name</th>
+                                                            <th>Product Images</th>
+                                                            <th>Product Slug</th>
+                                                            <th>Category</th>
+                                                            <th>Sub Category</th>
+                                                            <th>Stock</th>
+                                                            <th>Price</th>
+                                                            <th>Discount</th>
+                                                            <th>Status</th>
+                                                            <th>Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div><!-- end card -->
@@ -105,13 +106,18 @@
     @include('admin.product.EditProdcut')
     @include('admin.product.AddProduct')
 
-
     <script>
         $(document).ready(function() {
             $('#datatable-crud').DataTable({
                 processing: true,
                 serverSide: true,
-                url: "{{ route('admin.products.index') }}",
+                ajax: {
+                    url: "{{ route('admin.products.index') }}",
+                    data: function(d) {
+                        d._token = "{{ csrf_token() }}";
+                    }
+                },
+
                 columns: [{
                         data: 'id',
                     },
@@ -155,71 +161,69 @@
                     }
                 ],
                 order: [
-                    [0, 'asc'] // Sort by the second column (category_name) in ascending order
+                    [0, 'asc']
                 ]
             });
 
         });
     </script>
 
-<script>
-    var urlWithId = "";
-    $(document).ready(function() {
-
-        $('.data-table').on("click", ".delete", function() {
-            var productId = $(this).data('id');
-            const deleteUrl = "{{ route('admin.product.delete', ['id' => ':id']) }}";
-            urlWithId = deleteUrl.replace(':id', productId);
-            $('#deleteProductButton').data('product-id', productId);
-            $('#deleteProduct').modal('show');
+    <script>
+        var urlWithId = "";
+        $(document).ready(function() {
+            $('.data-table').on("click", ".delete", function() {
+                var productId = $(this).data('id');
+                const deleteUrl = "{{ route('admin.product.delete', ['id' => ':id']) }}";
+                urlWithId = deleteUrl.replace(':id', productId);
+                $('#deleteProductButton').data('product-id', productId);
+                $('#deleteProduct').modal('show');
+            });
+            $('#deleteProductButton').click(function() {
+                var productId = $(this).data('product-id');
+                $.ajax({
+                    type: 'DELETE',
+                    url: urlWithId,
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                    },
+                    success: function(response) {
+                        showToast(response.message);
+                        $('#deleteProduct').modal('hide');
+                        $('#datatable-crud').DataTable().ajax.reload();
+                        $('#successAlertContainer').html(successAlert);
+                    },
+                    error: function(error) {
+                        console.error('Delete error:', error);
+                    }
+                });
+            });
         });
-        $('#deleteProductButton').click(function() {
-            var productId = $(this).data('product-id');
+    </script>
+
+
+    <script>
+        $(document).on('click', '.btn-status', function(e) {
+            e.preventDefault();
+
+            var form = $(this).closest('form');
+            var url = form.attr('action');
+
             $.ajax({
-                type: 'DELETE',
-                url: urlWithId,
-                data: {
-                    _token: '{{ csrf_token() }}',
-                },
+                type: 'POST',
+                url: url,
+                data: form.serialize(),
                 success: function(response) {
                     showToast(response.message);
-                    $('#deleteProduct').modal('hide');
+                    // You can add additional logic here if needed
+                    // For example, updating the button color and text based on the new status
+
+                    // Reload the DataTable after successful status update
                     $('#datatable-crud').DataTable().ajax.reload();
-                    $('#successAlertContainer').html(successAlert);
                 },
                 error: function(error) {
-                    console.error('Delete error:', error);
+                    console.error('Error updating status:', error);
                 }
             });
         });
-    });
-</script>
-
-<script>
-
-$(document).on('click', '.btn-status', function (e) {
-    e.preventDefault();
-
-    var form = $(this).closest('form');
-    var url = form.attr('action');
-
-    $.ajax({
-        type: 'POST',
-        url: url,
-        data: form.serialize(),
-        success: function (response) {
-            showToast(response.message);
-            // You can add additional logic here if needed
-            // For example, updating the button color and text based on the new status
-
-            // Reload the DataTable after successful status update
-            $('#datatable-crud').DataTable().ajax.reload();
-        },
-        error: function (error) {
-            console.error('Error updating status:', error);
-        }
-    });
-});
-</script>
-
+    </script>
 @endsection

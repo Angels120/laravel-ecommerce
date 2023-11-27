@@ -34,7 +34,11 @@ class Helper{
 
         $check = in_array($extension, $allowedFileExtension);
         if (!$check) {
-            return response()->json(['error' => 'Sorry, this file type is not allowed. Only the following file types are allowed: jpg, png, jpeg'], 400);
+            $errors = [
+                'image' => ['Sorry, this file type is not allowed. Only the image file types are allowed: jpg, png, jpeg'],
+            ];
+
+            return response()->json(['errors' => $errors], 400);
         }
 
         $data = 'data:' . $item->type . ';base64,' . $item->data;
@@ -42,12 +46,11 @@ class Helper{
 
         $fileSizeLimit = 3000000; // 3MB in bytes
         if (strlen($image) > $fileSizeLimit) {
-            return response()->json(['error' => 'File size exceeds the limit of 3MB. Please select a file having size lesser than 3MB'], 400);
+            return response()->json(['error' => 'Image size exceeds the limit of 3MB. Please select a image having size lesser than 3MB'], 400);
         }
 
-        // Append timestamp to the image name to make it unique
         $microtime = microtime(true);
-        $timestamp = round($microtime * 1000); // Convert to milliseconds and round
+        $timestamp = round($microtime * 1000);
         $imageName = $ext . '_' . $timestamp . '.' . $extension;
         $destination = $directory . $imageName;
         $file = fopen($destination, 'w+');

@@ -191,7 +191,8 @@
                                     </div>
                                     <div class="col-lg-12 mt-2">
                                         <label for="name" class="control-label mb-1">Available Sizes</label>
-                                        <select id="Editsizes" class="js-example-basic-singleEdit form-select" multiple name="sizes">
+                                        <select id="Editsizes" class="js-example-basic-singleEdit form-select"
+                                            multiple name="sizes">
                                             <option value="S" selected>Small</option>
                                             <option value="M">Medium</option>
                                             <option value="L">Large</option>
@@ -282,18 +283,56 @@
                     $('#successAlertContainer').html(successAlert);
                 },
                 error: function(error) {
-                    console.log(error);
-                    document.getElementById('EditProductNameError').style.display = "none";
-                    document.getElementById('EditProductCategoryError').style.display =
-                        "none";
-                    document.getElementById('EditProductSubCategoryError').style.display =
-                        "none";
-                    document.getElementById('EditProductBrandError').style.display = "none";
-                    document.getElementById('EditProductImagesError').style.display =
-                        "none";
-                    document.getElementById('EditProductPriceError').style.display = "none";
-                    document.getElementById('EditProductStockError').style.display = "none";
 
+                    console.log(error);
+                    if (error.responseJSON.errors) {
+                        if (error.responseJSON.errors.name) {
+                            var errMsg = document.getElementById('EditProductNameError');
+                            if (error.responseJSON.errors.name[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors.name[0];
+                            }
+                        }
+                        if (error.responseJSON.errors.category_id) {
+                            var errMsg = document.getElementById(
+                            'EditProductCategoryError');
+                            if (error.responseJSON.errors.category_id[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors.category_id[
+                                    0];
+                            }
+                        }
+                        if (error.responseJSON.errors.sub_categories_id) {
+                            var errMsg = document.getElementById(
+                                'EditProductSubCategoryError');
+                            if (error.responseJSON.errors.sub_categories_id[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors
+                                    .sub_categories_id[0];
+                            }
+                        }
+                        if (error.responseJSON.errors.image) {
+                            var errMsg = document.getElementById('EditProductImagesError');
+                            if (error.responseJSON.errors.image[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors.image[0];
+                            }
+                        }
+                        if (error.responseJSON.errors.price) {
+                            var errMsg = document.getElementById('EditProductPriceError');
+                            if (error.responseJSON.errors.price[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors.price[0];
+                            }
+                        }
+                        if (error.responseJSON.errors.stock) {
+                            var errMsg = document.getElementById('EditProductStockError');
+                            if (error.responseJSON.errors.stock[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors.stock[0];
+                            }
+                        }
+                    }
                 }
             });
 
@@ -358,7 +397,7 @@
                                         headers: {
                                             'X-CSRF-TOKEN': $(
                                                 'meta[name="csrf-token"]'
-                                                ).attr(
+                                            ).attr(
                                                 'content')
                                         },
                                         data: {
@@ -369,8 +408,10 @@
                                             response) {
                                             // Handle success
                                             imageDiv
-                                            .remove();
-                                            $('#deleteProductImages').modal('hide');
+                                                .remove();
+                                            $('#deleteProductImages')
+                                                .modal(
+                                                    'hide');
                                         },
                                         error: function(error) {
                                             // Handle error
@@ -448,57 +489,3 @@
             });
     }
 </script>
-{{--
-if (error.responseJSON.errors) {
-    if (error.responseJSON.errors.name) {
-        var errMsg = document.getElementById('EditProductNameError');
-        if (error.responseJSON.errors.name[0]) {
-            errMsg.style.display = "block";
-            errMsg.textContent = error.responseJSON.errors.name[0];
-        }
-    }
-    if (error.responseJSON.errors.category_id) {
-        var errMsg = document.getElementById('EditProductCategoryError');
-        if (error.responseJSON.errors.category_id[0]) {
-            errMsg.style.display = "block";
-            errMsg.textContent = error.responseJSON.errors.category_id[
-                0];
-        }
-    }
-    if (error.responseJSON.errors.sub_categories_id) {
-        var errMsg = document.getElementById('EditProductSubCategoryError');
-        if (error.responseJSON.errors.sub_categories_id[0]) {
-            errMsg.style.display = "block";
-            errMsg.textContent = error.responseJSON.errors
-                .sub_categories_id[0];
-        }
-    }
-    if (error.responseJSON.errors.brands_id) {
-        var errMsg = document.getElementById('EditProductImagesError');
-        if (error.responseJSON.errors.brands_id[0]) {
-            errMsg.style.display = "block";
-            errMsg.textContent = error.responseJSON.errors.brands_id[0];
-        }
-    }
-    if (error.responseJSON.errors.image) {
-        var errMsg = document.getElementById('ProductImagesError');
-        if (error.responseJSON.errors.image[0]) {
-            errMsg.style.display = "block";
-            errMsg.textContent = error.responseJSON.errors.image[0];
-        }
-    }
-    if (error.responseJSON.errors.price) {
-        var errMsg = document.getElementById('EditProductPriceError');
-        if (error.responseJSON.errors.price[0]) {
-            errMsg.style.display = "block";
-            errMsg.textContent = error.responseJSON.errors.price[0];
-        }
-    }
-    if (error.responseJSON.errors.stock) {
-        var errMsg = document.getElementById('EditProductStockError');
-        if (error.responseJSON.errors.stock[0]) {
-            errMsg.style.display = "block";
-            errMsg.textContent = error.responseJSON.errors.stock[0];
-        }
-    }
-} --}}
