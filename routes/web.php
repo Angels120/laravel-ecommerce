@@ -52,6 +52,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web'])->group(function
     Route::post('/categories/create', [CategoryController::class,'store'])->name('category.create');
     Route::get('/categories/edit', [CategoryController::class,'edit'])->name('category.edit');
     Route::post('/categories/update', [CategoryController::class, 'update'])->name('category.update');
+    Route::post('/categories/status/update/{id}', [CategoryController::class, 'updateStatus'])->name('category.status.update');
     Route::delete('/categories/delete/{id}', [CategoryController::class,'destroy'])->name('category.delete');
     //-------------------------------------Ends Here--------------------------------------------------------//
 
@@ -62,6 +63,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web'])->group(function
     Route::post('/subcategories/create', [SubCategoryController::class,'store'])->name('subcategory.create');
     Route::get('/subcategories/edit', [SubCategoryController::class,'edit'])->name('subcategory.edit');
     Route::post('/subcategories/update', [SubCategoryController::class, 'update'])->name('subcategory.update');
+    Route::post('/subcategories/status/update/{id}', [SubCategoryController::class, 'updateStatus'])->name('subcategory.status.update');
     Route::delete('/subcategories/delete/{id}', [SubCategoryController::class,'destroy'])->name('subcategory.delete');
 
     //-------------------------------------Ends Here--------------------------------------------------------//
@@ -71,6 +73,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web'])->group(function
     Route::post('/brands/create', [BrandController::class,'store'])->name('brand.create');
     Route::get('/brands/edit', [BrandController::class,'edit'])->name('brand.edit');
     Route::post('/brands/update', [BrandController::class,'update'])->name('brand.update');
+    Route::post('/brands/status/update/{id}', [BrandController::class, 'updateStatus'])->name('brand.status.update');
     Route::delete('/brands/delete/{id}', [BrandController::class,'destroy'])->name('brand.delete');
 
     //--------------------------------------Ends HEre--------------------------------------------------------//

@@ -200,7 +200,7 @@
         });
     </script>
 
-
+{{-- For Status Update Script --}}
     <script>
         $(document).on('click', '.btn-status', function(e) {
             e.preventDefault();

@@ -47,13 +47,13 @@ class BrandController extends Controller
                 })
                 ->editColumn('status', function ($row) {
                     $status = ($row->status == 0) ? 1 : 0;
-                    $buttonColorClass = ($row->status == 0) ? 'btn-warning' : 'btn-success';
+                    $buttonColorClass = ($row->status == 0) ? 'btn-danger' : 'btn-success';
                     $buttonText = ($row->status == 0) ? 'Inactive' : 'Active';
 
-                    return '<form action="' . '" method="POST">
-                            ' . csrf_field() . '
-                            <div class="btn btn-sm ' . $buttonColorClass . '">' . $buttonText . '</div>
-                        </form>';
+                    return '<form action="' . route('admin.brand.status.update', ['id' => $row->id]) . '" method="POST">
+                                ' . csrf_field() . '
+                                <button type="submit" class="btn btn-sm btn-status ' . $buttonColorClass . '">' . $buttonText . '</button>
+                            </form>';
                 })
                 ->editColumn('action', function ($row) {
                     return '<td class="id">
@@ -141,6 +141,13 @@ class BrandController extends Controller
         return response()->json(['message' => 'Brand updated successfully']);
     }
 
+    public function updateStatus($id)
+    {
+        $brand = Brand::findOrFail($id);
+        $brand->status = ($brand->status == 0) ? 1 : 0;
+        $brand->save();
+        return response()->json(['message' => 'Brand Status updated successfully',200]);
+    }
 
     public function destroy($id)
     { $brand = Brand::findOrFail($id);

@@ -166,4 +166,30 @@
                 });
             });
         </script>
+        {{-- For Status Update Script --}}
+<script>
+    $(document).on('click', '.btn-status', function(e) {
+        e.preventDefault();
+
+        var form = $(this).closest('form');
+        var url = form.attr('action');
+
+        $.ajax({
+            type: 'POST',
+            url: url,
+            data: form.serialize(),
+            success: function(response) {
+                showToast(response.message);
+                // You can add additional logic here if needed
+                // For example, updating the button color and text based on the new status
+
+                // Reload the DataTable after successful status update
+                $('#datatable-crud').DataTable().ajax.reload();
+            },
+            error: function(error) {
+                console.error('Error updating status:', error);
+            }
+        });
+    });
+</script>
     @endsection
