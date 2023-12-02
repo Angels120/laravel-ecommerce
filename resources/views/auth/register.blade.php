@@ -14,10 +14,20 @@
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
                         <div class="form-group">
+                            <label>Name</label>
+                            <input id="username" type="text"
+                                class="form-control @error('name') is-invalid @enderror" name="name"
+                                value="{{ old('name') }}"  autocomplete="name"
+                                placeholder="name">
+                            @error('name')
+                                <div class="alert alert-danger">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
                             <label>Username</label>
                             <input id="username" type="text"
                                 class="form-control @error('username') is-invalid @enderror" name="username"
-                                value="{{ old('username') }}" required autocomplete="username" autofocus
+                                value="{{ old('username') }}"  autocomplete="username"
                                 placeholder="Username">
                             @error('username')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -27,7 +37,7 @@
                             <label>Contact Number</label>
                             <input id="phone_number" type="text"
                                 class="form-control @error('phone_number') is-invalid @enderror" name="phone_number"
-                                value="{{ old('phone_number') }}" required autocomplete="phone_number" autofocus
+                                value="{{ old('phone_number') }}"  autocomplete="phone_number"
                                 placeholder="Phone number">
                             @error('phone_number')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -36,7 +46,7 @@
                         <div class="form-group">
                             <label>Email Address</label>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" value="{{ old('email') }}" required autocomplete="email"
+                                name="email" value="{{ old('email') }}"  autocomplete="email"
                                 placeholder="Email">
                             @error('email')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -45,7 +55,7 @@
                         <div class="form-group">
                             <label>Password</label>
                             <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password" required
+                                class="form-control @error('password') is-invalid @enderror" name="password"
                                 autocomplete="new-password" placeholder="Password">
                             @error('password')
                                 <div class="alert alert-danger">{{ $message }}</div>
@@ -54,7 +64,7 @@
                         <div class="form-group">
                             <label>Confirm Password</label>
                             <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                                required autocomplete="new-password" placeholder="Confirm Password">
+                                 autocomplete="new-password" placeholder="Confirm Password">
                             @error('password_confirmation')
                                 <div class="alert alert-danger">{{ $message }}
                                 </div>
@@ -106,7 +116,7 @@
                                     <img src="assets/images/logo-light.png" alt="" height="20">
                                 </a>
                             </div>
-                            <p class="mt-3 fs-15 fw-medium">Premium Admin & Dashboard Template</p>
+                            <p class="mt-3 fs-15 fw-medium">Connect With WebMart</p>
                         </div>
                     </div>
                 </div>
@@ -119,47 +129,73 @@
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
                                     <h5 class="text-primary">Create New Account</h5>
-                                    <p class="text-muted">Get your free velzon account now</p>
+                                    <p class="text-muted">Get your free WebMart Shopping account now</p>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form class="needs-validation" novalidate action="index.html">
+                                    <form method="POST" action="{{ route('register') }}">
+                                        @csrf
 
                                         <div class="mb-3">
-                                            <label for="useremail" class="form-label">Email <span class="text-danger">*</span></label>
-                                            <input type="email" class="form-control" id="useremail" placeholder="Enter email address" required>
-                                            <div class="invalid-feedback">
-                                                Please enter email
-                                            </div>
+                                            <label>Name <span class="text-danger">*</span></label>
+                                            <input id="username" type="text"
+                                                class="form-control @error('name') is-invalid @enderror" name="name"
+                                                value="{{ old('name') }}"  autocomplete="name"
+                                                placeholder="name">
+                                            @error('name')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="username" placeholder="Enter username" required>
-                                            <div class="invalid-feedback">
-                                                Please enter username
-                                            </div>
+                                            <label>Username  <span class="text-danger">*</span></label>
+                                            <input id="username" type="text"
+                                                class="form-control @error('username') is-invalid @enderror" name="username"
+                                                value="{{ old('username') }}"  autocomplete="username"
+                                                placeholder="Username">
+                                            @error('username')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
-
                                         <div class="mb-3">
-                                            <label class="form-label" for="password-input">Password</label>
-                                            <div class="position-relative auth-pass-inputgroup">
-                                                <input type="password" class="form-control pe-5 password-input" onpaste="return false" placeholder="Enter password" id="password-input" aria-describedby="passwordInput" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
-                                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
-                                                <div class="invalid-feedback">
-                                                    Please enter password
+                                            <label>Contact Number  <span class="text-danger">*</span></label>
+                                            <input id="phone_number" type="text"
+                                                class="form-control @error('phone_number') is-invalid @enderror" name="phone_number"
+                                                value="{{ old('phone_number') }}"  autocomplete="phone_number"
+                                                placeholder="Phone number">
+                                            @error('phone_number')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Email Address  <span class="text-danger">*</span></label>
+                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                                name="email" value="{{ old('email') }}"  autocomplete="email"
+                                                placeholder="Email">
+                                            @error('email')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Password  <span class="text-danger">*</span></label>
+                                            <input id="password" type="password"
+                                                class="form-control @error('password') is-invalid @enderror" name="password"
+                                                autocomplete="new-password" placeholder="Password">
+                                            @error('password')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Confirm Password  <span class="text-danger">*</span></label>
+                                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
+                                                 autocomplete="new-password" placeholder="Confirm Password">
+                                            @error('password_confirmation')
+                                                <div class="alert alert-danger">{{ $message }}
                                                 </div>
-                                            </div>
+                                            @enderror
                                         </div>
-
-                                        <div class="mb-4">
-                                            <p class="mb-0 fs-12 text-muted fst-italic">By registering you agree to the Velzon <a href="#" class="text-primary text-decoration-underline fst-normal fw-medium">Terms of Use</a></p>
-                                        </div>
-
-                                        <div id="password-contain" class="p-3 bg-light mb-2 rounded">
-                                            <h5 class="fs-13">Password must contain:</h5>
-                                            <p id="pass-length" class="invalid fs-12 mb-2">Minimum <b>8 characters</b></p>
-                                            <p id="pass-lower" class="invalid fs-12 mb-2">At <b>lowercase</b> letter (a-z)</p>
-                                            <p id="pass-upper" class="invalid fs-12 mb-2">At least <b>uppercase</b> letter (A-Z)</p>
-                                            <p id="pass-number" class="invalid fs-12 mb-0">A least <b>number</b> (0-9)</p>
+                                        <div class="login-checkbox">
+                                            <label>
+                                                <input type="checkbox" name="aggree">Agree the terms and policy
+                                            </label>
                                         </div>
 
                                         <div class="mt-4">
@@ -205,7 +241,7 @@
                     <div class="col-lg-12">
                         <div class="text-center">
                             <p class="mb-0 text-muted">&copy;
-                                <script>document.write(new Date().getFullYear())</script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
+                                <script>document.write(new Date().getFullYear())</script> WebMart. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
                             </p>
                         </div>
                     </div>

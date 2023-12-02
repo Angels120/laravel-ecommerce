@@ -10,7 +10,7 @@ use App\Http\Requests\RegisterRequest;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Validator;
-
+use Spatie\Permission\Models\Role;
 
 class RegisterController extends Controller
 {
@@ -53,8 +53,10 @@ class RegisterController extends Controller
      */
     public function register(RegisterRequest $request)
     {
+        // dd($request->all());
         $user = User::create($request->validated());
-
+        $role = Role::where('name', 'Customer')->first();
+        $user->assignRole($role);
         auth()->login($user);
 
         return redirect('dashboard')->with('success', "Account successfully registered.");
