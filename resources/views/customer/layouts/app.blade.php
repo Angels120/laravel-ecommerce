@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html lang="en" data-layout="vertical" data-topbar="light" data-sidebar="dark" data-sidebar-size="lg" data-sidebar-image="none" data-preloader="disable">
+<html lang="en" data-layout="horizontal" data-layout-style="" data-layout-position="fixed" data-topbar="light">
 @include('admin.layouts.head')
 <body>
     <div id="layout-wrapper">
-    @include('admin.layouts.header')
-    @include('admin.layouts.sidebar')
+    @include('customer.layouts.header')
+
    @yield('container')
     </div>
-    @include('admin.layouts.footer')
+    @include('customer.layouts.footer')
 
        <!--start back-to-top-->
        <button onclick="topFunction()" class="btn btn-danger btn-icon" id="back-to-top">
@@ -17,7 +17,9 @@
 
 
  <!-- JAVASCRIPT -->
- <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+ {{-- <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}
+ {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> --}}
+
  <script src="{{ asset('admin_asset/libs/simplebar/simplebar.min.js') }}"></script>
  <script src="{{ asset('admin_asset/libs/node-waves/waves.min.js') }}"></script>
  <script src="{{ asset('admin_asset/libs/feather-icons/feather.min.js') }}"></script>
@@ -25,6 +27,8 @@
  <script src="{{ asset('admin_asset/js/plugins.js') }}"></script>
 
   {{-- ck editor --}}
+
+
   <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 
   {{-- <script src="{{ asset('admin_asset/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script> --}}
@@ -80,6 +84,8 @@
 
 
 
+
 </body>
 
 </html>
+

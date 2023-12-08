@@ -1,98 +1,7 @@
-@extends('layouts.app')
+@extends('customer.layouts.app-without-navbar')
 
 @section('content')
 
-    {{-- <div class="container">
-        <div class="login-wrap">
-            <div class="login-content">
-                <div class="login-logo">
-                    <a href="#">
-                        <img src="{{ asset('admin_asset/images/icon/logo.png') }} " alt="CoolAdmin">
-                    </a>
-                </div>
-                <div class="login-form">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-                        <div class="form-group">
-                            <label>Name</label>
-                            <input id="username" type="text"
-                                class="form-control @error('name') is-invalid @enderror" name="name"
-                                value="{{ old('name') }}"  autocomplete="name"
-                                placeholder="name">
-                            @error('name')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Username</label>
-                            <input id="username" type="text"
-                                class="form-control @error('username') is-invalid @enderror" name="username"
-                                value="{{ old('username') }}"  autocomplete="username"
-                                placeholder="Username">
-                            @error('username')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Contact Number</label>
-                            <input id="phone_number" type="text"
-                                class="form-control @error('phone_number') is-invalid @enderror" name="phone_number"
-                                value="{{ old('phone_number') }}"  autocomplete="phone_number"
-                                placeholder="Phone number">
-                            @error('phone_number')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" value="{{ old('email') }}"  autocomplete="email"
-                                placeholder="Email">
-                            @error('email')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password"
-                                autocomplete="new-password" placeholder="Password">
-                            @error('password')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Confirm Password</label>
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                                 autocomplete="new-password" placeholder="Confirm Password">
-                            @error('password_confirmation')
-                                <div class="alert alert-danger">{{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="login-checkbox">
-                            <label>
-                                <input type="checkbox" name="aggree">Agree the terms and policy
-                            </label>
-                        </div>
-                        <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">register</button>
-                        <div class="social-login-content">
-                            <div class="social-button">
-                                <button class="au-btn au-btn--block au-btn--blue m-b-20">register with facebook</button>
-                                <button class="au-btn au-btn--block au-btn--blue2">register with twitter</button>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="register-link">
-                        <p>
-                            Already have account?
-                            <a href="#">Sign In</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     <div class="auth-page-wrapper pt-5">
         <!-- auth page bg -->
         <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
@@ -113,7 +22,7 @@
                         <div class="text-center mt-sm-5 mb-4 text-white-50">
                             <div>
                                 <a href="index.html" class="d-inline-block auth-logo">
-                                    <img src="assets/images/logo-light.png" alt="" height="20">
+                                    <img src="{{ asset('admin_asset/images/logos/webmart-light.svg') }}" alt="" height="92">
                                 </a>
                             </div>
                             <p class="mt-3 fs-15 fw-medium">Connect With WebMart</p>

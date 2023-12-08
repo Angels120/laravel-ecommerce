@@ -16,6 +16,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@material/textfield": "^14.0.0",
         "choices.js": "^10.2.0",
         "filepond": "^4.30.4",
         "jquery": "^3.7.0",

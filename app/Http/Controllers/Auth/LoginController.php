@@ -23,32 +23,35 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
     protected $redirectTo = '/admin/dashboard';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function login(LoginRequest $request)
-{
-    $credentials = $request->only('email', 'password');
+    {
+        $credentials = $request->only('email', 'password');
 
-    if (!Auth::attempt($credentials)) {
-        return redirect()->back()
-            ->withInput($request->only('email', 'remember'))
-            ->withErrors([
-                'email' => trans('auth.failed'),
-            ]);
+        if (!Auth::attempt($credentials)) {
+            return redirect()->back()
+                ->withInput($request->only('email', 'remember'))
+                ->withErrors([
+                    'email' => trans('auth.failed'),
+                ]);
+        }
+
+        return $this->authenticated($request, Auth::user())
+            ?: redirect(route('admin.dashboard'));
     }
 
-    return redirect(route('admin.dashboard'));
-}
+    protected function authenticated($request, $user)
+    {
+
+        if ($user->hasRole('Admin') || $user->hasRole('Super Admin')) {
+            return redirect('/admin/dashboard');
+        } elseif ($user->hasRole('Customer')) {
+            return redirect()->route('home.page');
+        }
+
+        return redirect($this->redirectTo);
+    }
 
     public function __construct()
     {
