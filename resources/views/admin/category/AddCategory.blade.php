@@ -20,12 +20,6 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="email-field" class="form-label">Category Slug</label>
-                        <input type="text" id="category_slug" name="category_slug" class="form-control"
-                            placeholder="category Slug" />
-                        <div class="invalid-feedback" id="CategorySlugError">Please Category Slug</div>
-                    </div>
-                    <div class="mb-3">
                         <label for="status" class="form-label">Category Status</label>
                     <div class="form-check mb-2">
                         <input class="form-check-input" id="flexRadioDefault1" type="radio" name="status"

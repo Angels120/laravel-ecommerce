@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('image');
             $table->longText('description')->nullable();
             $table->double('price',10,2);
-            $table->double('discount');
+            $table->double('discount')->default(0);
             $table->string('slug');
             $table->string('stock');
             $table->Boolean('status')->default(0);

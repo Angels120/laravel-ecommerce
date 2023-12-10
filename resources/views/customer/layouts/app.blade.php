@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" data-layout="horizontal" data-layout-style="" data-layout-position="fixed" data-topbar="light">
-@include('admin.layouts.head')
+@include('customer.layouts.head')
 <body>
     <div id="layout-wrapper">
     @include('customer.layouts.header')

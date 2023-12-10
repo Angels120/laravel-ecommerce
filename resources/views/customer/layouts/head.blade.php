@@ -8,14 +8,12 @@
 
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('admin_asset/images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('admin_asset/images/logos/webmart-light.svg') }}">
       <!-- Filepond Css -->
       <link rel="stylesheet" href="{{ asset('admin_asset/libs/filepond/filepond.min.css') }}" type="text/css" />
       <link rel="stylesheet" href="{{ asset('admin_asset/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css') }}">
     <!-- jsvectormap css -->
     <link href="{{ asset('admin_asset/libs/jsvectormap/css/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
-
-
 
     <!--Swiper slider css-->
     <link href="{{ asset('admin_asset/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css" />

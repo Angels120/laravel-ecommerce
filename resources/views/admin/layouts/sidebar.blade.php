@@ -47,15 +47,15 @@
                 </li> <!-- end Dashboard Menu -->
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
-                        <i class="ri-apps-2-line"></i> <span data-key="t-apps">Apps</span>
+                        <i class="ri-team-fill"></i> <span data-key="t-apps">Users</span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarApps">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a href="apps-calendar.html" class="nav-link" data-key="t-calendar"> Calendar </a>
+                                <a href="{{ route('admin.user.index') }}" class="nav-link" data-key="t-calendar"> Admins</a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-chat.html" class="nav-link" data-key="t-chat"> Chat </a>
+                                <a href="apps-chat.html" class="nav-link" data-key="t-chat">Customer</a>
                             </li>
 
                         </ul>

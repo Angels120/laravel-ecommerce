@@ -113,8 +113,13 @@
                         </form>
                     </div>
                 </div>
-
-
+                @role(['Admin','Super Admin'])
+                <div class="ms-1 header-item d-none d-sm-flex">
+                    <a class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" href="{{route('admin.dashboard')}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Dashboard">
+                        <i class='ri-dashboard-line fs-22'></i>
+                    </a>
+                </div>
+                @endrole
 
 
                 <div class="dropdown topbar-head-dropdown ms-1 header-item">
@@ -264,8 +269,9 @@
                     </div>
                 </div>
 
+
                 <div class="ms-1 header-item d-none d-sm-flex">
-                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-toggle="fullscreen">
+                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-toggle="fullscreen" data-bs-toggle="tooltip" data-bs-placement="bottom" title="FullScreen">
                         <i class='bx bx-fullscreen fs-22'></i>
                     </button>
                 </div>
@@ -653,31 +659,32 @@
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarDashboards" >
-                        <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards <span class="m-2"><i class="ri-arrow-down-s-line"></i></span></span>
+                        <i class="ri-list-check"></i> <span data-key="t-dashboards">All Categories<span class="m-2"><i class="ri-arrow-down-s-line"></i></span></span>
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarDashboards">
+
+
                         <ul class="nav nav-sm flex-column">
+                            @foreach ($categories as $category )
                             <li class="nav-item">
-                                <a href="dashboard-analytics.html" class="nav-link" data-key="t-analytics"> Analytics </a>
+                                <a href="dashboard-analytics.html" class="nav-link" data-key="t-analytics">
+                                    <span>{{ $category->category_name ?? '' }}</span>
+                                    <i class="ri-arrow-right-s-line"></i>
+                                </a>
+
+                                     <div class="collapse menu-dropdown" id="sidebarCalendar">
+                                    <ul class="nav nav-sm flex-column">
+                                        {{-- @foreach ($subcategories as $subcategory ) --}}
+                                        <li class="nav-item">
+                                            @foreach($category->subcategories ?? [] as $subcategory)
+                                                <a href="apps-calendar.html" class="nav-link">{{ $subcategory->subcategory_name }}</a>
+                                            @endforeach
+                                        </li>
+                                        {{-- @endforeach --}}
+                                    </ul>
+                                </div>
                             </li>
-                            <li class="nav-item">
-                                <a href="dashboard-crm.html" class="nav-link" data-key="t-crm"> CRM </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="index.html" class="nav-link" data-key="t-ecommerce"> Ecommerce </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-crypto.html" class="nav-link" data-key="t-crypto"> Crypto </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-projects.html" class="nav-link" data-key="t-projects"> Projects </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-nft.html" class="nav-link" data-key="t-nft"> NFT</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-job.html" class="nav-link"><span data-key="t-job">Job</span> <span class="badge badge-pill bg-success" data-key="t-new">New</span></a>
-                            </li>
+                            @endforeach
                         </ul>
                     </div>
                 </li> <!-- end Dashboard Menu -->

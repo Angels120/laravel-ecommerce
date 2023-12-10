@@ -9,12 +9,22 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\admin\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SubCategoryController;
+use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Auth;
 
 
 Auth::routes();
 Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin||Admin'])->group(function () {
     Route::get('dashboard', [DashboardController::class,  'index'])->name('dashboard');
+
+    //--------------------------------------Route for Users--------------------------------------------------------//
+    Route::get('/admin-users', [UserController::class,'index'])->name('user.index');
+    Route::post('/admin-users/create', [UserController::class,'CreateAdminUser'])->name('user.create');
+    Route::get('/admin-users/edit', [UserController::class,'EditAdminUser'])->name('user.edit');
+    Route::post('/admin-users/update', [UserController::class, 'UpdateAdminUser'])->name('user.update');
+    Route::post('/admin-users/verify/update/{id}', [UserController::class, 'AdminVerify'])->name('user.verify.update');
+    Route::delete('/admin-users/delete/{id}', [UserController::class,'DestroyAdminUser'])->name('user.delete');
+    //-------------------------------------Ends Here--------------------------------------------------------//
     //--------------------------------------Route for Products--------------------------------------------------------//
     Route::get('/products', [ProductController::class,'index'])->name('products.index');
     Route::post('/products/create', [ProductController::class,'store'])->name('product.create');

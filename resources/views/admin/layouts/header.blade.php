@@ -149,6 +149,13 @@
                         </form>
                     </div>
                 </div>
+
+
+                <div class="ms-1 header-item d-none d-sm-flex">
+                    <a class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" href="{{route('home.page')}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home Page">
+                        <i class="ri-home-4-line fs-22"></i>
+                    </a>
+                </div>
                 <div class="dropdown topbar-head-dropdown ms-1 header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                         id="page-header-cart-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside"
