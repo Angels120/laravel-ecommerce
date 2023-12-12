@@ -55,7 +55,7 @@
                                 <a href="{{ route('admin.user.index') }}" class="nav-link" data-key="t-calendar"> Admins</a>
                             </li>
                             <li class="nav-item">
-                                <a href="apps-chat.html" class="nav-link" data-key="t-chat">Customer</a>
+                                <a href="{{ route('admin.customer.index') }}" class="nav-link" data-key="t-chat">Customer</a>
                             </li>
 
                         </ul>

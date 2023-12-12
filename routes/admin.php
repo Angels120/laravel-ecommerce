@@ -18,13 +18,21 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     Route::get('dashboard', [DashboardController::class,  'index'])->name('dashboard');
 
     //--------------------------------------Route for Users--------------------------------------------------------//
-    Route::get('/admin-users', [UserController::class,'index'])->name('user.index');
+    Route::get('/admin-users', [UserController::class,'AdminIndex'])->name('user.index');
     Route::post('/admin-users/create', [UserController::class,'CreateAdminUser'])->name('user.create');
-    Route::get('/admin-users/edit', [UserController::class,'EditAdminUser'])->name('user.edit');
-    Route::post('/admin-users/update', [UserController::class, 'UpdateAdminUser'])->name('user.update');
-    Route::post('/admin-users/verify/update/{id}', [UserController::class, 'AdminVerify'])->name('user.verify.update');
-    Route::delete('/admin-users/delete/{id}', [UserController::class,'DestroyAdminUser'])->name('user.delete');
+    Route::get('/admin-users/edit', [UserController::class,'EditUser'])->name('user.edit');
+    Route::post('/admin-users/update', [UserController::class, 'UpdateUser'])->name('user.update');
+    Route::post('/admin-users/verify/update/{id}', [UserController::class, 'UserVerify'])->name('user.verify.update');
+    Route::delete('/admin-users/delete/{id}', [UserController::class,'DestroyUser'])->name('user.delete');
+
+    Route::get('/customer-users', [UserController::class,'CustomerIndex'])->name('customer.index');
+    Route::get('/customer-users/edit', [UserController::class,'EditCustomerUser'])->name('customer.edit');
+    Route::post('/customer-users/update', [UserController::class, 'UpdateCustomerUser'])->name('customer.update');
+    Route::post('/customer-users/verify/update/{id}', [UserController::class, 'CustomerVerify'])->name('customer.verify.update');
+    Route::delete('/customer-users/delete/{id}', [UserController::class,'DestroyCustomerUser'])->name('customer.delete');
+
     //-------------------------------------Ends Here--------------------------------------------------------//
+
     //--------------------------------------Route for Products--------------------------------------------------------//
     Route::get('/products', [ProductController::class,'index'])->name('products.index');
     Route::post('/products/create', [ProductController::class,'store'])->name('product.create');

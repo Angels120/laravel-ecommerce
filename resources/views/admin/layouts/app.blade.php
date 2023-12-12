@@ -17,6 +17,11 @@
 
 
  <!-- JAVASCRIPT -->
+    <!-- include jQuery library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.min.js" integrity="sha512-1/RvZTcCDEUjY/CypiMz+iqqtaoQfAITmNSJY17Myp4Ms5mdxPS5UV7iOfdZoxcGhzFbOm6sntTKJppjvuhg4g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
  {{-- <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}
  <script src="{{ asset('admin_asset/libs/simplebar/simplebar.min.js') }}"></script>
  <script src="{{ asset('admin_asset/libs/node-waves/waves.min.js') }}"></script>
@@ -31,9 +36,7 @@
  <!-- apexcharts -->
  <script src="{{ asset('admin_asset/libs/apexcharts/apexcharts.min.js') }}"></script>
 
- <!-- Vector map-->
- <script src="{{ asset('admin_asset/libs/jsvectormap/js/jsvectormap.min.js') }}"></script>
- <script src="{{ asset('admin_asset/libs/jsvectormap/maps/world-merc.js') }}"></script>
+
 
  <!--Swiper slider js-->
  <script src="{{ asset('admin_asset/libs/swiper/swiper-bundle.min.js') }}"></script>
@@ -55,8 +58,7 @@
   <script src="{{ asset('admin_asset/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js') }}"></script>
   <script src="{{ asset('admin_asset/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js') }}"></script>
   <script src="{{ asset('admin_asset/js/pages/form-file-upload.init.js') }}"></script>
-   <!-- include jQuery library -->
-   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
+
   <script src="{{ asset('admin_asset/js/pages/datatables.init.js') }}"></script>
 
   <!--datatable js-->
@@ -77,7 +79,6 @@
 
    <!-- Select2 -->
    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
 
 
 </body>
