@@ -1,79 +1,60 @@
 @extends('admin.layouts.app')
+@section('page_head', 'Product Details')
 @section('container')
-    <div class="col-12">
-        <div class="main-content">
-            <div class="page-content">
-                <div class="container-fluid">
-                    <!-- start page title -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Product</h4>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Add, Edit & Remove</h4>
+                </div><!-- end card header -->
 
+                <div class="card-body">
+                    <div class="listjs-table" id="customerList">
+                        <div class="row g-4 mb-3">
+                            <div class="col-sm-auto">
+                                <div>
+                                    <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
+                                        id="create-btn" data-bs-target="#AddProduct"><i
+                                            class="ri-add-line align-bottom me-1"></i> Add</button>
+                                    <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
+                                            class="ri-delete-bin-2-line"></i></button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="datatable-crud" class="table nowrap align-middle data-table"
+                                    style="width:100%; overflow-x: auto;">
+
+                                    <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>Product Name</th>
+                                            <th>Product Images</th>
+                                            <th>Product Slug</th>
+                                            <th>Category</th>
+                                            <th>Sub Category</th>
+                                            <th>Stock</th>
+                                            <th>Price</th>
+                                            <th>Discount</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
                         </div>
                     </div>
-                    <!-- end page title -->
-
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title mb-0">Add, Edit & Remove</h4>
-                                </div><!-- end card header -->
-
-                                <div class="card-body">
-                                    <div class="listjs-table" id="customerList">
-                                        <div class="row g-4 mb-3">
-                                            <div class="col-sm-auto">
-                                                <div>
-                                                    <button type="button" class="btn btn-success add-btn"
-                                                        data-bs-toggle="modal" id="create-btn"
-                                                        data-bs-target="#AddProduct"><i
-                                                            class="ri-add-line align-bottom me-1"></i> Add</button>
-                                                    <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
-                                                            class="ri-delete-bin-2-line"></i></button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table id="datatable-crud" class="table nowrap align-middle data-table"
-                                                    style="width:100%; overflow-x: auto;">
-
-                                                    <thead>
-                                                        <tr>
-                                                            <th>SN</th>
-                                                            <th>Product Name</th>
-                                                            <th>Product Images</th>
-                                                            <th>Product Slug</th>
-                                                            <th>Category</th>
-                                                            <th>Sub Category</th>
-                                                            <th>Stock</th>
-                                                            <th>Price</th>
-                                                            <th>Discount</th>
-                                                            <th>Status</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div><!-- end card -->
-                            </div>
-                            <!-- end col -->
-                        </div>
-                        <!-- end col -->
-                    </div>
-                    <!-- end row -->
-                </div>
-                <!-- container-fluid -->
+                </div><!-- end card -->
             </div>
+            <!-- end col -->
         </div>
+        <!-- end col -->
     </div>
+    <!-- end row -->
+    </div>
+
     <!-- Modal -->
     <div class="modal fade zoomIn" id="deleteProduct" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -200,7 +181,7 @@
         });
     </script>
 
-{{-- For Status Update Script --}}
+    {{-- For Status Update Script --}}
     <script>
         $(document).on('click', '.btn-status', function(e) {
             e.preventDefault();

@@ -18,6 +18,14 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
+        $breadcrumb = [
+
+            'breadcrumbs' => [
+                'Dashboard' => route('admin.dashboard'),
+                'current_menu' => 'Prodcuts',
+            ],
+
+        ];
         $categories = Category::get();
         $subcategories = SubCategory::get();
         $brands = Brand::get();
@@ -114,7 +122,7 @@ class ProductController extends Controller
                 ->make(true);
         }
 
-        return view('admin.product.product', compact('categories', 'subcategories', 'brands'));
+        return view('admin.product.product', compact('categories', 'subcategories', 'brands','breadcrumb'));
     }
 
     /**

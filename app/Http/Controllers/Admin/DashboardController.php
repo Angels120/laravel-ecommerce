@@ -9,6 +9,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        $breadcrumb = [
+
+            'breadcrumbs' => [
+                'current_menu' => 'Dashboard',
+            ],
+
+        ];
+        return view('admin.dashboard.dashboard',compact('breadcrumb'));
     }
 }

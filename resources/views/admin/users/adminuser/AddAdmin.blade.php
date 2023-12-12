@@ -25,7 +25,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="phonenumber" class="control-label mb-1">Phone Number<span class="text-danger">*</span></label>
-                        <input id="phonenumber" name="phone_number" type="text" class="form-control"
+                        <input id="phonenumber" name="phone_number" type="number" class="form-control"
                       placeholder="Enter Phone Number">
                         <div class="invalid-feedback" id="PhoneNumberError">Please enter a phonenumber.</div>
                     </div>

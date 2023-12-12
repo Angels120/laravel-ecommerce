@@ -14,6 +14,14 @@ class UserController extends Controller
 {
     public function AdminIndex(Request $request)
     {
+        $breadcrumb = [
+
+            'breadcrumbs' => [
+                    'Dashboard' => route('admin.dashboard'),
+                    'current_menu' => 'Admin User',
+            ],
+
+    ];
         $index = 1;
         if ($request->ajax()) {
             $users = User::whereHas('roles', function ($query) {
@@ -62,7 +70,7 @@ class UserController extends Controller
                 ->make(true);
         }
 
-        return view('admin.users.adminuser.admin');
+        return view('admin.users.adminuser.admin',compact('breadcrumb'));
     }
 
 
@@ -118,7 +126,7 @@ public function CustomerIndex(Request $request)
 
             'breadcrumbs' => [
                     'Dashboard' => route('admin.dashboard'),
-                    'current_menu' => 'Admin Profile',
+                    'current_menu' => 'Customer User',
             ],
 
     ];

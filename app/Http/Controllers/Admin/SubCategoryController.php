@@ -18,6 +18,14 @@ class SubCategoryController extends Controller
      */
     public function index(Request $request)
     {
+        $breadcrumb = [
+
+            'breadcrumbs' => [
+                'Dashboard' => route('admin.dashboard'),
+                'current_menu' => 'Sub-Categories',
+            ],
+
+        ];
         $categories=Category::all();
         $index = 1;
         if ($request->ajax()) {
@@ -64,7 +72,7 @@ class SubCategoryController extends Controller
                 ->make(true);
         }
 
-        return view('admin.subcategory.subcategory',compact('categories'));
+        return view('admin.subcategory.subcategory',compact('categories','breadcrumb'));
     }
 
     /**

@@ -20,6 +20,14 @@ class CategoryController extends Controller
 
     public function index(Request $request)
     {
+        $breadcrumb = [
+
+            'breadcrumbs' => [
+                'Dashboard' => route('admin.dashboard'),
+                'current_menu' => 'Categories',
+            ],
+
+        ];
         $index = 1;
         if ($request->ajax()) {
             $categories = Category::all();
@@ -62,7 +70,7 @@ class CategoryController extends Controller
                 ->make(true);
         }
 
-        return view('admin.category.category');
+        return view('admin.category.category',compact('breadcrumb'));
     }
 
 

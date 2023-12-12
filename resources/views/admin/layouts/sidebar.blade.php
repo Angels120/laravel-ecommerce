@@ -31,20 +31,10 @@
             <ul class="navbar-nav" id="navbar-nav">
                 <li class="menu-title"><span data-key="t-menu">Menu</span></li>
                 <li class="nav-item">
-                    <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarDashboards">
-                        <i class="ri-dashboard-2-line"></i> <span data-key="t-dashboards">Dashboards</span>
+                    <a class="nav-link menu-link" href="{{ route('admin.dashboard') }}"  role="button" aria-expanded="false">
+                        <i class="ri-dashboard-2-line"></i> <span>Dashboards</span>
                     </a>
-                    <div class="collapse menu-dropdown" id="sidebarDashboards">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a href="dashboard-analytics.html" class="nav-link" data-key="t-analytics"> Analytics </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="dashboard-crm.html" class="nav-link" data-key="t-crm"> CRM </a>
-
-                        </ul>
-                    </div>
-                </li> <!-- end Dashboard Menu -->
+                </li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-team-fill"></i> <span data-key="t-apps">Users</span>
