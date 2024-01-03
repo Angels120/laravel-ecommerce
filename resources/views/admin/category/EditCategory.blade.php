@@ -16,13 +16,6 @@
                             value="{{ old('category_name') }}" placeholder="Enter Category Name">
                         <div class="invalid-feedback" id="CategoryNameEditError">Please enter a customer name.</div>
                     </div>
-
-                    <div class="mb-3">
-                        <label for="email-field" class="form-label">Category Slug</label>
-                        <input type="text" id="category_slug_edit" name="category_slug" class="form-control"
-                            placeholder="category Slug" />
-                        <div class="invalid-feedback" id="CategorySlugEditError">Please Category Slug</div>
-                    </div>
                     <div class="mb-3">
                         <label for="status" class="form-label">Category Status</label>
                         <div class="form-check mb-2">
