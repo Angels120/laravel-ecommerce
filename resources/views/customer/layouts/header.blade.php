@@ -703,7 +703,7 @@
 
                     <div class="ms-1 header-item d-none d-sm-flex">
                         <a href="{{ route('register') }}" class="btn btn-icon btn-topbar btn-ghost-secondary "
-                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Log In">
+                            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Sign Up">
                             <i class="ri-user-add-fill fs-22"></i>
                         </a>
 
@@ -725,20 +725,20 @@
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
         <a href="index.html" class="logo logo-dark">
-            <span class="logo-sm">
-                <img src="assets/images/logo-sm.png" alt="" height="22">
+            <span class="logo-sm" height="25">
+                <img src="assets/images/logo-sm.png" alt="" height="25">
             </span>
-            <span class="logo-lg">
-                <img src="assets/images/logo-dark.png" alt="" height="17">
+            <span class="logo-lg" height="25">
+                <img src="assets/images/logo-dark.png" alt="" height="25">
             </span>
         </a>
         <!-- Light Logo-->
         <a href="index.html" class="logo logo-light">
-            <span class="logo-sm">
-                <img src="assets/images/logo-sm.png" alt="" height="22">
+            <span class="logo-sm" height="25">
+                <img src="assets/images/logo-sm.png" alt="" height="25">
             </span>
-            <span class="logo-lg">
-                <img src="assets/images/logo-light.png" alt="" height="17">
+            <span class="logo-lg" height="25">
+                <img src="assets/images/logo-light.png" alt="" height="25">
             </span>
         </a>
         <button type="button" class="btn btn-sm p-0 fs-20 header-item float-end btn-vertical-sm-hover"
@@ -747,12 +747,12 @@
         </button>
     </div>
 
-    <div id="scrollbar">
+    <div id="scrollbar" style="background-color: #363e61; height: 60px">
         <div class="container-fluid">
             <div id="two-column-menu">
             </div>
             <ul class="navbar-nav" id="navbar-nav">
-                <li class="nav-item">
+                <li class="nav-item ">
                     <a class="nav-link menu-link" href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false">
                         <i class="ri-list-check"></i> <span data-key="t-dashboards">All Categories</span>
                     </a>
@@ -769,7 +769,7 @@
                                             <li class="nav-item">
                                                 @foreach ($category->subcategories ?? [] as $subcategory)
                                                     @if ($subcategory->status == 1)
-                                                        <a href="apps-calendar.html"
+                                                        <a href="{{ route('product.detail',[ $category->category_slug,$subcategory->subcategory_slug]) }}"
                                                             class="nav-link">{{ $subcategory->subcategory_name }}</a>
                                                     @endif
                                                 @endforeach
@@ -787,7 +787,7 @@
                     @php
                         $firstCategory = $categories[0];
                     @endphp
-                    <li class="nav-item">
+                    <li class="nav-item ms-3">
                         <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false">
                             <span data-key="t-layouts">{{ $firstCategory->category_name }}</span>
                         </a>
@@ -810,7 +810,7 @@
                     @php
                         $secondCategory = $categories[1];
                     @endphp
-                    <li class="nav-item">
+                    <li class="nav-item ">
                         <a class="nav-link menu-link" href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false">
                             <span data-key="t-layouts">{{ $secondCategory->category_name }} </span>
                         </a>
@@ -858,7 +858,7 @@
         <!-- Sidebar -->
     </div>
 
-    <div class="sidebar-background"></div>
+
 </div>
 
 
