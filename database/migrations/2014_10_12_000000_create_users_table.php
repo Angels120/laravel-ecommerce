@@ -20,6 +20,8 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->boolean('verify')->default(0);
+            $table->string('oauth_id')->nullable();
+            $table->string('oauth_type')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
