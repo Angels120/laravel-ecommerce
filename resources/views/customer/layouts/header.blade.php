@@ -19,15 +19,15 @@
                 <!-- LOGO -->
                 <div class="navbar-brand-box horizontal-logo" style="overflow: hidden;">
                     <a href="{{ route('home.page') }}" class="logo logo-dark">
-                       
+
                         <img src="{{ asset('admin_asset/images/logos/webmart-light.svg') }}" alt="" style="height:100px">
                     </a>
 
                     <a href="{{ route('home.page') }}" class="logo logo-light">
-                        
+
                         <img src="{{ asset('admin_asset/images/logos/webmart-dark.svg') }}" alt="" style="height: 100px;">
                     </a>
-                </div> 
+                </div>
 
                 <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
                     <span class="hamburger-icon">
@@ -748,7 +748,7 @@
                             <li class="nav-item">
                                 @foreach ($products as $product)
                                 @if ($product->featured == 1)
-                                <a href="apps-calendar.html" class="nav-link">{{ $product->name }}</a>
+                                <a href="" class="nav-link">{{ $product->name }}</a>
                                 @endif
                                 @endforeach
 
