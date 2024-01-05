@@ -24,6 +24,7 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'name' => 'required',
             'username' => 'required|unique:users,username',
             'phone_number' => ['required', 'string', 'max:10'],
             'email' => 'required|email:rfc,dns|unique:users,email',
@@ -31,7 +32,8 @@ class RegisterRequest extends FormRequest
             ->mixedCase()
             ->numbers()
             ->symbols()],
-            'password_confirmation' => 'required|same:password'
+            'password_confirmation' => 'required|same:password',
+            'verify' => 'nullable',
         ];
     }
 }

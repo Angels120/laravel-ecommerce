@@ -18,8 +18,16 @@ class CategoryController extends Controller
 
 
 
-     public function index(Request $request)
-     {
+    public function index(Request $request)
+    {
+        $breadcrumb = [
+
+            'breadcrumbs' => [
+                'Dashboard' => route('admin.dashboard'),
+                'current_menu' => 'Categories',
+            ],
+
+        ];
         $index = 1;
         if ($request->ajax()) {
             $categories = Category::all();
@@ -40,13 +48,13 @@ class CategoryController extends Controller
                 })
                 ->editColumn('status', function ($row) {
                     $status = ($row->status == 0) ? 1 : 0;
-                    $buttonColorClass = ($row->status == 0) ? 'btn-warning' : 'btn-success';
+                    $buttonColorClass = ($row->status == 0) ? 'btn-danger' : 'btn-success';
                     $buttonText = ($row->status == 0) ? 'Inactive' : 'Active';
 
-                    return '<form action="' . '" method="POST">
-                            ' . csrf_field() . '
-                            <div class="btn btn-sm ' . $buttonColorClass . '">' . $buttonText . '</div>
-                        </form>';
+                    return '<form action="' . route('admin.category.status.update', ['id' => $row->id]) . '" method="POST">
+                                ' . csrf_field() . '
+                                <button type="submit" class="btn btn-sm btn-status ' . $buttonColorClass . '">' . $buttonText . '</button>
+                            </form>';
                 })
                 ->editColumn('action', function ($row) {
                     return '<td class="id">
@@ -62,7 +70,7 @@ class CategoryController extends Controller
                 ->make(true);
         }
 
-        return view('admin.category.category');
+        return view('admin.category.category',compact('breadcrumb'));
     }
 
 
@@ -73,11 +81,12 @@ class CategoryController extends Controller
     {
         $validatedData = $request->validated();
 
-        $category = Category::create($validatedData);
-        $category->category_slug = \Str::slug($category->category_name);
+        $category = new Category($validatedData);
+        $category->category_slug = Str::slug($category->category_name);
         $category->save();
         return response()->json(['message' => 'Category Created Successfully', 'data' => $category], 201);
     }
+
 
 
     /**
@@ -85,7 +94,6 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-
     }
 
     /**
@@ -93,7 +101,7 @@ class CategoryController extends Controller
      */
     public function edit(Request $request)
     {
-        $category=Category::findOrFail($request->id);
+        $category = Category::findOrFail($request->id);
         return response()->json($category);
     }
 
@@ -102,20 +110,22 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
-    $category = Category::findOrFail($request->id ?? '');
-    $validateData = $request->validated();
-    $category->update($validateData);
-    // Custom response message
-    return response()->json(['message' => 'Category details updated successfully', 'data' => $category], 200);
+        $category = Category::findOrFail($request->id ?? '');
+        $validateData = $request->validated();
+        $category->update($validateData);
+        // Custom response message
+        return response()->json(['message' => 'Category details updated successfully', 'data' => $category], 200);
+    }
 
-    }
-    public function status(Request $request,$status,$id)
+
+    public function updateStatus($id)
     {
-       $model=Category::find($id);
-       $model->status=$status;
-       $model->save();
-       return redirect('admin/categories')->with(['success'=>'status updated successfully']);
+        $category = Category::findOrFail($id);
+        $category->status = ($category->status == 0) ? 1 : 0;
+        $category->save();
+        return response()->json(['message' => 'Category Status updated successfully', 200]);
     }
+
     /**
      * Remove the specified resource from storage.
      */

@@ -1,75 +1,53 @@
 @extends('admin.layouts.app')
-
+@section('page_head', 'Brand Details')
 @section('container')
-    <div class="col-12">
-        <div class="main-content">
-            <div class="page-content">
-                <div class="container-fluid">
-                    <!-- start page title -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Brand</h4>
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">List</a></li>
-                                    </ol>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Add, Edit & Remove</h4>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    <div class="listjs-table" id="customerList">
+                        <div class="row g-4 mb-3">
+                            <div class="col-sm-auto">
+                                <div>
+                                    <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
+                                        id="create-btn" data-bs-target="#AddBrand"><i
+                                            class="ri-add-line align-bottom me-1"></i> Add</button>
+                                    <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
+                                            class="ri-delete-bin-2-line"></i></button>
                                 </div>
                             </div>
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <table class="display table data-table" style="width:100%" id="datatable-crud">
+                                <thead>
+                                    <tr>
+                                        <th>SN</th>
+                                        <th>Brand Name</th>
+                                        <th>Brand Slug</th>
+                                        <th>Brand Image</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                    <!-- end page title -->
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title mb-0">Add, Edit & Remove</h4>
-                                </div><!-- end card header -->
-
-                                <div class="card-body">
-                                    <div class="listjs-table" id="customerList">
-                                        <div class="row g-4 mb-3">
-                                            <div class="col-sm-auto">
-                                                <div>
-                                                    <button type="button" class="btn btn-success add-btn"
-                                                        data-bs-toggle="modal" id="create-btn" data-bs-target="#AddBrand"><i
-                                                            class="ri-add-line align-bottom me-1"></i> Add</button>
-                                                    <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
-                                                            class="ri-delete-bin-2-line"></i></button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                        <div class="card-body">
-                                            <table class="display table data-table" style="width:100%" id="datatable-crud">
-                                                <thead>
-                                                    <tr>
-                                                        <th>SN</th>
-                                                        <th>Brand Name</th>
-                                                        <th>Brand Slug</th>
-                                                        <th>Brand Image</th>
-                                                        <th>Status</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div><!-- end card -->
-                            </div>
-                            <!-- end col -->
-                        </div>
-                        <!-- end col -->
-                    </div>
-                    <!-- end row -->
-                </div>
-                <!-- container-fluid -->
+                </div><!-- end card -->
             </div>
+            <!-- end col -->
         </div>
+        <!-- end col -->
     </div>
+    <!-- end row -->
+
     <!-- Modal -->
     <div class="modal fade zoomIn" id="deleteBrand" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
@@ -168,6 +146,33 @@
                         console.error('Delete error:', error);
                     }
                 });
+            });
+        });
+    </script>
+
+    {{-- For Status Update Script --}}
+    <script>
+        $(document).on('click', '.btn-status', function(e) {
+            e.preventDefault();
+
+            var form = $(this).closest('form');
+            var url = form.attr('action');
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: form.serialize(),
+                success: function(response) {
+                    showToast(response.message);
+                    // You can add additional logic here if needed
+                    // For example, updating the button color and text based on the new status
+
+                    // Reload the DataTable after successful status update
+                    $('#datatable-crud').DataTable().ajax.reload();
+                },
+                error: function(error) {
+                    console.error('Error updating status:', error);
+                }
             });
         });
     </script>

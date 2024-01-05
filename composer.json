@@ -9,8 +9,11 @@
         "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
+        "laravel/socialite": "^5.11",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
+        "spatie/laravel-permission": "^6.1",
+        "twbs/bootstrap": "5.3.2",
         "yajra/laravel-datatables-oracle": "^10.7"
     },
     "require-dev": {

@@ -1,95 +1,14 @@
-@extends('layouts.app')
+@extends('customer.layouts.app-without-navbar')
 
 @section('content')
-
-    {{-- <div class="container">
-        <div class="login-wrap">
-            <div class="login-content">
-                <div class="login-logo">
-                    <a href="#">
-                        <img src="{{ asset('admin_asset/images/icon/logo.png') }} " alt="CoolAdmin">
-                    </a>
-                </div>
-                <div class="login-form">
-                    <form method="POST" action="{{ route('register') }}">
-                        @csrf
-                        <div class="form-group">
-                            <label>Username</label>
-                            <input id="username" type="text"
-                                class="form-control @error('username') is-invalid @enderror" name="username"
-                                value="{{ old('username') }}" required autocomplete="username" autofocus
-                                placeholder="Username">
-                            @error('username')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Contact Number</label>
-                            <input id="phone_number" type="text"
-                                class="form-control @error('phone_number') is-invalid @enderror" name="phone_number"
-                                value="{{ old('phone_number') }}" required autocomplete="phone_number" autofocus
-                                placeholder="Phone number">
-                            @error('phone_number')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Email Address</label>
-                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                name="email" value="{{ old('email') }}" required autocomplete="email"
-                                placeholder="Email">
-                            @error('email')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input id="password" type="password"
-                                class="form-control @error('password') is-invalid @enderror" name="password" required
-                                autocomplete="new-password" placeholder="Password">
-                            @error('password')
-                                <div class="alert alert-danger">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="form-group">
-                            <label>Confirm Password</label>
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation"
-                                required autocomplete="new-password" placeholder="Confirm Password">
-                            @error('password_confirmation')
-                                <div class="alert alert-danger">{{ $message }}
-                                </div>
-                            @enderror
-                        </div>
-                        <div class="login-checkbox">
-                            <label>
-                                <input type="checkbox" name="aggree">Agree the terms and policy
-                            </label>
-                        </div>
-                        <button class="au-btn au-btn--block au-btn--green m-b-20" type="submit">register</button>
-                        <div class="social-login-content">
-                            <div class="social-button">
-                                <button class="au-btn au-btn--block au-btn--blue m-b-20">register with facebook</button>
-                                <button class="au-btn au-btn--block au-btn--blue2">register with twitter</button>
-                            </div>
-                        </div>
-                    </form>
-                    <div class="register-link">
-                        <p>
-                            Already have account?
-                            <a href="#">Sign In</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
     <div class="auth-page-wrapper pt-5">
         <!-- auth page bg -->
         <div class="auth-one-bg-position auth-one-bg" id="auth-particles">
             <div class="bg-overlay"></div>
 
             <div class="shape">
-                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 1440 120">
+                <svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 0 1440 120">
                     <path d="M 0,36 C 144,53.6 432,123.2 720,124 C 1008,124.8 1296,56.8 1440,40L1440 140L0 140z"></path>
                 </svg>
             </div>
@@ -103,10 +22,11 @@
                         <div class="text-center mt-sm-5 mb-4 text-white-50">
                             <div>
                                 <a href="index.html" class="d-inline-block auth-logo">
-                                    <img src="assets/images/logo-light.png" alt="" height="20">
+                                    <img src="{{ asset('admin_asset/images/logos/webmart-light.svg') }}" alt=""
+                                        height="92">
                                 </a>
                             </div>
-                            <p class="mt-3 fs-15 fw-medium">Premium Admin & Dashboard Template</p>
+                            <p class="mt-3 fs-15 fw-medium">Connect With WebMart</p>
                         </div>
                     </div>
                 </div>
@@ -119,47 +39,73 @@
                             <div class="card-body p-4">
                                 <div class="text-center mt-2">
                                     <h5 class="text-primary">Create New Account</h5>
-                                    <p class="text-muted">Get your free velzon account now</p>
+                                    <p class="text-muted">Get your free WebMart Shopping account now</p>
                                 </div>
                                 <div class="p-2 mt-4">
-                                    <form class="needs-validation" novalidate action="index.html">
+                                    <form method="POST" action="{{ route('register') }}">
+                                        @csrf
 
                                         <div class="mb-3">
-                                            <label for="useremail" class="form-label">Email <span class="text-danger">*</span></label>
-                                            <input type="email" class="form-control" id="useremail" placeholder="Enter email address" required>
-                                            <div class="invalid-feedback">
-                                                Please enter email
-                                            </div>
+                                            <label>Name <span class="text-danger">*</span></label>
+                                            <input id="username" type="text"
+                                                class="form-control @error('name') is-invalid @enderror" name="name"
+                                                value="{{ old('name') }}" autocomplete="name" placeholder="name">
+                                            @error('name')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
                                         <div class="mb-3">
-                                            <label for="username" class="form-label">Username <span class="text-danger">*</span></label>
-                                            <input type="text" class="form-control" id="username" placeholder="Enter username" required>
-                                            <div class="invalid-feedback">
-                                                Please enter username
-                                            </div>
+                                            <label>Username <span class="text-danger">*</span></label>
+                                            <input id="username" type="text"
+                                                class="form-control @error('username') is-invalid @enderror" name="username"
+                                                value="{{ old('username') }}" autocomplete="username"
+                                                placeholder="Username">
+                                            @error('username')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
                                         </div>
-
                                         <div class="mb-3">
-                                            <label class="form-label" for="password-input">Password</label>
-                                            <div class="position-relative auth-pass-inputgroup">
-                                                <input type="password" class="form-control pe-5 password-input" onpaste="return false" placeholder="Enter password" id="password-input" aria-describedby="passwordInput" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
-                                                <button class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon" type="button" id="password-addon"><i class="ri-eye-fill align-middle"></i></button>
-                                                <div class="invalid-feedback">
-                                                    Please enter password
+                                            <label>Contact Number <span class="text-danger">*</span></label>
+                                            <input id="phone_number" type="text"
+                                                class="form-control @error('phone_number') is-invalid @enderror"
+                                                name="phone_number" value="{{ old('phone_number') }}"
+                                                autocomplete="phone_number" placeholder="Phone number">
+                                            @error('phone_number')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Email Address <span class="text-danger">*</span></label>
+                                            <input id="email" type="email"
+                                                class="form-control @error('email') is-invalid @enderror" name="email"
+                                                value="{{ old('email') }}" autocomplete="email" placeholder="Email">
+                                            @error('email')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Password <span class="text-danger">*</span></label>
+                                            <input id="password" type="password"
+                                                class="form-control @error('password') is-invalid @enderror" name="password"
+                                                autocomplete="new-password" placeholder="Password">
+                                            @error('password')
+                                                <div class="alert alert-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                        <div class="mb-3">
+                                            <label>Confirm Password <span class="text-danger">*</span></label>
+                                            <input id="password-confirm" type="password" class="form-control"
+                                                name="password_confirmation" autocomplete="new-password"
+                                                placeholder="Confirm Password">
+                                            @error('password_confirmation')
+                                                <div class="alert alert-danger">{{ $message }}
                                                 </div>
-                                            </div>
+                                            @enderror
                                         </div>
-
-                                        <div class="mb-4">
-                                            <p class="mb-0 fs-12 text-muted fst-italic">By registering you agree to the Velzon <a href="#" class="text-primary text-decoration-underline fst-normal fw-medium">Terms of Use</a></p>
-                                        </div>
-
-                                        <div id="password-contain" class="p-3 bg-light mb-2 rounded">
-                                            <h5 class="fs-13">Password must contain:</h5>
-                                            <p id="pass-length" class="invalid fs-12 mb-2">Minimum <b>8 characters</b></p>
-                                            <p id="pass-lower" class="invalid fs-12 mb-2">At <b>lowercase</b> letter (a-z)</p>
-                                            <p id="pass-upper" class="invalid fs-12 mb-2">At least <b>uppercase</b> letter (A-Z)</p>
-                                            <p id="pass-number" class="invalid fs-12 mb-0">A least <b>number</b> (0-9)</p>
+                                        <div class="login-checkbox">
+                                            <label>
+                                                <input type="checkbox" name="aggree">Agree the terms and policy
+                                            </label>
                                         </div>
 
                                         <div class="mt-4">
@@ -172,10 +118,18 @@
                                             </div>
 
                                             <div>
-                                                <button type="button" class="btn btn-primary btn-icon waves-effect waves-light"><i class="ri-facebook-fill fs-16"></i></button>
-                                                <button type="button" class="btn btn-danger btn-icon waves-effect waves-light"><i class="ri-google-fill fs-16"></i></button>
-                                                <button type="button" class="btn btn-dark btn-icon waves-effect waves-light"><i class="ri-github-fill fs-16"></i></button>
-                                                <button type="button" class="btn btn-info btn-icon waves-effect waves-light"><i class="ri-twitter-fill fs-16"></i></button>
+                                                <button type="button"
+                                                    class="btn btn-primary btn-icon waves-effect waves-light"><i
+                                                        class="ri-facebook-fill fs-16"></i></button>
+                                                <a href="{{ route('redirect.google') }}"><button type="button"
+                                                        class="btn btn-danger btn-icon waves-effect waves-light"><i
+                                                            class="ri-google-fill fs-16"></i></button></a>
+                                                <a href="{{ route('redirect.github') }}"><button type="button"
+                                                        class="btn btn-dark btn-icon waves-effect waves-light"><i
+                                                            class="ri-github-fill fs-16"></i></button></a>
+                                                <button type="button"
+                                                    class="btn btn-info btn-icon waves-effect waves-light"><i
+                                                        class="ri-twitter-fill fs-16"></i></button>
                                             </div>
                                         </div>
                                     </form>
@@ -187,7 +141,8 @@
                         <!-- end card -->
 
                         <div class="mt-4 text-center">
-                            <p class="mb-0">Already have an account ? <a href="{{ route('login') }}" class="fw-semibold text-primary text-decoration-underline"> Signin </a> </p>
+                            <p class="mb-0">Already have an account ? <a href="{{ route('login') }}"
+                                    class="fw-semibold text-primary text-decoration-underline"> Signin </a> </p>
                         </div>
 
                     </div>
@@ -205,7 +160,10 @@
                     <div class="col-lg-12">
                         <div class="text-center">
                             <p class="mb-0 text-muted">&copy;
-                                <script>document.write(new Date().getFullYear())</script> Velzon. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
+                                <script>
+                                    document.write(new Date().getFullYear())
+                                </script> WebMart. Crafted with <i class="mdi mdi-heart text-danger"></i> by
+                                Themesbrand
                             </p>
                         </div>
                     </div>

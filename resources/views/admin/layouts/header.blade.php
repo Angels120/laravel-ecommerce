@@ -149,6 +149,13 @@
                         </form>
                     </div>
                 </div>
+
+
+                <div class="ms-1 header-item d-none d-sm-flex">
+                    <a class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" href="{{route('home.page')}}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Home Page">
+                        <i class="ri-home-4-line fs-22"></i>
+                    </a>
+                </div>
                 <div class="dropdown topbar-head-dropdown ms-1 header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                         id="page-header-cart-dropdown" data-bs-toggle="dropdown" data-bs-auto-close="outside"
@@ -322,15 +329,13 @@
                 </div>
 
                 <div class="ms-1 header-item d-none d-sm-flex">
-                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
-                        data-toggle="fullscreen">
+                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle" data-toggle="fullscreen" data-bs-toggle="tooltip" data-bs-placement="bottom" title="FullScreen">
                         <i class='bx bx-fullscreen fs-22'></i>
                     </button>
                 </div>
 
                 <div class="ms-1 header-item d-none d-sm-flex">
-                    <button type="button"
-                        class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
+                    <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle light-dark-mode">
                         <i class='bx bx-moon fs-22'></i>
                     </button>
                 </div>
@@ -341,44 +346,48 @@
                     <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
                         aria-haspopup="true" aria-expanded="false">
                         <span class="d-flex align-items-center">
-                            <img class="rounded-circle header-profile-user"
-                                src="{{ asset('admin_asset/images/users/avatar-1.jpg') }}" alt="Header Avatar">
+                            @php
+                                $userImage = auth()->user()->image ?? null;
+                                $Name = auth()->user()->name ?? '';
+                                $initial = strtoupper(substr($Name, 0, 1));
+                            @endphp
+
+                            @if ($userImage)
+                                <img class="rounded-circle header-profile-user" src="{{ asset('admin_asset/images/users/avatar-1.jpg') }}" alt="Header Avatar">
+                            @else
+                                <div class="rounded-circle header-profile-user bg-primary text-white" style="width: 40px; height: 40px; line-height: 40px; text-align: center;">
+                                    {{ $initial }}
+                                </div>
+                            @endif
+
                             <span class="text-start ms-xl-2">
-                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">Anna Adame</span>
-                                <span class="d-none d-xl-block ms-1 fs-12 user-name-sub-text">Founder</span>
+                                <span class="d-none d-xl-inline-block ms-1 fw-medium user-name-text"> {{ auth()->user()->username ?? '' }}</span>
                             </span>
                         </span>
                     </button>
                     <div class="dropdown-menu dropdown-menu-end">
                         <!-- item-->
-                        <h6 class="dropdown-header">Welcome Anna!</h6>
-                        <a class="dropdown-item" href="pages-profile.html"><i
-                                class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Profile</span></a>
-                        <a class="dropdown-item" href="apps-chat.html"><i
-                                class="mdi mdi-message-text-outline text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Messages</span></a>
-                        <a class="dropdown-item" href="apps-tasks-kanban.html"><i
-                                class="mdi mdi-calendar-check-outline text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Taskboard</span></a>
-                        <a class="dropdown-item" href="pages-faqs.html"><i
-                                class="mdi mdi-lifebuoy text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Help</span></a>
+                        <h6 class="dropdown-header">Welcome {{ auth()->user()->name ?? '' }}!</h6>
+                        <a class="dropdown-item" href="pages-profile.html">
+                            <i class="ri-account-circle-fill fs-16 align-middle me-1"></i>
+                            <span class="align-middle">Profile</span>
+                        </a>
+                        <a class="dropdown-item" href="pages-faqs.html">
+                            <i class="ri-question-fill fs-16 align-middle me-1"></i>
+                            <span class="align-middle">Help</span>
+                        </a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="pages-profile.html"><i
-                                class="mdi mdi-wallet text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Balance : <b>$5971.67</b></span></a>
-                        <a class="dropdown-item" href="pages-profile-settings.html"><span
-                                class="badge bg-success-subtle text-success mt-1 float-end">New</span><i
-                                class="mdi mdi-cog-outline text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Settings</span></a>
-                        <a class="dropdown-item" href="auth-lockscreen-basic.html"><i
-                                class="mdi mdi-lock text-muted fs-16 align-middle me-1"></i> <span
-                                class="align-middle">Lock screen</span></a>
-                        <a class="dropdown-item" href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
-                                      document.getElementById('logout-form').submit();" ><i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
-                            <span class="align-middle" data-key="t-logout">Logout</span></a>
+
+                        <a class="dropdown-item" href="pages-profile-settings.html">
+                            <span class="badge bg-success-subtle text-success mt-1 float-end">New</span>
+
+                            <i class="ri-settings-fill text-muted fs-16 align-middle me-1"></i>
+                            <span class="align-middle">Settings</span>
+                        </a>
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                            <i class="ri-logout-box-fill text-muted fs-16 align-middle me-1"></i>
+                            <span class="align-middle" data-key="t-logout">Logout</span>
+                        </a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
@@ -486,88 +495,3 @@
 </script>
 
 
-
-{{-- <div class="page-wrapper">
-    <!-- HEADER MOBILE-->
-    <header class="header-mobile d-block d-lg-none">
-        <div class="header-mobile__bar">
-            <div class="container-fluid">
-                <div class="header-mobile-inner">
-                    <a class="logo" href="index.html">
-                        <img src="images/icon/logo.png" alt="CoolAdmin" />
-                    </a>
-                    <button class="hamburger hamburger--slider" type="button">
-                        <span class="hamburger-box">
-                            <span class="hamburger-inner"></span>
-                        </span>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <nav class="navbar-mobile">
-            <div class="container-fluid">
-                <ul class="navbar-mobile__list list-unstyled">
-                    <li>
-                        <a href="">
-                            <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                    </li>
-                    <li>
-                        <a href="{{ route('admin.categories.index') }}">
-                            <i class="fas fa-tachometer-alt"></i>Category</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    <!-- END HEADER MOBILE-->
-
-    <!-- PAGE CONTAINER-->
-    <div class="page-container">
-        <!-- HEADER DESKTOP-->
-        <header class="header-desktop">
-            <div class="section__content section__content--p30">
-                <div class="container-fluid">
-                    <div class="header-wrap">
-                        <form class="form-header" action="" method="POST">
-
-                        </form>
-                        <div class="header-button">
-
-                            <div class="account-wrap">
-                                <div class="account-item clearfix js-item-menu">
-
-                                    <div class="content">
-                                        <a class="js-acc-btn" href="#">john doe</a>
-                                    </div>
-                                    <div class="account-dropdown js-dropdown">
-                                        <div class="account-dropdown__body">
-                                            <div class="account-dropdown__item">
-                                                <a href="#">
-                                                    <i class="zmdi zmdi-account"></i>Account</a>
-                                            </div>
-
-                                        </div>
-                                        <div class="account-dropdown__footer">
-                                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                                onclick="event.preventDefault();
-                                                          document.getElementById('logout-form').submit();">
-                                                <i class="zmdi zmdi-power"></i>
-                                                {{ __('Logout') }}
-                                            </a>
-                                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                                class="d-none">
-                                                @csrf
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-        <!-- END HEADER DESKTOP-->
-
-
-</div> --}}

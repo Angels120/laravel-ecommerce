@@ -16,6 +16,14 @@ class BrandController extends Controller
 
     public function index(Request $request)
     {
+        $breadcrumb = [
+
+            'breadcrumbs' => [
+                'Dashboard' => route('admin.dashboard'),
+                'current_menu' => 'Brands',
+            ],
+
+        ];
         $index = 1;
         if ($request->ajax()) {
             $brands = Brand::all();
@@ -47,13 +55,13 @@ class BrandController extends Controller
                 })
                 ->editColumn('status', function ($row) {
                     $status = ($row->status == 0) ? 1 : 0;
-                    $buttonColorClass = ($row->status == 0) ? 'btn-warning' : 'btn-success';
+                    $buttonColorClass = ($row->status == 0) ? 'btn-danger' : 'btn-success';
                     $buttonText = ($row->status == 0) ? 'Inactive' : 'Active';
 
-                    return '<form action="' . '" method="POST">
-                            ' . csrf_field() . '
-                            <div class="btn btn-sm ' . $buttonColorClass . '">' . $buttonText . '</div>
-                        </form>';
+                    return '<form action="' . route('admin.brand.status.update', ['id' => $row->id]) . '" method="POST">
+                                ' . csrf_field() . '
+                                <button type="submit" class="btn btn-sm btn-status ' . $buttonColorClass . '">' . $buttonText . '</button>
+                            </form>';
                 })
                 ->editColumn('action', function ($row) {
                     return '<td class="id">
@@ -71,36 +79,36 @@ class BrandController extends Controller
                 ->make(true);
         }
 
-        return view('admin.brand.brand');
+        return view('admin.brand.brand', compact('breadcrumb'));
     }
 
 
-     public function store(Request $request)
-     {
+    public function store(Request $request)
+    {
 
-         $request->validate([
-             'name' => 'required|string|max:255|unique:brands',
-             'status' => 'required',
-             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            ]);
-         $image = $request->file('image');
-         if ($request->hasfile('image')) {
+        $request->validate([
+            'name' => 'required|string|max:255|unique:brands',
+            'status' => 'required',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+        $image = $request->file('image');
+        if ($request->hasfile('image')) {
             $dbName = 'brand-image-' . time() . 'png';
             $destination = 'uploads/brands/' . $dbName;
             $image->move('uploads/brands/', $dbName);
             $uploadedImageNames[] = $dbName;
-             // Save the filename in the database
-             $brand = new Brand();
-             $brand->name = $request->input('name');
-             $brand->slug = Str::slug($request->input('name'));
-             $brand->status = $request->input('status', 0);
-             $brand->image = $dbName;
-             $brand->save();
-             return response()->json(['message' => 'Brand created successfully']);
-         }
+            // Save the filename in the database
+            $brand = new Brand();
+            $brand->name = $request->input('name');
+            $brand->slug = Str::slug($request->input('name'));
+            $brand->status = $request->input('status', 0);
+            $brand->image = $dbName;
+            $brand->save();
+            return response()->json(['message' => 'Brand created successfully']);
+        }
 
-         return response()->json(['message' => 'No image uploaded'], 400);
-     }
+        return response()->json(['message' => 'No image uploaded'], 400);
+    }
 
     public function show(string $id)
     {
@@ -116,7 +124,7 @@ class BrandController extends Controller
 
 
 
-    public function update(Request $request,Brand $brand)
+    public function update(Request $request, Brand $brand)
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:brands,name,' . $request->id,
@@ -141,9 +149,17 @@ class BrandController extends Controller
         return response()->json(['message' => 'Brand updated successfully']);
     }
 
+    public function updateStatus($id)
+    {
+        $brand = Brand::findOrFail($id);
+        $brand->status = ($brand->status == 0) ? 1 : 0;
+        $brand->save();
+        return response()->json(['message' => 'Brand Status updated successfully', 200]);
+    }
 
     public function destroy($id)
-    { $brand = Brand::findOrFail($id);
+    {
+        $brand = Brand::findOrFail($id);
 
         if ($brand->image) {
             unlink('uploads/brands/' . $brand->image);

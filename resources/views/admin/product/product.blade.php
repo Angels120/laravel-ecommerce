@@ -1,79 +1,62 @@
 @extends('admin.layouts.app')
+@section('page_head', 'Product Details')
 @section('container')
-    <div class="col-12">
-        <div class="main-content">
-            <div class="page-content">
-                <div class="container-fluid">
-                    <!-- start page title -->
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                                <h4 class="mb-sm-0">Product</h4>
-                                <div class="page-title-right">
-                                    <ol class="breadcrumb m-0">
-                                        <li class="breadcrumb-item"><a href="javascript: void(0);">List</a></li>
-                                    </ol>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title mb-0">Add, Edit & Remove</h4>
+                </div><!-- end card header -->
+
+                <div class="card-body">
+                    <div class="listjs-table" id="customerList">
+                        <div class="row g-4 mb-3">
+                            <div class="col-sm-auto">
+                                <div>
+                                    <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
+                                        id="create-btn" data-bs-target="#AddProduct"><i
+                                            class="ri-add-line align-bottom me-1"></i> Add</button>
+                                    <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
+                                            class="ri-delete-bin-2-line"></i></button>
                                 </div>
                             </div>
+
                         </div>
-                    </div>
-                    <!-- end page title -->
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table id="datatable-crud" class="table nowrap align-middle data-table"
+                                    style="width:100%; overflow-x: auto;">
 
-
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="card">
-                                <div class="card-header">
-                                    <h4 class="card-title mb-0">Add, Edit & Remove</h4>
-                                </div><!-- end card header -->
-
-                                <div class="card-body">
-                                    <div class="listjs-table" id="customerList">
-                                        <div class="row g-4 mb-3">
-                                            <div class="col-sm-auto">
-                                                <div>
-                                                    <button type="button" class="btn btn-success add-btn"
-                                                        data-bs-toggle="modal" id="create-btn"
-                                                        data-bs-target="#AddProduct"><i
-                                                            class="ri-add-line align-bottom me-1"></i> Add</button>
-                                                    <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
-                                                            class="ri-delete-bin-2-line"></i></button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div class="card-body">
-                                            <table  id="datatable-crud" class="table nowrap align-middle list-data-table" style="width:100%">
-                                                <thead>
-                                                    <tr>
-                                                        <th>SN</th>
-                                                        <th>Product Name</th>
-                                                        <th>Product Slug</th>
-                                                        <th>Category</th>
-                                                        <th>Sub Category</th>
-                                                        <th>Discount</th>
-                                                        <th>Product Images</th>
-                                                        <th>Status</th>
-                                                        <th>Action</th>
-                                                    </tr>
-                                                </thead>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div><!-- end card -->
+                                    <thead>
+                                        <tr>
+                                            <th>SN</th>
+                                            <th>Product Name</th>
+                                            <th>Product Images</th>
+                                            <th>Product Slug</th>
+                                            <th>Category</th>
+                                            <th>Sub Category</th>
+                                            <th>Stock</th>
+                                            <th>Price</th>
+                                            <th>Discount</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                </table>
                             </div>
-                            <!-- end col -->
                         </div>
-                        <!-- end col -->
                     </div>
-                    <!-- end row -->
-                </div>
-                <!-- container-fluid -->
+                </div><!-- end card -->
             </div>
+            <!-- end col -->
         </div>
+        <!-- end col -->
     </div>
+    <!-- end row -->
+    </div>
+
     <!-- Modal -->
-    <div class="modal fade zoomIn" id="deleteCategory" tabindex="-1" aria-hidden="true">
+    <div class="modal fade zoomIn" id="deleteProduct" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -91,7 +74,7 @@
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                         <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn w-sm btn-danger " id="deleteCategoryButton">Yes, Delete
+                        <button type="button" class="btn w-sm btn-danger " id="deleteProductButton">Yes, Delete
                             It!</button>
                     </div>
                 </div>
@@ -106,21 +89,25 @@
 
     <script>
         $(document).ready(function() {
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
             $('#datatable-crud').DataTable({
                 processing: true,
                 serverSide: true,
-                url: "{{ route('admin.brands.index') }}",
+                ajax: {
+                    url: "{{ route('admin.products.index') }}",
+                    data: function(d) {
+                        d._token = "{{ csrf_token() }}";
+                    }
+                },
+
                 columns: [{
                         data: 'id',
                     },
                     {
                         data: 'name',
+
+                    },
+                    {
+                        data: 'image',
 
                     },
                     {
@@ -136,14 +123,17 @@
 
                     },
                     {
-                        data: 'discount',
+                        data: 'stock',
 
                     },
                     {
-                        data: 'images',
+                        data: 'price',
 
                     },
+                    {
+                        data: 'discount',
 
+                    },
                     {
                         data: 'status',
                     },
@@ -152,40 +142,69 @@
                     }
                 ],
                 order: [
-                    [0, 'asc'] // Sort by the second column (category_name) in ascending order
+                    [0, 'asc']
                 ]
             });
 
-
         });
+    </script>
 
-        function confirmDelete(button) {
-            const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            const id = $(button).data("id"); // Retrieve data-id from the clicked button
-            const deleteUrl = "{{ route('admin.category.delete', ['id' => ':id']) }}";
-            const urlWithId = deleteUrl.replace(':id', id);
-            $('#deleteCategory').modal('show');
-            $('#deleteCategoryButton').on('click', function() {
-                console.log('clicked')
+    <script>
+        var urlWithId = "";
+        $(document).ready(function() {
+            $('.data-table').on("click", ".delete", function() {
+                var productId = $(this).data('id');
+                const deleteUrl = "{{ route('admin.product.delete', ['id' => ':id']) }}";
+                urlWithId = deleteUrl.replace(':id', productId);
+                $('#deleteProductButton').data('product-id', productId);
+                $('#deleteProduct').modal('show');
+            });
+            $('#deleteProductButton').click(function() {
+                var productId = $(this).data('product-id');
                 $.ajax({
                     type: 'DELETE',
                     url: urlWithId,
-                    headers: {
-                        'X-CSRF-TOKEN': csrfToken
+                    data: {
+                        _token: '{{ csrf_token() }}',
                     },
                     success: function(response) {
                         showToast(response.message);
+                        $('#deleteProduct').modal('hide');
                         $('#datatable-crud').DataTable().ajax.reload();
                         $('#successAlertContainer').html(successAlert);
                     },
                     error: function(error) {
-                        showErrorToast(error);
-                    },
+                        console.error('Delete error:', error);
+                    }
                 });
-                $('#deleteCategory').modal('hide');
             });
-
-        }
+        });
     </script>
 
+    {{-- For Status Update Script --}}
+    <script>
+        $(document).on('click', '.btn-status', function(e) {
+            e.preventDefault();
+
+            var form = $(this).closest('form');
+            var url = form.attr('action');
+
+            $.ajax({
+                type: 'POST',
+                url: url,
+                data: form.serialize(),
+                success: function(response) {
+                    showToast(response.message);
+                    // You can add additional logic here if needed
+                    // For example, updating the button color and text based on the new status
+
+                    // Reload the DataTable after successful status update
+                    $('#datatable-crud').DataTable().ajax.reload();
+                },
+                error: function(error) {
+                    console.error('Error updating status:', error);
+                }
+            });
+        });
+    </script>
 @endsection

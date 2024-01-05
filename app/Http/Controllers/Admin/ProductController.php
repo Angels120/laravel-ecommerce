@@ -16,11 +16,16 @@ use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
+        $breadcrumb = [
+
+            'breadcrumbs' => [
+                'Dashboard' => route('admin.dashboard'),
+                'current_menu' => 'Prodcuts',
+            ],
+
+        ];
         $categories = Category::get();
         $subcategories = SubCategory::get();
         $brands = Brand::get();
@@ -36,59 +41,88 @@ class ProductController extends Controller
                 })
                 ->editColumn('name', function ($row) {
 
-                    return $row->name;
+                    return $row->name ?? '';
                 })
                 ->editColumn('slug', function ($row) {
 
-                    return $row->slug;
+                    return $row->slug ?? '';
                 })
                 ->editColumn('category', function ($row) {
 
-                    return $row->category->name;
+                    return $row->category->category_name ?? '';
                 })
                 ->editColumn('sub_category', function ($row) {
 
-                    return $row->subcategory->name;
+                    return $row->subcategory->subcategory_name ?? ' ';
+                })
+                ->editColumn('stock', function ($row) {
+
+                    return $row->stock ?? '';
                 })
                 ->editColumn('discount', function ($row) {
 
-                    return $row->discount;
+                    return $row->discount . '%' ?? '';
+                })
+                ->editColumn('price', function ($row) {
+
+                    return $row->price ?? '';
                 })
                 ->editColumn('image', function ($row) {
-                    $imagePath = public_path('uploads/products/' . $row->image);
-                    // Check if the image file exists
-                    if (file_exists($imagePath)) {
-                        $imageUrl = asset('uploads/products/' . $row->image);
-                        return '<img src="' . $imageUrl . '" alt="Image" style="width: 70px; height: 50px;">';
+                    $images = $row->image;
+
+                    if (!empty($images) && is_array($images)) {
+                        $imageHtml = '';
+
+                        foreach ($images as $index => $image) {
+                            $imagePath = public_path('uploads/products/' . $image);
+
+                            if (file_exists($imagePath)) {
+                                $imageUrl = asset('uploads/products/' . $image);
+                                $imageHtml .= '<img src="' . $imageUrl . '" alt="Image" style="width: 70px; height: 50px;">';
+
+                                if (($index + 1) % 2 == 0 && $index < count($images) - 1) {
+                                    $imageHtml .= '<br>';
+                                } elseif ($index < count($images) - 1) {
+
+                                    $imageHtml .= '<span style="border-right: 2px solid black; height: 100%; margin-left: 10px;"></span>';
+                                }
+                            } else {
+                                $imageHtml .= 'Image Not Found<br>';
+                            }
+                        }
+
+                        return $imageHtml;
                     } else {
-                        return 'Image Not Found';
+                        return 'No Images';
                     }
                 })
+
+
                 ->editColumn('status', function ($row) {
                     $status = ($row->status == 0) ? 1 : 0;
                     $buttonColorClass = ($row->status == 0) ? 'btn-danger' : 'btn-success';
                     $buttonText = ($row->status == 0) ? 'Inactive' : 'Active';
 
-                    return '<form action="' . '" method="POST">
+                    return '<form action="' . route('admin.product.status.update', ['id' => $row->id]) . '" method="POST">
                                 ' . csrf_field() . '
-                                <div class="btn btn-sm ' . $buttonColorClass . '">' . $buttonText . '</div>
+                                <button type="submit" class="btn btn-sm btn-status ' . $buttonColorClass . '">' . $buttonText . '</button>
                             </form>';
                 })
                 ->editColumn('action', function ($row) {
                     return '<td class="id">
-                            <a data-id="' . $row->id . '" class="btn editBrandButton btn-info">
-                                <i class="ri-edit-2-line"></i>
-                            </a>
-                            <a data-id="' . $row->id . '" class="btn btn-danger delete">
-                                <i class="ri-delete-bin-line"></i>
-                            </a>
-                        </td>';
+                        <a data-id="' . $row->id . '" class="btn editProductButton btn-info">
+                            <i class="ri-edit-2-line"></i>
+                        </a>
+                        <a data-id="' . $row->id . '" class="btn btn-danger delete">
+                            <i class="ri-delete-bin-line"></i>
+                        </a>
+                    </td>';
                 })
-                ->rawColumns(['id', 'name', 'category', 'sub_category', 'discount', 'slug', 'status', 'image', 'action'])
+                ->rawColumns(['id', 'name', 'category', 'sub_category', 'price', 'discount', 'stock', 'slug', 'status', 'image', 'action'])
                 ->make(true);
         }
 
-        return view('admin.product.product', compact('categories', 'subcategories', 'brands'));
+        return view('admin.product.product', compact('categories', 'subcategories', 'brands','breadcrumb'));
     }
 
     /**
@@ -108,6 +142,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required',
+            'image' => 'required|array',
             'image.*' => 'required',
             'category_id' => 'required',
             'sub_categories_id' => 'required',
@@ -139,10 +174,12 @@ class ProductController extends Controller
                 }
             }
         }
-        $validatedData['images'] = $arrProductImages;
+        $sizes = [];
+        $validatedData['image'] = $arrProductImages;
+        $validatedData['sizes'] = $sizes;
         Product::create([
             'name' => $request->name,
-            'slug'=> Str::slug($request->input('name')),
+            'slug' => Str::slug($request->input('name')),
             'image' => $arrProductImages,
             'description' => $request->description,
             'category_id' => $request->category_id,
@@ -153,9 +190,9 @@ class ProductController extends Controller
             'price' => $request->price,
             'featured' => $request->featured,
             'discount' => $request->discount,
-            'sizes' => $request->sizes,
+            'sizes' => $sizes,
         ]);
-        return redirect()->route('admin.subcategories.index')->with('success', 'Product created successfully.');
+        return response()->json(['message' => 'Product Created successfully']);
     }
 
     /**
@@ -169,73 +206,128 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(Request $request)
     {
-        $categories = Category::get();
-        return view('admin.product.edit_product', compact('categories', 'product'));
+        $product = Product::findOrFail($request->id);
+        return response()->json($product);
+    }
+
+
+
+
+    public function unlinkimageedit(Request $request)
+    {
+
+        if ($request->has('image') && $request->has('productId')) {
+
+            $product = Product::find($request->productId);
+
+            // Call the removeImage method to remove the image from the database
+            $product->removeImage($request->image);
+
+            // Now, unlink the image from storage
+            unlink('uploads/products/' . $request->image);
+
+            return response()->json('Image removed successfully');
+        }
+
+        return response()->json('Invalid request parameters', 400);
+    }
+
+
+    public function updateStatus($id)
+    {
+        $product = Product::findOrFail($id);
+        $product->status = ($product->status == 0) ? 1 : 0;
+        $product->save();
+        return response()->json(['message' => 'Product Status updated successfully',200]);
     }
 
     /**
      * Update the specified resource in storage.
      */
 
-    public function update(Request $request, Product $product)
+    public function update(Request $request)
     {
+        $product = Product::findOrFail($request->id ?? '');
+
         $request->validate([
             'name' => 'required',
-            'brand' => 'required',
-            'model' => 'required|unique:products,model,' . $product->id,
-            'short_desc' => 'required',
-            'desc' => 'required',
-            'keywords' => 'required',
-            'slug' => 'required|unique:products,slug,' . $product->id,
-            'technical_specification' => 'required',
-            'uses' => 'required',
-            'warranty' => 'required',
-            'status' => 'required|boolean'
-        ]);
-        $image = $request->image;
-        $dbName = $product->$image;
-        if ($image) {
-            if ($product->image) {
-                unlink('uploads/products/' . $product->image);
-            }
-            $dbName = 'product-image-' . time() . '.' . $image->clientExtension();
-            $source = $image->getRealPath();
-            $destination = 'uploads/products/' . $dbName;
-            copy($source, $destination);
-        }
-        $category = Category::find($request->category_id);
-        $category->products()->update([
-            'name' => $request->name,
-            'image' => $dbName,
-            'brand' => $request->brand,
-            'model' => $request->model,
-            'short_desc' => $request->short_desc,
-            'desc' => $request->desc,
-            'keywords' => $request->keywords,
-            'slug' => $request->slug,
-            'technical_specification' => $request->technical_specification,
-            'uses' => $request->uses,
-            'warranty' => $request->warranty,
-            'status' => $request->status,
+            // 'image' => 'required|array',
+            // 'image.*' => 'required',
+            'category_id' => 'required',
+            'sub_categories_id' => 'required',
+            'brands_id' => 'nullable',
+            'description' => 'nullable',
+            'stock' => 'required',
+            'status' => 'required|boolean',
+            'featured' => 'required|boolean',
+            'price' => 'required',
+            'discount' => 'nullable',
+            'sizes' => 'nullable',
         ]);
 
-        return redirect()->route('admin.products.index')->with('success', 'Product updated successfully.');
+        $arrProductImages = $product->image;
+        if ($request->has('image')) {
+            $images = $request->input('image');
+            foreach ($images as $image) {
+                $dir = 'uploads/products/';
+                $imageName = Helper::saveFilePondImage($image, $dir);
+
+                if (is_string($imageName)) {
+                    $arrProductImages[] = $imageName;
+                } else {
+                    return $imageName;
+                }
+            }
+        }
+        // $validatedData['image'] = $arrProductImages;
+        $validatedData = [
+            'name' => $request->name,
+            'slug' => Str::slug($request->input('name')),
+            'image' => $arrProductImages,
+            'description' => $request->description,
+            'category_id' => $request->category_id,
+            'sub_categories_id' => $request->sub_categories_id,
+            'brands_id' => $request->brands_id,
+            'stock' => $request->stock,
+            'status' => $request->status,
+            'price' => $request->price,
+            'featured' => $request->featured,
+            'discount' => $request->discount,
+            'sizes' => $request->sizes,
+        ];
+
+        $product->update($validatedData);
+
+        return response()->json(['message' => 'Product updated successfully']);
     }
+
+
 
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        if ($product->image) {
-            unlink('uploads/products/' . $product->image);
+        $product = Product::findOrFail($id);
+
+        if (!empty($product->image) && is_array($product->image)) {
+            foreach ($product->image as $image) {
+                $filePath = 'uploads/products/' . $image;
+
+                if (file_exists($filePath)) {
+                    unlink($filePath);
+                }
+            }
         }
+
         $product->delete();
-        return redirect(route('admin.products.index'))->with(['success' => 'Product deleted successfully']);
+
+        return response()->json(['message' => 'Product deleted successfully', 'data' => $product], 200);
     }
+
     public function getSubcategories($categoryId)
     {
         $subcategories = Subcategory::where('category_id', $categoryId)->get();
