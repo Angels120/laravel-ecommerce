@@ -3,6 +3,7 @@
 use App\Http\Controllers\Auth\GithubController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Customer\HomeController;
+use App\Http\Controllers\Customer\ProductController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
@@ -19,4 +20,8 @@ Route::get('/auth/github/callback', [GithubController::class,  'handleGithubCall
 
 Route::get('/', [HomeController::class,  'index'])->name('home.page');
 
-Route::get('/{categorySlug?}/{subCategorySlug?}', [HomeController::class,  'index'])->name('product.detail');
+Route::prefix('Product')->name('product.')->group(function () {
+Route::get('{slug}', [ProductController::class,  'productDetail'])->name('detail');
+Route::get('/{categorySlug?}/{subCategorySlug?}', [ProductController::class,  'productList'])->name('lists');
+});
+

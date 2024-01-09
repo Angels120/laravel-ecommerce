@@ -677,7 +677,7 @@
                                         <li class="nav-item">
                                             @foreach ($category->subcategories ?? [] as $subcategory)
                                             @if ($subcategory->status == 1)
-                                            <a href="{{ route('product.detail',[ $category->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link">{{ $subcategory->subcategory_name }}</a>
+                                            <a href="{{ route('product.lists',[ $category->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link">{{ $subcategory->subcategory_name }}</a>
                                             @endif
                                             @endforeach
                                         </li>
@@ -748,7 +748,7 @@
                             <li class="nav-item">
                                 @foreach ($products as $product)
                                 @if ($product->featured == 1)
-                                <a href="" class="nav-link">{{ $product->name }}</a>
+                                <a href="{{ route('product.detail', $product->slug) }}" class="nav-link">{{ $product->name }}</a>
                                 @endif
                                 @endforeach
 

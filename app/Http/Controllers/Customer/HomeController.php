@@ -14,4 +14,5 @@ class HomeController extends Controller
         $products=Product::where('status','=','1')->get();
         return view('customer.home',compact('categories','products'));
     }
+
 }
