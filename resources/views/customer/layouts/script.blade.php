@@ -1,5 +1,11 @@
 <!-- JAVASCRIPT -->
- <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.min.js') }}"></script>
+
+
+ <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+ <script>
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+</script>
  <script src="{{ asset('admin_asset/libs/simplebar/simplebar.min.js') }}"></script>
  <script src="{{ asset('admin_asset/libs/node-waves/waves.min.js') }}"></script>
  <script src="{{ asset('admin_asset/libs/feather-icons/feather.min.js') }}"></script>
@@ -8,6 +14,7 @@
 
  {{-- ck editor --}}
  <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
 
  {{-- <script src="{{ asset('admin_asset/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script> --}}
  <!-- apexcharts -->
@@ -23,7 +30,7 @@
  <!-- Dashboard init -->
  <script src="{{ asset('admin_asset/js/pages/dashboard-ecommerce.init.js') }}"></script>
  <script src="{{ asset('admin_asset/js/pages/ecommerce-product-details.init.js') }}"></script>
- <script src="{{ asset('admin_asset/js/jquery.exzoom.js') }}"></script>
+
 
 
 
@@ -31,6 +38,7 @@
  <script src="{{ asset('admin_asset/js/pages/form-editor.init.js') }}"></script>
  <!-- App js -->
  <script src="{{ asset('admin_asset/js/app.js') }}"></script>
+
 
  <!-- filepond js -->
 

@@ -28,7 +28,7 @@
     <link href="{{ asset('admin_asset/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{{ asset('admin_asset/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
-    <link href="{{ asset('admin_asset/css/jquery.exzoom.css') }}" rel="stylesheet" type="text/css" />
+
 
 
 
@@ -48,12 +48,6 @@
     integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
    <style>
-     /*Magnify*/
-     .magnify > .magnify-lens {
-      width: 100px;
-      height: 100px;
-    }
-
 
     .select2-container--default .select2-selection--single {
         background-color: #fff;

@@ -38,6 +38,7 @@
                                                                 alt="" class="img-fluid d-block"
                                                                  />
                                                         </div>
+
                                                     @endforeach
                                                 </div>
 
@@ -49,7 +50,7 @@
                                             <div class="swiper product-nav-slider mt-2">
                                                 <div class="swiper-wrapper">
                                                     @foreach ($product->image as $imageName)
-                                                    <div class="swiper-slide">
+                                                    <div class="swiper-slide ">
                                                         <div class="nav-slide-item">
                                                             <img src="{{ asset('uploads/products/' . $imageName) }}"
                                                                 alt="" class="img-fluid d-block"
@@ -66,18 +67,23 @@
                                     <!-- end col -->
 
                                     <div class="col-xl-8">
-                                        <div class="mt-xl-0 mt-5">
+                                        <div class="mt-xl-0 mt-5" >
                                             <div class="d-flex">
                                                 <div class="flex-grow-1">
                                                     <h4>{{ $product->name ?? '' }}</h4>
 
                                                 </div>
+                                                <button type="button" class="btn btn-light me-2" data-bs-container="body" data-bs-toggle="popover" data-bs-html="true" data-bs-placement="bottom" data-bs-content="share via : <i class='ri-facebook-circle-fill fs-80' ></i>">
+                                                    <i class="ri-share-line"></i>
+                                                  </button>
                                                 @role(['Admin', 'Super Admin'])
                                                     <div class="flex-shrink-0">
                                                         <div>
+
                                                             <a href="apps-ecommerce-add-product.html" class="btn btn-light"
                                                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                                                 title="Edit"><i class="ri-pencil-fill align-bottom"></i></a>
+
                                                         </div>
                                                     </div>
                                                 @endrole
