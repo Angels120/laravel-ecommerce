@@ -19,15 +19,15 @@
                 <!-- LOGO -->
                 <div class="navbar-brand-box horizontal-logo" style="overflow: hidden;">
                     <a href="{{ route('home.page') }}" class="logo logo-dark">
-                       
+
                         <img src="{{ asset('admin_asset/images/logos/webmart-light.svg') }}" alt="" style="height:100px">
                     </a>
 
                     <a href="{{ route('home.page') }}" class="logo logo-light">
-                        
+
                         <img src="{{ asset('admin_asset/images/logos/webmart-dark.svg') }}" alt="" style="height: 100px;">
                     </a>
-                </div> 
+                </div>
 
                 <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
                     <span class="hamburger-icon">
@@ -677,7 +677,7 @@
                                         <li class="nav-item">
                                             @foreach ($category->subcategories ?? [] as $subcategory)
                                             @if ($subcategory->status == 1)
-                                            <a href="{{ route('product.detail',[ $category->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link">{{ $subcategory->subcategory_name }}</a>
+                                            <a href="{{ route('product.lists',[ $category->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link">{{ $subcategory->subcategory_name }}</a>
                                             @endif
                                             @endforeach
                                         </li>
@@ -748,7 +748,7 @@
                             <li class="nav-item">
                                 @foreach ($products as $product)
                                 @if ($product->featured == 1)
-                                <a href="apps-calendar.html" class="nav-link">{{ $product->name }}</a>
+                                <a href="{{ route('product.detail', $product->slug) }}" class="nav-link">{{ $product->name }}</a>
                                 @endif
                                 @endforeach
 

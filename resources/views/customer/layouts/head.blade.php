@@ -30,6 +30,8 @@
     <link href="{{ asset('admin_asset/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
 
 
+
+
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <!--datatable css-->
    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
@@ -46,6 +48,7 @@
     integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
    <style>
+
     .select2-container--default .select2-selection--single {
         background-color: #fff;
         border: 1px solid #d7d8d9;
