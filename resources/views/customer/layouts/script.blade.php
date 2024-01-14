@@ -27,6 +27,9 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
  <!--Swiper slider js-->
  <script src="{{ asset('admin_asset/libs/swiper/swiper-bundle.min.js') }}"></script>
 
+
+<!-- swiper.init js -->
+<script src="{{ asset('admin_asset/js/pages/swiper.init.js') }}"></script>
  <!-- Dashboard init -->
  <script src="{{ asset('admin_asset/js/pages/dashboard-ecommerce.init.js') }}"></script>
  <script src="{{ asset('admin_asset/js/pages/ecommerce-product-details.init.js') }}"></script>
@@ -71,9 +74,6 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
 
- <script src="https://cdnjs.cloudflare.com/ajax/libs/choices.js/10.2.0/choices.min.js"
-     integrity="sha512-OrRY3yVhfDckdPBIjU2/VXGGDjq3GPcnILWTT39iYiuV6O3cEcAxkgCBVR49viQ99vBFeu+a6/AoFAkNHgFteg=="
-     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
  <!-- Select2 -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>

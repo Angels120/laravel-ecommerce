@@ -110,14 +110,14 @@
                                                                 </div>
                                                             </div>
                                                             <div class="flex-grow-1">
-                                                                <p class="mb-1  fs-16">Price:
+                                                                <p class="mb-1  fs-16 price">Price:
                                                                     @if ($product->discount)
                                                                         {{ $product->price - ($product->price * $product->discount) / 100 }}
                                                                         <div>
-                                                                            <strike>
+                                                                            <s>
                                                                                 {{ $product->price }}
-                                                                            </strike>
-                                                                            <span class="text-danger">
+                                                                            </s>
+                                                                            <span class="text-danger price">
                                                                                 ({{ $product->discount }}% off)</span>
                                                                         </div>
                                                                     @else

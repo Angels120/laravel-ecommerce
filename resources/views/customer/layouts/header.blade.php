@@ -769,7 +769,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
-
+{{--
 <script>
     function showToast(a) {
         const toastBox = document.getElementById('toast-box');
@@ -832,4 +832,4 @@
             toastErrorBox.classList.remove('hide');
         }, 500);
     }
-</script>
+</script> --}}
