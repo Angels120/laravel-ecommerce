@@ -29,15 +29,13 @@
                                 <div class="row gx-lg-5">
                                     <div class="col-xl-4 mx-auto">
                                         <div class="product-img-slider sticky-side-div">
-                                            <div class="swiper product-thumbnail-slider p-2 ">
+                                            <div class="swiper product-thumbnail-slider p-2">
                                                 <div class="swiper-wrapper">
                                                     @foreach ($product->image as $imageName)
                                                         <div class="swiper-slide">
                                                             <img src="{{ asset('uploads/products/' . $imageName) }}"
-                                                                alt="" class="img-fluid d-block"
-                                                                 />
+                                                                alt="" class="img-fluid d-block w-100 h-100" style="object-fit: cover;">
                                                         </div>
-
                                                     @endforeach
                                                 </div>
 
