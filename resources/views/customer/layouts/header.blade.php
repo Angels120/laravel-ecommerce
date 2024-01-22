@@ -704,7 +704,7 @@
                             <li class="nav-item">
                                 @foreach ($firstCategory->subcategories ?? [] as $subcategory)
                                 @if ($subcategory->status == 1)
-                                <a href="apps-calendar.html" class="nav-link">{{ $subcategory->subcategory_name }}</a>
+                                <a href="{{ route('product.lists',[ $firstCategory->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link">{{ $subcategory->subcategory_name }}</a>
                                 @endif
                                 @endforeach
                             </li>
@@ -726,7 +726,7 @@
                             <li class="nav-item">
                                 @foreach ($secondCategory->subcategories ?? [] as $subcategory)
                                 @if ($subcategory->status == 1)
-                                <a href="apps-calendar.html" class="nav-link">{{ $subcategory->subcategory_name }}</a>
+                                <a href="{{ route('product.lists',[ $secondCategory->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link">{{ $subcategory->subcategory_name }}</a>
                                 @endif
                                 @endforeach
 

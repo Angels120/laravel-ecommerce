@@ -14,4 +14,6 @@ class ProductController extends Controller
         // dd($product);
         return view('customer.Product.details',compact('product'));
     }
+
+
 }

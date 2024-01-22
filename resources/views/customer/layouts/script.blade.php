@@ -2,6 +2,7 @@
 
 
  <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
  <script>
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
 const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
@@ -43,6 +44,7 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
  <script src="{{ asset('admin_asset/js/app.js') }}"></script>
 
 
+
  <!-- filepond js -->
 
  <script src="{{ asset('admin_asset/libs/filepond/filepond.min.js') }}"></script>
@@ -77,4 +79,5 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
 
  <!-- Select2 -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
+ <!-- range Slider js -->
+ <script src="{{ asset('admin_asset/js/ion.rangeSlider.min.js') }}"></script>
