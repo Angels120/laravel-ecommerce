@@ -5,39 +5,42 @@
         <div class="page-content">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-2 sticky-side-div">
-                        <h1 class="brands fs-24 ">Brands</h1>
-                        <hr class="w-50" style="border: 2px solid #2c3662">
-                        <div class="card">
-                            <div class="card-body" style="flex: 1;">
-                                @foreach ($brands as $brand)
-                                    <p class="card-text m-0 price text-muted">
-                                        <input {{ in_array($brand->id, $brandsArray) ? 'checked' : '' }}
-                                            class="form-check-input brand-label" type="checkbox" name="brand[]"
-                                            value="{{ $brand->id }}" id="brand-{{ $brand->id }}">
-                                        <label class="" for="brand-{{ $brand->id }}">
-                                            {{ $brand->name }}
-                                        </label>
-                                    </p>
-                                @endforeach
+                    <!-- Left Side Column -->
+                    <div class="col-md-2">
+                        <div class="sticky-side-div">
+                            <h1 class="brands fs-24">Brands</h1>
+                            <hr class="w-50" style="border: 2px solid #2c3662">
+                            <div class="card">
+                                <div class="card-body" style="flex: 1;">
+                                    @foreach ($brands as $brand)
+                                        <p class="card-text m-0 price text-muted">
+                                            <input {{ in_array($brand->id, $brandsArray) ? 'checked' : '' }}
+                                                class="form-check-input brand-label" type="checkbox" name="brand[]"
+                                                value="{{ $brand->id }}" id="brand-{{ $brand->id }}">
+                                            <label class="" for="brand-{{ $brand->id }}">
+                                                {{ $brand->name }}
+                                            </label>
+                                        </p>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="sticky-side-div">
+                            <h1 class="brands fs-24">Price</h1>
+                            <hr class="w-50" style="border: 2px solid #2c3662">
+                            <div class="card">
+                                <div class="card-body" style="flex: 1;">
+                                    <input type="text" class="js-range-slider" name="my_range" value="" />
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2 sticky-side-div">
-                        <h1 class="brands fs-24 ">Brands</h1>
-                        <hr class="w-50" style="border: 2px solid #2c3662">
-                        <div class="card">
-                            <div class="card-body" style="flex: 1;">
-                                <input type="text" class="js-range-slider" name="my_range" value="" />
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Products Section (Right Side) -->
-                    <div class="col-md-7 mt-3">
+                    <!-- Right Side Column -->
+                    <div class="col-md-10 mt-3">
                         <div class="row d-flex align-items-center">
-                            @foreach ($products as $product)
+                            @forelse ($products as $product)
                                 @if ($product->featured == 1)
                                     <div class="col-xl-3">
                                         <!-- Simple card with a link -->
@@ -72,10 +75,16 @@
                                         </a>
                                     </div><!-- end col -->
                                 @endif
-                            @endforeach
-                        </div>
-                    </div><!-- end col-md-9 -->
+                            @empty
+                                <div class="col-md-12">
+                                    <h1>No products Available </h1>
+                                </div>
+                            @endforelse
+                        </div><!-- end row -->
+
+                    </div><!-- end col-md-10 -->
                 </div><!-- end row -->
+
             </div><!-- end container-fluid -->
 
         </div>
@@ -90,10 +99,10 @@
     });
     $(".js-range-slider").ionRangeSlider({
         type:"double",
-        min:0,
-        max:1000,
+        min:1000,
+        max:100000,
         from:{{ $priceMin }},
-        step:10,
+        step:10000,
         to:{{ $priceMax }},
         skin:"round",
         max_postfix:"+",

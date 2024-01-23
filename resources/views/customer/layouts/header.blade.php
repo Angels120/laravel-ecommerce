@@ -677,7 +677,7 @@
                                         <li class="nav-item">
                                             @foreach ($category->subcategories ?? [] as $subcategory)
                                             @if ($subcategory->status == 1)
-                                            <a href="{{ route('product.lists',[ $category->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link">{{ $subcategory->subcategory_name }}</a>
+                                            <a href="{{ route('product.lists',[ $category->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link item-{{ $subcategory->subcategory_name }}">{{ $subcategory->subcategory_name }}</a>
                                             @endif
                                             @endforeach
                                         </li>
@@ -701,15 +701,17 @@
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarLayouts">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                @foreach ($firstCategory->subcategories ?? [] as $subcategory)
+                            @foreach ($firstCategory->subcategories ?? [] as $subcategory)
                                 @if ($subcategory->status == 1)
-                                <a href="{{ route('product.lists',[ $firstCategory->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link">{{ $subcategory->subcategory_name }}</a>
+                                    <li class="nav-item">
+                                        <a href="{{ route('product.lists', [$firstCategory->category_slug, $subcategory->subcategory_slug]) }}" class="nav-link item-{{ $subcategory->subcategory_name }}">
+                                            {{ $subcategory->subcategory_name }}
+                                        </a>
+                                    </li>
                                 @endif
-                                @endforeach
-                            </li>
-
+                            @endforeach
                         </ul>
+
                     </div>
                 </li> <!-- end Dashboard Menu -->
                 @endif

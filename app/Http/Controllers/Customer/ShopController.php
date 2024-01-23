@@ -34,10 +34,28 @@ class ShopController extends Controller
             $products=$products->whereIn('brands_id',$brandsArray);
         }
         if(($request->get('price_max')!=''&& $request->get('price_min')!='')){
+            if($request->get('price_max')==1000){
+                $products=$products->whereBetween('price',[intval($request->get('price_min')),100000]);
+            }else{
             $products=$products->whereBetween('price',[intval($request->get('price_min')),intval($request->get('price_max'))]);
+        }
         }
         $data['priceMin']=intval($request->get('price_min'));
         $data['priceMax']=intval($request->get('price_max'));
         return view('customer.Product.shop',$data,compact('products','categories','brands','brandsArray'));
+    }
+
+    Public function BrandFilter(Request $request,$brandSlug=null){
+        $brandsArray=[];
+
+
+        $brands=Brand::orderBy('name','ASC')->where('status',1)->get();
+        $products=Product::where('status',1)->get();
+        //Apply Filters
+        if(!empty($brandSlug)){
+            $brands=Brand::where('slug',$brandSlug)->first();
+            $products=Product::where('brands_id',$brands->id)->get();
+        }
+        return view('customer.Product.brands-filter',compact('products','brands'));
     }
 }

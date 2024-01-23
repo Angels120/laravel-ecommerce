@@ -44,19 +44,19 @@
             <div class="container-fluid ">
                 <h1 class="brands">Popular Brands</h1>
                 <hr class="w-100">
-                        <div class="row">
-                            @foreach ($brands as $brand)
-                                <div class="col-md-3 mb-3">
-                                    <div class="card">
-                                        <img class="card-img-top img-fluid"
-                                            src="{{ asset('uploads/brands/' . $brand->image) }}" alt="Brand Image" style="height: 130px; object-fit: cover;">
-                                        <div class="card-body">
-                                            <!-- You can add any additional information or links related to the brand here -->
-                                        </div>
-                                    </div>
+                <div class="row">
+                    @foreach ($brands as $brand)
+                        <div class="col-md-3 mb-3 brand-card" data-brand="{{ $brand->slug }}">
+                            <div class="card">
+                                <img class="card-img-top img-fluid" src="{{ asset('uploads/brands/' . $brand->image) }}"
+                                    alt="Brand Image" style="height: 130px; object-fit: cover;">
+                                <div class="card-body">
+                                    <!-- You can add any additional information or links related to the brand here -->
                                 </div>
-                            @endforeach
+                            </div>
                         </div>
+                    @endforeach
+                </div>
                 @if ($latestProducts->count() > 0)
                     <div class="row  d-flex align-items-center mt-3 mb-3">
                         <h1 class="titlecard">Recently Added</h1>
@@ -68,8 +68,8 @@
                                 <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
                                     <div class="card">
                                         <img class="card-img-top img-fluid"
-                                            src="{{ asset('uploads/products/' . $product->image[0]) }}"
-                                            alt="" style="height: 200px; object-fit: cover;">
+                                            src="{{ asset('uploads/products/' . $product->image[0]) }}" alt=""
+                                            style="height: 200px; object-fit: cover;">
                                         <div class="card-body">
                                             <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
                                             <p class="card-text price">
@@ -110,8 +110,8 @@
                                 <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
                                     <div class="card">
                                         <img class="card-img-top img-fluid"
-                                            src="{{ asset('uploads/products/' . $product->image[0]) }}"
-                                            alt="" style="height: 200px; object-fit: cover;">
+                                            src="{{ asset('uploads/products/' . $product->image[0]) }}" alt=""
+                                            style="height: 200px; object-fit: cover;">
                                         <div class="card-body">
                                             <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
                                             <p class="card-text price">
@@ -146,4 +146,53 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    <script>
+        $(document).ready(function() {
+            // Check localStorage for previously selected brands
+            var selectedBrands = localStorage.getItem('selectedBrands');
+            if (selectedBrands) {
+                selectedBrands = selectedBrands.split(',');
+                selectedBrands.forEach(function(brand) {
+                    $('[data-brand="' + brand + '"]').addClass('selected');
+                });
+            }
+
+            // Handle brand card click
+            $('.brand-card').click(function() {
+                console.log('clicked')
+                var brandSlug = $(this).data('brand');
+
+                // Toggle the 'selected' class
+                $(this).toggleClass('selected');
+
+                // Update localStorage with selected brands
+                var selectedBrands = $('.brand-card.selected').map(function() {
+                    return $(this).data('brand');
+                }).get();
+
+                // Store the updated selected brands
+                localStorage.setItem('selectedBrands', selectedBrands.join(','));
+
+                // Redirect to another page with selected brands
+                redirectToPage(selectedBrands);
+            });
+
+            function redirectToPage(selectedBrands) {
+                var baseUrl = "{{ route('brands.filter', ['brandSlug' => '']) }}";
+                // Remove any empty elements from the selectedBrands array
+                selectedBrands = selectedBrands.filter(Boolean);
+                // Append the selected brands to the URL
+                var brandSlug = selectedBrands.join('/');
+                var url = baseUrl + '/' + brandSlug;
+
+                // Redirect to the constructed URL
+                window.location.href = url;
+                // Clear previous selected brands from local storage
+localStorage.removeItem('selectedBrands');
+
+            }
+        });
+    </script>
 @endsection

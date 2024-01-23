@@ -25,4 +25,6 @@ Route::prefix('Product')->name('product.')->group(function () {
 Route::get('{slug}', [ProductController::class,  'productDetail'])->name('detail');
 Route::get('/{categorySlug?}/{subCategorySlug?}', [ShopController::class,  'index'])->name('lists');
 });
+Route::get('/{brandSlug?}', [ShopController::class,  'BrandFilter'])->name('brands.filter');
+
 
