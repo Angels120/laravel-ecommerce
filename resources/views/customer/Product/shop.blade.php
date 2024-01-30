@@ -1,3 +1,11 @@
+
+<style>
+    #select_option{
+        position: absolute;
+        right: 40px;
+    }
+</style>
+
 @extends('customer.layouts.app')
 
 @section('container')
@@ -112,7 +120,7 @@
                     </div><!-- end col-md-10 -->
 
                     <!-- Sort Select on Right Side -->
-                    <div class="col-md-2 mt-3">
+                    <div class="col-md-2 mt-3" id="select_option">
                         <div class="d-flex flex-column align-items-end">
                             <div class="ml-2 mb-4">
                                 <select name="sort" id="sort" class="form-control">
