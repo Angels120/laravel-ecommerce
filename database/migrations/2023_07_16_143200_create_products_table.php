@@ -20,12 +20,12 @@ return new class extends Migration
             $table->string('image');
             $table->longText('description')->nullable();
             $table->double('price',10,2);
-            $table->double('discount')->default(0);
+            $table->double('discount')->nullable();
             $table->string('slug');
             $table->string('stock');
             $table->Boolean('status')->default(0);
             $table->Boolean('featured')->default(0);
-            $table->string('sizes')->default(0);
+            $table->string('sizes')->nullable();
             $table->timestamps();
         });
     }

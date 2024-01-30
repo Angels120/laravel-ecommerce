@@ -5,6 +5,33 @@
         <div class="page-content">
             <div class="container-fluid">
                 <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0">Product Lists</h4>
+                            <div class="page-title-right">
+                                @if ($breadcrumb['breadcrumbs'])
+                                    <ol class="breadcrumb m-0">
+                                        @foreach ($breadcrumb['breadcrumbs'] as $label => $link)
+                                            <li class="breadcrumb-item">
+                                                @if ($label == 'current_menu')
+                                                    <a>
+                                                        {{ $link }}
+                                                    </a>
+                                                @else
+                                                    <a href="{{ $link }}">
+                                                        {{ $label }}
+                                                    </a>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ol>
+                                @endif
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
                     <!-- Left Side Column -->
                     <div class="col-md-2">
                         <div class="sticky-side-div">
@@ -37,11 +64,12 @@
                         </div>
                     </div>
 
+
                     <!-- Right Side Column -->
-                    <div class="col-md-10 mt-3">
+                    <div class="col-md-10 mt-4">
                         <div class="row d-flex align-items-center">
                             @forelse ($products as $product)
-                                @if ($product->featured == 1)
+                                @if ($product->status == 1)
                                     <div class="col-xl-3">
                                         <!-- Simple card with a link -->
                                         <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
@@ -81,49 +109,62 @@
                                 </div>
                             @endforelse
                         </div><!-- end row -->
-
                     </div><!-- end col-md-10 -->
-                </div><!-- end row -->
 
+                    <!-- Sort Select on Right Side -->
+                    <div class="col-md-2 mt-3">
+                        <div class="d-flex flex-column align-items-end">
+                            <div class="ml-2 mb-4">
+                                <select name="sort" id="sort" class="form-control">
+                                    <option value="latest">Latest</option>
+                                    <option value="latest">Price High</option>
+                                    <option value="latest">Price Low</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- end row -->
             </div><!-- end container-fluid -->
 
         </div>
+
     </div>
 
 
 @endsection
 @section('script')
-<script>
-    $(".brand-label").change(function() {
-        apply_filters();
-    });
-    $(".js-range-slider").ionRangeSlider({
-        type:"double",
-        min:1000,
-        max:100000,
-        from:{{ $priceMin }},
-        step:10000,
-        to:{{ $priceMax }},
-        skin:"round",
-        max_postfix:"+",
-        prefix:"Rs. ",
-        onFinish:function(){
-            apply_filters()
-        }
-    });
-    var slider = $(".js-range-slider").data("ionRangeSlider")
-    function apply_filters() {
-        var brands = [];
-        $(".brand-label").each(function() {
-            if ($(this).is(":checked") == true) {
-                brands.push($(this).val());
+    <script>
+        $(".brand-label").change(function() {
+            apply_filters();
+        });
+        $(".js-range-slider").ionRangeSlider({
+            type: "double",
+            min: 1000,
+            max: 1000000,
+            from: {{ $priceMin }},
+            step: 10000,
+            to: {{ $priceMax }},
+            skin: "round",
+            max_postfix: "+",
+            prefix: "Rs. ",
+            onFinish: function() {
+                apply_filters()
             }
         });
-        console.log(brands.toString())
-        var url = '{{ url()->current() }}?';
+        var slider = $(".js-range-slider").data("ionRangeSlider")
 
-        url += '&price_min='+slider.result.from+'&price_max='+slider.result.to;
-        window.location.href = url + '&brand=' + brands.toString();
-    }
-</script>
+        function apply_filters() {
+            var brands = [];
+            $(".brand-label").each(function() {
+                if ($(this).is(":checked") == true) {
+                    brands.push($(this).val());
+                }
+            });
+            console.log(brands.toString())
+            var url = '{{ url()->current() }}?';
+
+            url += '&price_min=' + slider.result.from + '&price_max=' + slider.result.to;
+            window.location.href = url + '&brand=' + brands.toString();
+        }
+    </script>
 @endsection

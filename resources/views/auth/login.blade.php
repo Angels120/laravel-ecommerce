@@ -47,9 +47,8 @@
                                             <label for="email" class="form-label">Email</label>
                                             <input id="email" type="email"
                                                 class="form-control @error('email') is-invalid @enderror" name="email"
-                                                value="{{ old('email') }}" required autocomplete="email" autofocus
+                                                value="{{ old('email') }}"
                                                 placeholder="Enter Email">
-
                                             @error('email')
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $message }}</strong>
@@ -65,10 +64,7 @@
 
                                             <div class="position-relative auth-pass-inputgroup mb-3">
                                                 <input id="password" type="password"
-                                                    class="form-control pe-5 password-input" name="password" required
-                                                    autocomplete="current-password" placeholder="Enter Password">
-
-
+                                                class="form-control @error('password') is-invalid @enderror" name="password"  placeholder="Enter Password">
                                                 <button
                                                     class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
                                                     type="button" id="password-addon"><i

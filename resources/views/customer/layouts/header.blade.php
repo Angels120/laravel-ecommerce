@@ -674,13 +674,15 @@
                                 </a>
                                 <div class="collapse menu-dropdown" id="sidebarSignIn">
                                     <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
+
                                             @foreach ($category->subcategories ?? [] as $subcategory)
                                             @if ($subcategory->status == 1)
-                                            <a href="{{ route('product.lists',[ $category->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link item-{{ $subcategory->subcategory_name }}">{{ $subcategory->subcategory_name }}</a>
+                                            <li class="nav-item">
+                                            <a href="{{ route('lists',[ $category->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link item-{{ $subcategory->subcategory_name }}">{{ $subcategory->subcategory_name }}</a>
+                                        </li>
                                             @endif
                                             @endforeach
-                                        </li>
+
 
                                     </ul>
                                 </div>
@@ -704,7 +706,7 @@
                             @foreach ($firstCategory->subcategories ?? [] as $subcategory)
                                 @if ($subcategory->status == 1)
                                     <li class="nav-item">
-                                        <a href="{{ route('product.lists', [$firstCategory->category_slug, $subcategory->subcategory_slug]) }}" class="nav-link item-{{ $subcategory->subcategory_name }}">
+                                        <a href="{{ route('lists', [$firstCategory->category_slug, $subcategory->subcategory_slug]) }}" class="nav-link item-{{ $subcategory->subcategory_name }}">
                                             {{ $subcategory->subcategory_name }}
                                         </a>
                                     </li>
@@ -728,7 +730,7 @@
                             <li class="nav-item">
                                 @foreach ($secondCategory->subcategories ?? [] as $subcategory)
                                 @if ($subcategory->status == 1)
-                                <a href="{{ route('product.lists',[ $secondCategory->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link">{{ $subcategory->subcategory_name }}</a>
+                                <a href="{{ route('lists',[ $secondCategory->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link">{{ $subcategory->subcategory_name }}</a>
                                 @endif
                                 @endforeach
 
@@ -747,16 +749,16 @@
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarLayouts">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                @foreach ($products as $product)
-                                @if ($product->featured == 1)
-                                <a href="{{ route('product.detail', $product->slug) }}" class="nav-link">{{ $product->name }}</a>
+                            @foreach ($products as $product)
+                            @if ($product->featured == 1)
+                                    <li class="nav-item">
+                                        <a href="{{ route('product.detail', $product->slug) }}"  class="nav-link item-{{ $product->slug }}">{{ $product->name }}</a>
+
+                                    </li>
                                 @endif
-                                @endforeach
-
-                            </li>
-
+                            @endforeach
                         </ul>
+
                     </div>
                 </li> <!-- end Dashboard Menu -->
 

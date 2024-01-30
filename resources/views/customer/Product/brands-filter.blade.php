@@ -4,6 +4,33 @@
     <div class="main-content">
         <div class="page-content">
             <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box d-sm-flex align-items-center justify-content-between">
+                            <h4 class="mb-sm-0">Brand Filters</h4>
+                            <div class="page-title-right">
+                                @if ($breadcrumb['breadcrumbs'])
+                                    <ol class="breadcrumb m-0">
+                                        @foreach ($breadcrumb['breadcrumbs'] as $label => $link)
+                                            <li class="breadcrumb-item">
+                                                @if ($label == 'current_menu')
+                                                    <a>
+                                                        {{ $link }}
+                                                    </a>
+                                                @else
+                                                    <a href="{{ $link }}">
+                                                        {{ $label }}
+                                                    </a>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ol>
+                                @endif
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
                 <div class="row align-items-center">
                     <div class="col-xl-4">
                         <div class="card">
@@ -23,7 +50,7 @@
                 <div class="col-md-7 mt-3">
                     <div class="row d-flex align-items-center">
                         @foreach ($products as $product)
-                            @if ($product->featured == 1)
+                            @if ($product->status == 1)
                                 <div class="col-xl-3">
                                     <!-- Simple card with a link -->
                                     <a href="{{ route('product.detail', $product->slug) }}" class="card-link">

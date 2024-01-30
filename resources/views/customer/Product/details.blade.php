@@ -2,7 +2,7 @@
 @section('container')
     <div class="main-content">
         <div class="page-content">
-            <div class="container-fluid col-8" >
+            <div class="container-fluid col-8">
                 <!-- start page title -->
                 <div class="row">
                     <div class="col-12">
@@ -33,7 +33,8 @@
                                                     @foreach ($product->image as $imageName)
                                                         <div class="swiper-slide">
                                                             <img src="{{ asset('uploads/products/' . $imageName) }}"
-                                                                alt="" class="img-fluid d-block w-100 h-100" style="object-fit: cover;">
+                                                                alt="" class="img-fluid d-block w-100 h-100"
+                                                                style="object-fit: cover;">
                                                         </div>
                                                     @endforeach
                                                 </div>
@@ -46,13 +47,12 @@
                                             <div class="swiper product-nav-slider mt-2">
                                                 <div class="swiper-wrapper">
                                                     @foreach ($product->image as $imageName)
-                                                    <div class="swiper-slide ">
-                                                        <div class="nav-slide-item">
-                                                            <img src="{{ asset('uploads/products/' . $imageName) }}"
-                                                                alt="" class="img-fluid d-block"
-                                                                 />
+                                                        <div class="swiper-slide ">
+                                                            <div class="nav-slide-item">
+                                                                <img src="{{ asset('uploads/products/' . $imageName) }}"
+                                                                    alt="" class="img-fluid d-block" />
+                                                            </div>
                                                         </div>
-                                                    </div>
                                                     @endforeach
 
                                                 </div>
@@ -63,15 +63,28 @@
                                     <!-- end col -->
 
                                     <div class="col-xl-8">
-                                        <div class="mt-xl-0 mt-5" >
+                                        <div class="mt-xl-0 mt-5">
                                             <div class="d-flex">
                                                 <div class="flex-grow-1">
-                                                    <h4>{{ $product->name ?? '' }}</h4>
+                                                    <h4 style="color: #293362">{{ $product->name ?? '' }}</h4>
 
                                                 </div>
-                                                <button type="button" class="btn btn-light me-2" data-bs-container="body" data-bs-toggle="popover" data-bs-html="true" data-bs-placement="bottom" data-bs-content="share via : <i class='ri-facebook-circle-fill fs-80' ></i>">
-                                                    <i class="ri-share-line"></i>
-                                                  </button>
+                                                <div class="me-2 fs-5" style="color: #293362">share Via <i
+                                                        class="ri-share-line"></i>:
+                                                    <a href="apps-ecommerce-add-product.html" class="btn btn-light"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                        <i class="ri-facebook-fill"></i>
+                                                    </a>
+                                                    <a href="apps-ecommerce-add-product.html" class="btn btn-light"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                        <i class="ri-twitter-x-line"></i>
+                                                    </a>
+                                                    <a href="apps-ecommerce-add-product.html" class="btn btn-light"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top" title="Edit">
+                                                        <i class="ri-whatsapp-line"></i>
+                                                    </a>
+                                                </div>
+
                                                 @role(['Admin', 'Super Admin'])
                                                     <div class="flex-shrink-0">
                                                         <div>
@@ -458,7 +471,6 @@
 
     </div>
 @section('script')
-
     {{-- Script for increment and decrement quantity --}}
     <script>
         $(function() {
