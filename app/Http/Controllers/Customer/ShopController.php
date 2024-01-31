@@ -47,10 +47,25 @@ class ShopController extends Controller
             $products=$products->whereBetween('price',[intval($request->get('price_min')),intval($request->get('price_max'))]);
         }
         }
+        if ($request->has('sort') && $request->get('sort') != '') {
+            if ($request->get('sort') == 'latest') {
+                $products = $products->sortByDesc('id')->values()->all();
+            } elseif ($request->get('sort') == 'price_high') {
+                $products = $products->sortByDesc('price')->values()->all();
+            } elseif ($request->get('sort') == 'price_low') {
+                $products = $products->sortBy('price')->values()->all();
+            }
+        } else {
+            $products = $products->sortByDesc('id')->values()->all();
+        }
+
+
         $data['priceMin']=intval($request->get('price_min'));
         $data['priceMax']=intval($request->get('price_max'));
+        $data['sort']=$request->get('sort');
         return view('customer.Product.shop',$data,compact('products','categories','brands','brandsArray','breadcrumb'));
     }
+
 
     Public function BrandFilter(Request $request,$brandSlug=null){
         $breadcrumb = [

@@ -1,6 +1,5 @@
-
 <style>
-    #select_option{
+    #select_option {
         position: absolute;
         right: 40px;
     }
@@ -123,10 +122,10 @@
                     <div class="col-md-2 mt-3" id="select_option">
                         <div class="d-flex flex-column align-items-end">
                             <div class="ml-2 mb-4">
-                                <select name="sort" id="sort" class="form-control">
-                                    <option value="latest">Latest</option>
-                                    <option value="latest">Price High</option>
-                                    <option value="latest">Price Low</option>
+                                <select class="form-select" name="sort" id="sort">
+                                    <option value="latest" {{ ($sort=='latest')?'selected':'' }}>Latest</option>
+                                    <option value="price_high" {{ ($sort=='price_high')? 'selected':'' }}>Price High</option>
+                                    <option value="price_low" {{ ($sort=='price_low')? 'selected':'' }} >Price Low</option>
                                 </select>
                             </div>
                         </div>
@@ -145,6 +144,9 @@
         $(".brand-label").change(function() {
             apply_filters();
         });
+        $("#sort").change(function() {
+                apply_filters()
+            })
         $(".js-range-slider").ionRangeSlider({
             type: "double",
             min: 1000,
@@ -168,11 +170,17 @@
                     brands.push($(this).val());
                 }
             });
+            //Brands Filter
             console.log(brands.toString())
             var url = '{{ url()->current() }}?';
 
+            //Price Range Filter
             url += '&price_min=' + slider.result.from + '&price_max=' + slider.result.to;
+
+            //Sorting filter
+            url+='&sort='+$("#sort").val()
             window.location.href = url + '&brand=' + brands.toString();
+
         }
     </script>
 @endsection
