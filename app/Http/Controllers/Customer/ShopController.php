@@ -11,60 +11,72 @@ use Illuminate\Http\Request;
 
 class ShopController extends Controller
 {
-    Public function index(Request $request,$categorySlug=null,$subCategorySlug=null){
+    public function index(Request $request, $categorySlug = null, $subCategorySlug = null)
+    {
         $breadcrumb = [
             'breadcrumbs' => [
                 'WebMart' => route('home.page'),
-                $categorySlug   => route('lists',$categorySlug),
-                $subCategorySlug   => route('lists',$subCategorySlug),
+                $categorySlug   => route('lists', $categorySlug),
+                $subCategorySlug   => route('lists', $subCategorySlug),
             ],
         ];
-        $categorySelected='';
-        $subCategorySelected='';
-        $brandsArray=[];
 
+        $categorySelected = '';
+        $subCategorySelected = '';
+        $brandsArray = [];
 
-        $categories=Category::orderBy('category_name','ASC')->with('subcategories')->where('status',1)->get();
-        $brands=Brand::orderBy('name','ASC')->where('status',1)->get();
-        $products=Product::where('status',1)->get();
-        //Apply Filters
-        if(!empty($categorySlug)){
-            $category=Category::where('category_slug',$categorySlug)->first();
-            $products=Product::where('category_id',$category->id)->get();
+        $categories = Category::orderBy('category_name', 'ASC')->with('subcategories')->where('status', 1)->get();
+        $brands = Brand::orderBy('name', 'ASC')->where('status', 1)->get();
+
+        $productsQuery = Product::where('status', 1);
+
+        // Apply Filters
+        if (!empty($categorySlug)) {
+            $category = Category::where('category_slug', $categorySlug)->first();
+            $productsQuery->where('category_id', $category->id);
         }
-        if(!empty($subCategorySlug)){
-            $subcategory=SubCategory::where('subcategory_slug',$subCategorySlug)->first();
-            $products=Product::where('sub_categories_id',$subcategory->id)->get();
+
+        if (!empty($subCategorySlug)) {
+            $subcategory = SubCategory::where('subcategory_slug', $subCategorySlug)->first();
+            $productsQuery->where('sub_categories_id', $subcategory->id);
         }
-        if(!empty($request->get('brand'))){
-            $brandsArray=explode(',',$request->get('brand'));
-            $products=$products->whereIn('brands_id',$brandsArray);
+
+        if (!empty($request->get('brand'))) {
+            $brandsArray = explode(',', $request->get('brand'));
+            $productsQuery->whereIn('brands_id', $brandsArray);
         }
-        if(($request->get('price_max')!=''&& $request->get('price_min')!='')){
-            if($request->get('price_max')==1000){
-                $products=$products->whereBetween('price',[intval($request->get('price_min')),100000000]);
-            }else{
-            $products=$products->whereBetween('price',[intval($request->get('price_min')),intval($request->get('price_max'))]);
+
+        if (($request->get('price_max') != '' && $request->get('price_min') != '')) {
+            if ($request->get('price_max') == 1000) {
+                $productsQuery->whereBetween('price', [intval($request->get('price_min')), 1000000]);
+            } else {
+                $productsQuery->whereBetween('price', [intval($request->get('price_min')), intval($request->get('price_max'))]);
+            }
         }
-        }
+
+        // Sort the results
         if ($request->has('sort') && $request->get('sort') != '') {
             if ($request->get('sort') == 'latest') {
-                $products = $products->sortByDesc('id')->values()->all();
+                $productsQuery->orderByDesc('id');
             } elseif ($request->get('sort') == 'price_high') {
-                $products = $products->sortByDesc('price')->values()->all();
+                $productsQuery->orderByDesc('price');
             } elseif ($request->get('sort') == 'price_low') {
-                $products = $products->sortBy('price')->values()->all();
+                $productsQuery->orderBy('price');
             }
         } else {
-            $products = $products->sortByDesc('id')->values()->all();
+            $productsQuery->orderByDesc('id');
         }
 
+        // Get paginated results
+        $products = $productsQuery->paginate(6);
 
-        $data['priceMin']=intval($request->get('price_min'));
-        $data['priceMax']=intval($request->get('price_max'));
-        $data['sort']=$request->get('sort');
-        return view('customer.Product.shop',$data,compact('products','categories','brands','brandsArray','breadcrumb'));
+        $data['priceMin'] = intval($request->get('price_min'));
+        $data['priceMax'] = intval($request->get('price_max'));
+        $data['sort'] = $request->get('sort');
+
+        return view('customer.Product.shop', $data, compact('products', 'categories', 'brands', 'brandsArray', 'breadcrumb'));
     }
+
 
 
     Public function BrandFilter(Request $request,$brandSlug=null){
