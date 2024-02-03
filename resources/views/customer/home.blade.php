@@ -137,7 +137,7 @@
                             <div class="col-sm-6 col-xl-3">
                                 <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
                                     <div class="card">
-                                        <img class="card-img-top img-fluid"
+                                        <img class="img-fluid d-block"
                                             src="{{ asset('uploads/products/' . $product->image[0]) }}" alt=""
                                             style="height: 200px; object-fit: cover;">
                                         <div class="card-body">

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\GithubController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\Customer\ProductController;
 use App\Http\Controllers\Customer\ShopController;
@@ -20,6 +21,8 @@ Route::get('/auth/github/callback', [GithubController::class,  'handleGithubCall
 
 
 Route::get('/', [HomeController::class,  'index'])->name('home.page');
+Route::get('/cart', [CartController::class,  'cart'])->name('carts.details');
+Route::post('/add-to-cart', [CartController::class,  'addToCart'])->name('carts.add');
 
 Route::prefix('Product')->name('product.')->group(function () {
 Route::get('{slug}', [ProductController::class,  'productDetail'])->name('detail');

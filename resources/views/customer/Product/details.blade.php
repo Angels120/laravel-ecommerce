@@ -182,14 +182,9 @@
                                                 <button type="submit" class="btn btn-info btn-lg btn-block me-3"
                                                     id="save-Category" style="width: 260px;">Buy Now</button>
                                                 <button type="submit" class="btn btn-danger btn-lg btn-block"
-                                                    id="save-Category" style="width: 260px;">Add To Cart</button>
+                                                    id="save-Category" style="width: 260px;" onclick="addToCart({{ $product->id }})">Add To Cart</button>
                                             </div>
                                         </div>
-
-
-
-
-
                                         <div class="row">
                                             <div class="col-xl-6">
                                                 <div class="mt-4">
@@ -494,7 +489,9 @@
                 }
             });
         });
+
     </script>
+
 @endsection
 
 @endsection

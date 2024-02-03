@@ -81,3 +81,28 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
  <!-- range Slider js -->
  <script src="{{ asset('admin_asset/js/ion.rangeSlider.min.js') }}"></script>
+
+ <script>
+    function addToCart(id) {
+        $.ajax({
+            url: '{{ route("carts.add") }}',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'post',
+            data: { id: id },
+            dataType: 'json',
+            success: function (response) {
+                if(response.status==true){
+                    window.location.href="{{ route('carts.details') }}"
+                }else{
+                    alert(response.message);
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+                // Handle error response
+            }
+        });
+    }
+ </script>
