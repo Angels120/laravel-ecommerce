@@ -1,8 +1,5 @@
 <!-- JAVASCRIPT -->
-
-
- <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
+ <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.min.js') }}"></script>
  <script>
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
 const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
@@ -94,15 +91,12 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
             dataType: 'json',
             success: function (response) {
                 if(response.status==true){
+                    localStorage.setItem("successMessage", response.message);
                     window.location.href="{{ route('carts.details') }}"
                 }else{
                     alert(response.message);
                 }
             },
-            error: function (xhr, status, error) {
-                console.error('Error:', error);
-                // Handle error response
-            }
         });
     }
  </script>

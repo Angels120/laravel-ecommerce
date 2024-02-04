@@ -459,7 +459,6 @@
         <!-- container-fluid -->
     </div>
     <!-- End Page-content -->
-
     </div>
 @section('script')
     {{-- Script for increment and decrement quantity --}}
@@ -471,7 +470,6 @@
                 var quantity = parseInt(input.val());
                 var availableStock = parseInt($('.stock-info').text());
                 console.log(availableStock);
-
                 if (quantity < availableStock) {
                     quantity++;
                     input.val(quantity);

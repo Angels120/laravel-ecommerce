@@ -23,6 +23,8 @@ Route::get('/auth/github/callback', [GithubController::class,  'handleGithubCall
 Route::get('/', [HomeController::class,  'index'])->name('home.page');
 Route::get('/cart', [CartController::class,  'cart'])->name('carts.details');
 Route::post('/add-to-cart', [CartController::class,  'addToCart'])->name('carts.add');
+Route::post('/update-cart', [CartController::class,  'updateCart'])->name('carts.update');
+Route::post('/delete-cart', [CartController::class,  'delteItem'])->name('carts.item.delete');
 
 Route::prefix('Product')->name('product.')->group(function () {
 Route::get('{slug}', [ProductController::class,  'productDetail'])->name('detail');

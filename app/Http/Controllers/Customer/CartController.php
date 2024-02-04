@@ -33,7 +33,8 @@ class CartController extends Controller
 
             if($productAlreadyExist == false){
                 Cart::add($product->id, $product->name, 1, $product->price, [
-                    (!empty($product->image[0])) ? $product->image[0] : ''
+                    'image' => (!empty($product->image[0])) ? $product->image[0] : '',
+                    'stock' => $product->stock,
                 ]);
 
                 $status = true;
@@ -46,9 +47,8 @@ class CartController extends Controller
         } else {
             // Cart is empty
             Cart::add($product->id, $product->name, 1, $product->price, [
-                (!empty($product->image[0])) ? $product->image[0] : ''
+                'image' => (!empty($product->image[0])) ? $product->image[0] : '',
             ]);
-
             $status = true;
             $message = $product->name . ' added to cart';
         }
@@ -61,9 +61,49 @@ class CartController extends Controller
 
 
     public function cart(){
+        $breadcrumb = [
+            'breadcrumbs' => [
+                'WebMart' => route('home.page'),
+                'current_menu' => 'Shopping Cart',
+            ],
+        ];
         $cartContent = Cart::content();
-        // dd( $cartContent);
+
         $data['cartContent']=$cartContent;
-        return view('customer.Product.carts',$data);
+        return view('customer.Product.carts',$data,compact('breadcrumb'));
+    }
+    public function updateCart(Request $request){
+        $rowId=$request->rowId;
+        $qty=$request->qty;
+        $itemInfo=Cart::get($rowId);
+        $product=Product::find($itemInfo->id);
+        if($qty<=$product->stock){
+            Cart::update($rowId,$qty);
+            $status=true;
+            $message='Cart Updated Succesfully';
+        }else{
+            $status=false;
+            $message='Request quantity ('.$qty.')not available in stock';
+        }
+        return response()->json([
+            'status'=>$status,
+            'message'=>$message,
+        ],200);
+    }
+    public function delteItem(Request $request){
+
+        $itemInfo=Cart::get($request->rowId);
+        if($itemInfo==null){
+            return response()->json([
+                'status'=>false,
+                'message'=>'Item Not Found',
+            ],200);
+        }
+        Cart::remove($request->rowId);
+        return response()->json([
+            'status'=>true,
+            'message'=>'Item Delted From Cart succesfully',
+        ],200);
+
     }
 }

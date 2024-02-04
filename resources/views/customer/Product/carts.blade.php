@@ -11,12 +11,23 @@
                             <h4 class="mb-sm-0">Shopping Cart</h4>
 
                             <div class="page-title-right">
-                                <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item">
-                                        <a href="javascript: void(0);">Ecommerce</a>
-                                    </li>
-                                    <li class="breadcrumb-item active">Shopping Cart</li>
-                                </ol>
+                                @if ($breadcrumb['breadcrumbs'])
+                                    <ol class="breadcrumb m-0">
+                                        @foreach ($breadcrumb['breadcrumbs'] as $label => $link)
+                                            <li class="breadcrumb-item">
+                                                @if ($label == 'current_menu')
+                                                    <a>
+                                                        {{ $link }}
+                                                    </a>
+                                                @else
+                                                    <a href="{{ $link }}">
+                                                        {{ $label }}
+                                                    </a>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ol>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -28,7 +39,7 @@
                         <div class="row align-items-center gy-3 mb-3">
                             <div class="col-sm">
                                 <div>
-                                    <h5 class="fs-14 mb-0">Your Cart (03 items)</h5>
+                                    <h5 class="fs-14 mb-0">Your Cart ({{ $cartContent->count() }} items)</h5>
                                 </div>
                             </div>
                             <div class="col-sm-auto">
@@ -36,7 +47,7 @@
                                     class="link-primary text-decoration-underline">Continue Shopping</a>
                             </div>
                         </div>
-                        @if (!empty($cartContent))
+                        @if (Cart::count() > 0)
                             @foreach ($cartContent as $item)
                                 <div class="card product">
                                     <div class="card-body">
@@ -44,37 +55,42 @@
                                             <div class="col-sm-auto">
                                                 <div class="avatar-lg bg-light rounded p-1">
                                                     <img class="img-fluid d-block"
-                                                    src="{{ asset('uploads/products/' . ($item->options->has(0) ? $item->options->get(0) : '')) }}"
-                                                    alt=""
-                                                    >
+                                                        src="{{ asset('uploads/products/' . ($item->options->image ?? '')) }}"
+                                                        alt="">
+
                                                 </div>
                                             </div>
                                             <div class="col-sm">
                                                 <h5 class="fs-14 text-truncate">
-                                                    <a href="ecommerce-product-detail.html" class="text-dark">{{ $item->name }}
+                                                    <a href="ecommerce-product-detail.html"
+                                                        class="text-dark">{{ $item->name }}
                                                     </a>
                                                 </h5>
                                                 <ul class="list-inline text-muted">
-                                                    <li class="list-inline-item">
+
+                                                    {{-- <li class="list-inline-item">
                                                         Color : <span class="fw-medium">Pink</span>
                                                     </li>
                                                     <li class="list-inline-item">
                                                         Size : <span class="fw-medium">M</span>
-                                                    </li>
+                                                    </li> --}}
                                                 </ul>
 
                                                 <div class="input-step">
-                                                    <button type="button" class="minus">–</button>
+                                                    <button type="button" class="minus"
+                                                        data-id="{{ $item->rowId }}">–</button>
                                                     <input type="number" class="product-quantity" value={{ $item->qty }}
                                                         min="0" max="100" />
-                                                    <button type="button" class="plus">+</button>
+                                                    <button type="button" class="plus"
+                                                        data-id="{{ $item->rowId }}">+</button>
                                                 </div>
                                             </div>
                                             <div class="col-sm-auto">
                                                 <div class="text-lg-end">
                                                     <p class="text-muted mb-1">Item Price:</p>
                                                     <h5 class="fs-14">
-                                                        Rs.<span id="ticket_price" class="product-price">{{ $item->price }}</span>
+                                                        Rs.<span id="ticket_price"
+                                                            class="product-price">{{ $item->price }}</span>
                                                     </h5>
                                                 </div>
                                             </div>
@@ -88,7 +104,7 @@
                                                 <div class="d-flex flex-wrap my-n1">
                                                     <div>
                                                         <a href="#" class="d-block text-body p-1 px-2"
-                                                            data-bs-toggle="modal" data-bs-target="#removeItemModal"><i
+                                                            onclick="deleteItem('{{ $item->rowId }}')"><i
                                                                 class="ri-delete-bin-fill text-muted align-bottom me-1"></i>
                                                             Remove</a>
                                                     </div>
@@ -103,7 +119,8 @@
                                                 <div class="d-flex align-items-center gap-2 text-muted">
                                                     <div>Total :</div>
                                                     <h5 class="fs-14 mb-0">
-                                                        Rs.<span class="product-line-price">{{ $item->price*$item->qty }}</span>
+                                                        Rs.<span
+                                                            class="product-line-price">{{ $item->price * $item->qty }}</span>
                                                     </h5>
                                                 </div>
                                             </div>
@@ -113,14 +130,25 @@
                                 </div>
                                 <!-- end card -->
                             @endforeach
+
+
+
+                            <div class="text-end mb-4">
+                                <a href="apps-ecommerce-checkout.html" class="btn btn-success btn-label right ms-auto"><i
+                                        class="ri-arrow-right-line label-icon align-bottom fs-16 ms-2"></i>
+                                    Checkout</a>
+                            </div>
+                        @else
+                            <div class="card text-center">
+
+                                <div class="card-body">
+                                    <h5 class="card-title">Currently No Product Items in your Cart</h5>
+                                    <p class="card-text">Add some Products Item </p>
+                                    <a href="{{ route('home.page') }}" class="btn btn-primary">Do shopping</a>
+
+                                </div>
+                            </div>
                         @endif
-
-
-                        <div class="text-end mb-4">
-                            <a href="apps-ecommerce-checkout.html" class="btn btn-success btn-label right ms-auto"><i
-                                    class="ri-arrow-right-line label-icon align-bottom fs-16 ms-2"></i>
-                                Checkout</a>
-                        </div>
                     </div>
                     <!-- end col -->
 
@@ -151,7 +179,7 @@
                                                 <tr>
                                                     <td>Sub Total :</td>
                                                     <td class="text-end" id="cart-subtotal">
-                                                        ${{ Cart::subtotal(); }}
+                                                        ${{ Cart::subtotal() }}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -263,7 +291,7 @@
                         <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">
                             Close
                         </button>
-                        <button type="button" class="btn w-sm btn-danger" id="remove-product">
+                        <button type="button" class="btn w-sm btn-danger" id="remove-cart-product">
                             Yes, Delete It!
                         </button>
                     </div>
@@ -274,4 +302,102 @@
         <!-- /.modal-dialog -->
     </div>
     <!-- /.modal -->
+@section('script')
+    {{-- Script for increment and decrement quantity --}}
+    <script>
+        $(function() {
+            $('.plus').click(function(e) {
+                e.preventDefault();
+                var input = $(this).siblings('.product-quantity');
+                var quantity = parseInt(input.val());
+                if (quantity < 15) {
+                    quantity++;
+                    input.val(quantity);
+                    var rowId = $(this).data('id');
+                    updateCart(rowId, quantity);
+                }
+            });
+
+            $('.minus').click(function(e) {
+                e.preventDefault();
+                var input = $(this).siblings('.product-quantity');
+                var quantity = parseInt(input.val());
+
+                if (quantity > 1) {
+                    quantity--;
+                    input.val(quantity);
+                    var rowId = $(this).data('id');
+                    updateCart(rowId, quantity);
+                }
+            });
+        });
+
+        function updateCart(rowId, qty) {
+            $.ajax({
+                url: "{{ route('carts.update') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'post',
+                data: {
+                    rowId: rowId,
+                    qty: qty
+                },
+                dataType: 'json',
+                success: function(response) {
+                    if (response.status == true) {
+                        localStorage.setItem("successMessage", response.message);
+                        window.location.href = '{{ route('carts.details') }}';
+                    }
+                    if (response.status == false) {
+                        localStorage.setItem("errorMessage", response.message);
+                        window.location.href = '{{ route('carts.details') }}';
+                    }
+                },
+
+            });
+        }
+
+        function deleteItem(rowId) {
+            $('#removeItemModal').modal('show');
+            $('#remove-cart-product').click(function(e) {
+                console.log('clicked');
+                $.ajax({
+                    url: "{{ route('carts.item.delete') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    type: 'post',
+                    data: {
+                        rowId: rowId,
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status == true) {
+                            localStorage.setItem("successMessage", response.message);
+                            $('#removeItemModal').modal('hide');
+                            window.location.href = '{{ route('carts.details') }}';
+                        }
+                        if (response.status == false) {
+                            localStorage.setItem("errorMessage", response.message);
+                            window.location.href = '{{ route('carts.details') }}';
+                        }
+                    },
+                });
+            })
+        }
+        $(document).ready(function() {
+            var errorMessage = localStorage.getItem('errorMessage');
+            var successMessage = localStorage.getItem('successMessage');
+            if (errorMessage) {
+                showErrorToast(errorMessage);
+                localStorage.removeItem('errorMessage');
+            }
+            if (successMessage) {
+                showToast(successMessage);
+                localStorage.removeItem('successMessage');
+            }
+        });
+    </script>
+@endsection
 @endsection
