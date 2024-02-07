@@ -27,6 +27,7 @@ Route::get('/auth/github/callback', [GithubController::class,  'handleGithubCall
 //--------------------------------------Ends Here--------------------------------------------------------//
 //--------------------------------------Route for Checkout--------------------------------------------------------//
     Route::get('/checkout', [CartController::class,  'checkout'])->name('checkout.details');
+    Route::get('get-cities/{id}', [CartController::class,'getCity'])->name('cities.get');
 
 
 

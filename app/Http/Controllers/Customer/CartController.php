@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
 use App\Models\Product;
+use App\Models\Province;
+use Database\Seeders\ProvinceSeeder;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -121,6 +124,9 @@ class CartController extends Controller
                 'current_menu' => 'Checkout',
             ],
         ];
+        $provinces=Province::orderBy('name','ASC')->get();
+        $cities=City::orderBy('name','ASC')->get();
+
         if(Cart::count()==0){
             return redirect()->route('carts.details');
         }
@@ -130,6 +136,11 @@ class CartController extends Controller
             }
             return redirect()->route('login');
         }
-        return view('customer.Product.checkout',  compact('breadcrumb'));
+        return view('customer.Product.checkout',  compact('breadcrumb','provinces','cities'));
+    }
+    public function getCity($provinceId)
+    {
+        $provinces = City::where('province_id', $provinceId)->get();
+        return response()->json($provinces);
     }
 }

@@ -79,85 +79,63 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="mb-3">
-                                                        <label for="billinginfo-firstName" class="form-label">First Name</label>
-                                                        <input type="text" class="form-control" id="billinginfo-firstName" placeholder="Enter first name" value="">
+                                                        <label for="billinginfo-firstName" class="form-label">Full Name</label>
+                                                        <input type="text" class="form-control" id="billinginfo-firstName" placeholder="Enter first name" name="full_name">
                                                     </div>
                                                 </div>
-
-                                                <div class="col-sm-6">
-                                                    <div class="mb-3">
-                                                        <label for="billinginfo-lastName" class="form-label">Last Name</label>
-                                                        <input type="text" class="form-control" id="billinginfo-lastName" placeholder="Enter last name" value="">
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="mb-3">
                                                         <label for="billinginfo-email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
                                                         <input type="email" class="form-control" id="billinginfo-email" placeholder="Enter email">
                                                     </div>
                                                 </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="province" class="form-label">Province</label>
+                                                        <select class="js-example-basic-single-Province-city form-select" id="province_id" data-plugin="choices">
+                                                            <option value="">Select Province...</option>
+                                                            @if($provinces->isNotEmpty())
+                                                                @foreach ($provinces as $province)
+                                                                    <option value="{{ $province->id }}">{{ $province->name }}</option>
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
+                                                </div>
 
+                                                <div class="col-md-6">
+                                                    <div class="mb-3">
+                                                        <label for="city" class="form-label">City/Municipality</label>
+                                                        <select class="js-example-basic-single-Province-city form-select" id="cities_id" data-plugin="choices">
+                                                            <option value="">Select City/Municipality...</option>
+                                                            @foreach ($cities as $city)
+                                                            <option value="{{ $city->id }}">
+                                                                {{ $city->name ?? '' }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="mb-3">
-                                                        <label for="billinginfo-phone" class="form-label">Phone</label>
-                                                        <input type="text" class="form-control" id="billinginfo-phone" placeholder="Enter phone no.">
+                                                        <label for="billinginfo-phone" class="form-label">Mobile no</label>
+                                                        <input type="text" class="form-control" id="billinginfo-phone" placeholder="Enter mobile no.">
                                                     </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                <div class="mb-3">
+                                                    <label for="billinginfo-address" class="form-label">Address</label>
+                                                    <input class="form-control" name="address" id="billinginfo-address" placeholder="House no. /building /street/area" rows="3"></input>
+                                                </div>
                                                 </div>
                                             </div>
 
-                                            <div class="mb-3">
-                                                <label for="billinginfo-address" class="form-label">Address</label>
-                                                <textarea class="form-control" id="billinginfo-address" placeholder="Enter address" rows="3"></textarea>
-                                            </div>
 
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="mb-3">
-                                                        <label for="country" class="form-label">Country</label>
-                                                        <select class="form-select" id="country" data-plugin="choices">
-                                                            <option value="">Select Country...</option>
-                                                            <option selected>United States</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
 
-                                                <div class="col-md-4">
-                                                    <div class="mb-3">
-                                                        <label for="state" class="form-label">State</label>
-                                                        <select class="form-select" id="state" data-plugin="choices">
-                                                            <option value="">Select State...</option>
-                                                            <option value="Alabama">Alabama</option>
-                                                            <option value="Alaska">Alaska</option>
-                                                            <option value="American Samoa">American Samoa</option>
-                                                            <option value="California" selected>California</option>
-                                                            <option value="Colorado">Colorado</option>
-                                                            <option value="District Of Columbia">District Of Columbia</option>
-                                                            <option value="Florida">Florida</option>
-                                                            <option value="Georgia">Georgia</option>
-                                                            <option value="Guam">Guam</option>
-                                                            <option value="Hawaii">Hawaii</option>
-                                                            <option value="Idaho">Idaho</option>
-                                                            <option value="Kansas">Kansas</option>
-                                                            <option value="Louisiana">Louisiana</option>
-                                                            <option value="Montana">Montana</option>
-                                                            <option value="Nevada">Nevada</option>
-                                                            <option value="New Jersey">New Jersey</option>
-                                                            <option value="New Mexico">New Mexico</option>
-                                                            <option value="New York">New York</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
 
-                                                <div class="col-md-4">
-                                                    <div class="mb-3">
-                                                        <label for="zip" class="form-label">Zip Code</label>
-                                                        <input type="text" class="form-control" id="zip" placeholder="Enter zip code">
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                             <div class="d-flex align-items-start gap-3 mt-3">
                                                 <button type="button" class="btn btn-primary btn-label right ms-auto nexttab" data-nexttab="pills-bill-address-tab">
@@ -449,4 +427,57 @@
 
 
 </div>
+
+
+{{-- Script for select2 --}}
+<script>
+    $(document).ready(function() {
+        $('.js-example-basic-single-Province-city').select2({
+
+        });
+    });
+</script>
+
+{{-- Dynamic Dropdown for Province and City --}}
+<script>
+    $(document).ready(function() {
+        // Disable city dropdown initially
+        $('#cities_id').prop('disabled', true);
+
+        $('#province_id').change(function() {
+            var provinceId = $(this).val();
+            if (provinceId) {
+                var url = "{{ route('cities.get', ['id' => ':id']) }}";
+                var urlWithId = url.replace(':id', provinceId);
+                $.ajax({
+                    type: "GET",
+                    url: urlWithId,
+                    success: function(res) {
+                        if (res) {
+                            $("#cities_id").empty();
+                            $("#cities_id").append(
+                                '<option value="">Select City/Municipality...</option>');
+                            $.each(res, function(key, value) {
+                                $("#cities_id").append('<option value="' +
+                                    value.id + '">' + value.name +
+                                    '</option>');
+                            });
+                            $('#cities_id').prop('disabled', false);
+                        } else {
+                            $("#cities_id").empty();
+                            $('#cities_id').prop('disabled', true);
+                        }
+                    }
+                });
+            } else {
+                $("#cities_id").empty();
+                $('#cities_id').prop('disabled', true);
+            }
+        });
+    });
+</script>
+
+
 @endsection
+
+

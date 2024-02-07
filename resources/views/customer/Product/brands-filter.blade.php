@@ -13,7 +13,7 @@
                                     <ol class="breadcrumb m-0">
                                         @foreach ($breadcrumb['breadcrumbs'] as $label => $link)
                                             <li class="breadcrumb-item">
-                                                @if ($label == 'current_menu')
+                                    php            @if ($label == 'current_menu')
                                                     <a>
                                                         {{ $link }}
                                                     </a>
