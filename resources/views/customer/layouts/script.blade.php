@@ -83,10 +83,10 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
     function addToCart(id) {
         $.ajax({
             url: '{{ route("carts.add") }}',
+            type: 'post',
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            type: 'post',
             data: { id: id },
             dataType: 'json',
             success: function (response) {
@@ -94,9 +94,11 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
                     localStorage.setItem("successMessage", response.message);
                     window.location.href="{{ route('carts.details') }}"
                 }else{
-                    alert(response.message);
+                    $('#cartErrorModal').modal('show');
+
                 }
             },
+
         });
     }
  </script>

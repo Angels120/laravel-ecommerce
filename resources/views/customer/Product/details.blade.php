@@ -122,17 +122,17 @@
                                                         </div>
                                                         <div class="flex-grow-1">
                                                             <p class="mb-1  fs-16 price">Price:
-                                                                @if ($product->discount)
-                                                                    {{ $product->price - ($product->price * $product->discount) / 100 }}
+                                                                @if ($product->price)
+                                                                    {{ $product->price }}
                                                                     <div>
-                                                                        <s>
-                                                                            {{ $product->price }}
+                                                                        <s class="text-muted">
+                                                                            {{ $product->compare_price }}
                                                                         </s>
                                                                         <span class="text-danger price">
                                                                             ({{ $product->discount }}% off)</span>
                                                                     </div>
                                                                 @else
-                                                                    {{ $product->price ?? ' ' }}
+                                                                    {{ $product->compare_price ?? ' ' }}
                                                                 @endif
                                                             </p>
 
@@ -460,6 +460,29 @@
     </div>
     <!-- End Page-content -->
     </div>
+    <!-- CartErrorModal -->
+    <div id="cartErrorModal" class="modal fade zoomIn" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        id="close-modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-2 text-center">
+                        <lord-icon src="https://cdn.lordicon.com/usownftb.json" trigger="loop"
+                        style="width:100px;height:100px; ">
+                    </lord-icon>
+                        <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                            <h4 class="text-danger">Your Product is already added in cart!</h4>
+                    </div>
+                </div>
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
 @section('script')
     {{-- Script for increment and decrement quantity --}}
     <script>

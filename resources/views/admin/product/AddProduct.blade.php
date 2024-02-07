@@ -29,10 +29,10 @@
                                                 <label for="descriptionInput" class="form-label">
                                                     Description
                                                 </label>
-                                                <div  id="editor"></div>
+                                                <div id="editor"></div>
                                                 <input type="hidden" name="description"
-                                                value="{{ old('description') }}" id="editor_input">
-                                             </div>
+                                                    value="{{ old('description') }}" id="editor_input">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -63,7 +63,8 @@
                                     <div class="col-lg-12 mt-2">
                                         <label for="category" class="control-label mb-1">Category<span
                                                 class="ms-1 text-danger">*</span></label>
-                                        <select id="category_id" class="js-example-basic-singleEdit1 form-select" name="category_id">
+                                        <select id="category_id" class="js-example-basic-singleEdit1 form-select"
+                                            name="category_id">
                                             <option class="" value="">Select Category</option>
                                             @foreach ($categories as $category)
                                                 <option value="{{ $category->id }}">
@@ -77,7 +78,8 @@
                                         <div class="col-lg-12 mt-2">
                                             <label for="subcategory" class="control-label mb-1">Sub Category<span
                                                     class="ms-1 text-danger">*</span></label>
-                                            <select id="sub_categories_id" class="js-example-basic-singleEdit1 form-select"
+                                            <select id="sub_categories_id"
+                                                class="js-example-basic-singleEdit1 form-select"
                                                 name="sub_categories_id">
                                                 <option class="" value="">Select Sub-Category</option>
                                                 @foreach ($subcategories as $subcategory)
@@ -92,7 +94,8 @@
                                     <div id="brand-select" class="d-none">
                                         <div class="col-lg-12 mt-2">
                                             <label for="brand" class="control-label mb-1">Brand</label>
-                                            <select id="brand_id" class="js-example-basic-singleEdit1 form-select" name="brands_id">
+                                            <select id="brand_id" class="js-example-basic-singleEdit1 form-select"
+                                                name="brands_id">
                                                 <option class="" value="">Select Brands</option>
                                                 @foreach ($brands as $brand)
                                                     <option value="{{ $brand->id }}">
@@ -125,10 +128,12 @@
                         <div class="card-body" style="box-shadow: 0 0 10px rgba(135, 128, 128, 0.2);">
                             <div class="row my-6">
                                 <div class="col-lg-12">
-                                        <h5>
-                                            Product Images
-                                        </h5>
-                                        <input type="file" class="filepond filepond-input-multiple w-100" multiple name="image[]" data-allow-reorder="true"  data-max-file-size="3MB" data-max-files="5">
+                                    <h5>
+                                        Product Images
+                                    </h5>
+                                    <input type="file" class="filepond filepond-input-multiple w-100" multiple
+                                        name="image[]" data-allow-reorder="true" data-max-file-size="3MB"
+                                        data-max-files="5">
                                 </div>
                             </div>
                             <div class="invalid-feedback" id="ProductImagesError"></div>
@@ -138,30 +143,44 @@
                         <div class="card" style="width: 50%;">
                             <div class="card-body" style="box-shadow: 0 0 10px rgba(135, 128, 128, 0.2);">
                                 <div class="col-lg-12">
-                                    <h5>
-                                        Product Price
-                                    </h5>
-                                    <div class="col-lg-12 mt-2">
-                                        <label for="name" class="control-label mb-1">Price<span
+                                    <h5>Product Price</h5>
+                                    <h6 class="text-muted">#(Put the actual price of product in compare price field and
+                                        discount price in price field)</h6>
+
+                                        <label for="name" class="control-label mb-1">Compare Price<span
                                                 class="ms-1 text-danger">*</span></label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="product-discount-addon">Nrs</span>
-                                            <input type="text" name="price" class="form-control"
-                                                id="product-price" placeholder="Enter Price">
+                                            <input type="text" name="compare_price" class="form-control"
+                                                id="product-compare-price" placeholder="Enter Actual Price">
                                         </div>
-                                        <div class="invalid-feedback" id="ProductPriceError"></div>
-                                    </div>
-                                    <div class="col-lg-12 mt-2">
-                                        <label for="name" class="control-label mb-1">Discount</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="product-discount-addon">%</span>
-                                            <input type="text" name="discount" class="form-control"
-                                                id="product-discount" placeholder="Enter discount">
+                                        <div class="invalid-feedback" id="ProductComparePriceError"></div>
+
+                                    <div class="d-flex">
+                                        <div class="me-3">
+                                            <label for="name" class="control-label mb-1">Discount</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="product-discount-addon">%</span>
+                                                <input type="text" name="discount" class="form-control"
+                                                    id="product-discount" placeholder="Enter discount">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="name" class="control-label mb-1">Price
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="product-discount-addon">Nrs</span>
+                                                <input type="text" name="price" class="form-control"
+                                                    id="product-price" placeholder="Enter Discount  Price">
+                                            </div>
                                         </div>
                                     </div>
+
+                                    <div class="invalid-feedback" id="ProductPriceError"></div>
                                 </div>
                             </div>
                         </div>
+
+
                         <div class="card" style="width: 50%;">
                             <div class="card-body" style="box-shadow: 0 0 10px rgba(135, 128, 128, 0.2);">
                                 <div class="col-lg-12">
@@ -177,8 +196,9 @@
                                     </div>
                                     <div class="col-lg-12 mt-2">
                                         <label for="name" class="control-label mb-1">Available Sizes</label>
-                                        <select id="sizes" class="js-example-basic-singleEdit1 form-select" multiple name="sizes[]">
-                                            <option value="S" >Small</option>
+                                        <select id="sizes" class="js-example-basic-singleEdit1 form-select"
+                                            multiple name="sizes[]">
+                                            <option value="S">Small</option>
                                             <option value="M">Medium</option>
                                             <option value="L">Large</option>
                                             <option value="XL">Extra Large</option>
@@ -302,10 +322,12 @@
                     console.log(error);
                     document.getElementById('ProductNameError').style.display = "none";
                     document.getElementById('ProductCategoryError').style.display = "none";
-                    document.getElementById('ProductSubCategoryError').style.display ="none";
+                    document.getElementById('ProductSubCategoryError').style.display =
+                        "none";
                     document.getElementById('ProductBrandError').style.display = "none";
                     document.getElementById('ProductImagesError').style.display = "none";
                     document.getElementById('ProductPriceError').style.display = "none";
+                    document.getElementById('ProductComparePriceError').style.display = "none";
                     document.getElementById('ProductStockError').style.display = "none";
                     if (error.responseJSON.errors) {
                         if (error.responseJSON.errors.name) {
@@ -352,6 +374,13 @@
                                 errMsg.textContent = error.responseJSON.errors.price[0];
                             }
                         }
+                        if (error.responseJSON.errors.compare_price) {
+                            var errMsg = document.getElementById('ProductComparePriceError');
+                            if (error.responseJSON.errors.compare_price[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors.compare_price[0];
+                            }
+                        }
                         if (error.responseJSON.errors.stock) {
                             var errMsg = document.getElementById('ProductStockError');
                             if (error.responseJSON.errors.stock[0]) {
@@ -363,5 +392,24 @@
                 }
             });
         });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        // Function to calculate discounted price and update the "Price" field
+        function updatePrice() {
+            // Get values from the "Compare Price" and "Discount" fields
+            var comparePrice = parseFloat($('#product-compare-price').val()) || 0;
+            var discount = parseFloat($('#product-discount').val()) || 0;
+
+            // Calculate discounted price
+            var discountedPrice = comparePrice - (comparePrice * discount / 100);
+
+            // Update the "Price" field with the calculated discounted price
+            $('#product-price').val(discountedPrice.toFixed(2));
+        }
+
+        // Bind the updatePrice function to the input fields' change events
+        $('#product-compare-price, #product-discount').on('input', updatePrice);
     });
 </script>

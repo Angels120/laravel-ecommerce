@@ -18,20 +18,24 @@ Route::get('/auth/github/redirect', [GithubController::class,  'handleGithubRedi
 Route::get('/auth/github/callback', [GithubController::class,  'handleGithubCallback'])->name('callback.github');
 //--------------------------------------Ends here--------------------------------------------------------//
 
+//--------------------------------------Route for Carts--------------------------------------------------------//
+
+    Route::get('/cart', [CartController::class,  'cart'])->name('carts.details');
+    Route::post('/add-to-cart', [CartController::class,  'addToCart'])->name('carts.add');
+    Route::post('/cart/update-cart', [CartController::class,  'updateCart'])->name('carts.update');
+    Route::post('/delete-cart', [CartController::class,  'delteItem'])->name('carts.item.delete');
+//--------------------------------------Ends Here--------------------------------------------------------//
+//--------------------------------------Route for Checkout--------------------------------------------------------//
+    Route::get('/checkout', [CartController::class,  'checkout'])->name('checkout.details');
+
 
 
 Route::get('/', [HomeController::class,  'index'])->name('home.page');
-Route::get('/cart', [CartController::class,  'cart'])->name('carts.details');
-Route::post('/add-to-cart', [CartController::class,  'addToCart'])->name('carts.add');
-Route::post('/update-cart', [CartController::class,  'updateCart'])->name('carts.update');
-Route::post('/delete-cart', [CartController::class,  'delteItem'])->name('carts.item.delete');
+
 
 Route::prefix('Product')->name('product.')->group(function () {
-Route::get('{slug}', [ProductController::class,  'productDetail'])->name('detail');
+    Route::get('{slug}', [ProductController::class,  'productDetail'])->name('detail');
 });
 Route::get('brands/{brandSlug?}', [ShopController::class,  'BrandFilter'])->name('brands.filter');
 
 Route::get('/{categorySlug?}/{subCategorySlug?}', [ShopController::class,  'index'])->name('lists');
-
-
-

@@ -43,8 +43,8 @@
                                 </div>
                             </div>
                             <div class="col-sm-auto">
-                                <a href="apps-ecommerce-products.html"
-                                    class="link-primary text-decoration-underline">Continue Shopping</a>
+                                <a href="{{ route('home.page') }}" class="link-primary text-decoration-underline">Continue
+                                    Shopping</a>
                             </div>
                         </div>
                         @if (Cart::count() > 0)
@@ -89,7 +89,7 @@
                                                 <div class="text-lg-end">
                                                     <p class="text-muted mb-1">Item Price:</p>
                                                     <h5 class="fs-14">
-                                                        Rs.<span id="ticket_price"
+                                                        Rs. <span id="ticket_price"
                                                             class="product-price">{{ $item->price }}</span>
                                                     </h5>
                                                 </div>
@@ -119,7 +119,7 @@
                                                 <div class="d-flex align-items-center gap-2 text-muted">
                                                     <div>Total :</div>
                                                     <h5 class="fs-14 mb-0">
-                                                        Rs.<span
+                                                        Rs. <span
                                                             class="product-line-price">{{ $item->price * $item->qty }}</span>
                                                     </h5>
                                                 </div>
@@ -134,7 +134,8 @@
 
 
                             <div class="text-end mb-4">
-                                <a href="apps-ecommerce-checkout.html" class="btn btn-success btn-label right ms-auto"><i
+                                <a href="{{ route('checkout.details') }}"
+                                    class="btn btn-success btn-label right ms-auto"><i
                                         class="ri-arrow-right-line label-icon align-bottom fs-16 ms-2"></i>
                                     Checkout</a>
                             </div>
@@ -202,7 +203,7 @@
                                                     <td class="text-end" id="cart-tax">Rs. 44.99</td>
                                                 </tr>
                                                 <tr class="table-active">
-                                                    <th>Total (USD) :</th>
+                                                    <th>Total (Rs) :</th>
                                                     <td class="text-end">
                                                         <span class="fw-semibold" id="cart-total">
                                                             Rs.415.96
@@ -245,24 +246,6 @@
             <!-- container-fluid -->
         </div>
         <!-- End Page-content -->
-
-        <footer class="footer">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-sm-6">
-                        <script>
-                            document.write(new Date().getFullYear());
-                        </script>
-                        © Velzon.
-                    </div>
-                    <div class="col-sm-6">
-                        <div class="text-sm-end d-none d-sm-block">
-                            Design & Develop by Themesbrand
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
     </div>
     <!-- end main content-->
 
