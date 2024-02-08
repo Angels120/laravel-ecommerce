@@ -41,7 +41,7 @@
                     <div class="card">
                         <div class="card-body checkout-tab">
 
-                            <form action="#">
+                            <form action="#" id="Billing-information-form">
                                 <div class="step-arrow-nav mt-n3 mx-n3 mb-3">
 
                                     <ul class="nav nav-pills nav-justified custom-nav" role="tablist">
@@ -79,22 +79,27 @@
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="mb-3">
-                                                        <label for="billinginfo-firstName" class="form-label">Full Name</label>
-                                                        <input type="text" class="form-control" id="billinginfo-firstName" placeholder="Enter first name" name="full_name">
+                                                        <label for="billinginfo-firstName" class="form-label">Full Name <span
+                                                            class="ms-1 text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="billinginfo-FullName" placeholder="Enter first name" name="full_name">
+                                                        <div class="invalid-feedback" id="FullNameError"></div>
+
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="mb-3">
                                                         <label for="billinginfo-email" class="form-label">Email <span class="text-muted">(Optional)</span></label>
                                                         <input type="email" class="form-control" id="billinginfo-email" placeholder="Enter email">
+                                                        <div class="invalid-feedback" id="EmailError"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label for="province" class="form-label">Province</label>
-                                                        <select class="js-example-basic-single-Province-city form-select" id="province_id" data-plugin="choices">
+                                                        <label for="province" class="form-label">Province <span
+                                                            class="ms-1 text-danger">*</span></label>
+                                                        <select class="js-example-basic-single-Province-city form-select" id="province_id" name="province_id" data-plugin="choices">
                                                             <option value="">Select Province...</option>
                                                             @if($provinces->isNotEmpty())
                                                                 @foreach ($provinces as $province)
@@ -102,33 +107,42 @@
                                                                 @endforeach
                                                             @endif
                                                         </select>
+                                                        <div class="invalid-feedback" id="ProvinceError"></div>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-6">
                                                     <div class="mb-3">
-                                                        <label for="city" class="form-label">City/Municipality</label>
-                                                        <select class="js-example-basic-single-Province-city form-select" id="cities_id" data-plugin="choices">
+                                                        <label for="city" class="form-label">City/Municipality <span
+                                                            class="ms-1 text-danger">*</span></label>
+                                                        <select class="js-example-basic-single-Province-city form-select" id="cities_id" name="city_id" data-plugin="choices">
                                                             <option value="">Select City/Municipality...</option>
                                                             @foreach ($cities as $city)
                                                             <option value="{{ $city->id }}">
                                                                 {{ $city->name ?? '' }}</option>
                                                             @endforeach
                                                         </select>
+                                                        <div class="invalid-feedback" id="CityError"></div>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="mb-3">
-                                                        <label for="billinginfo-phone" class="form-label">Mobile no</label>
-                                                        <input type="text" class="form-control" id="billinginfo-phone" placeholder="Enter mobile no.">
+                                                        <label for="billinginfo-phone" class="form-label">Mobile no <span
+                                                            class="ms-1 text-danger">*</span></label>
+                                                        <input type="text" class="form-control" id="billinginfo-phone" name="phone" placeholder="Enter mobile no.">
+                                                        <div class="invalid-feedback" id="mobileError"></div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                 <div class="mb-3">
-                                                    <label for="billinginfo-address" class="form-label">Address</label>
+                                                    <label for="billinginfo-address" class="form-label">Address <span
+                                                        class="ms-1 text-danger">*</span></label>
                                                     <input class="form-control" name="address" id="billinginfo-address" placeholder="House no. /building /street/area" rows="3"></input>
+                                                    <div class="invalid-feedback" id="addressError"></div>
+                                                    <div class="invalid-feedback" id="addressError"></div>
+
                                                 </div>
                                                 </div>
                                             </div>
@@ -138,7 +152,7 @@
 
 
                                             <div class="d-flex align-items-start gap-3 mt-3">
-                                                <button type="button" class="btn btn-primary btn-label right ms-auto nexttab" data-nexttab="pills-bill-address-tab">
+                                                <button type="button" class="btn btn-primary btn-label right ms-auto nexttab" id="save-information" data-nexttab="pills-bill-address-tab">
                                                     <i class="ri-truck-line label-icon align-middle fs-16 ms-2"></i>Proceed to Shipping
                                                 </button>
                                             </div>
@@ -441,9 +455,7 @@
 {{-- Dynamic Dropdown for Province and City --}}
 <script>
     $(document).ready(function() {
-        // Disable city dropdown initially
         $('#cities_id').prop('disabled', true);
-
         $('#province_id').change(function() {
             var provinceId = $(this).val();
             if (provinceId) {
@@ -477,6 +489,83 @@
     });
 </script>
 
+
+<script>
+    $(document).ready(function() {
+        $('#save-information').click(function(e) {
+            var data = $('#Billing-information-form').serializeArray();
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('process.checkout') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: data,
+                success: function(response) {
+                    console.log("finally");
+                    showToast(response.message);
+                },
+                error: function(error) {
+                    console.log(error);
+                    document.getElementById('FullNameError').style.display = "none";
+                    document.getElementById('EmailError').style.display = "none";
+
+                    document.getElementById('ProvinceError').style.display = "none";
+                    document.getElementById('CityError').style.display = "none";
+                    document.getElementById('mobileError').style.display = "none";
+                    document.getElementById('addressError').style.display = "none";
+                    if (error.responseJSON.errors) {
+                        if (error.responseJSON.errors.full_name) {
+                            var errMsg = document.getElementById('FullNameError');
+                            if (error.responseJSON.errors.full_name[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors.full_name[0];
+                            }
+                        }
+                        if (error.responseJSON.errors.email) {
+                            var errMsg = document.getElementById('EmailError');
+                            if (error.responseJSON.errors.email[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors.email[
+                                    0];
+                            }
+                        }
+                        if (error.responseJSON.errors.province_id) {
+                            var errMsg = document.getElementById('ProvinceError');
+                            if (error.responseJSON.errors.province_id[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors.province_id[0];
+                            }
+                        }
+                        if (error.responseJSON.errors.city_id) {
+                            var errMsg = document.getElementById('CityError');
+                            if (error.responseJSON.errors.city_id[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors.city_id[0];
+                            }
+                        }
+                        if (error.responseJSON.errors.phone) {
+                            var errMsg = document.getElementById('mobileError');
+                            if (error.responseJSON.errors.phone[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors.phone[0];
+                            }
+                        }
+                        if (error.responseJSON.errors.address) {
+                            var errMsg = document.getElementById('addressError');
+                            if (error.responseJSON.errors.address[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors.address[0];
+                            }
+                        }
+
+                    }
+                }
+            });
+        });
+    });
+</script>
 
 @endsection
 

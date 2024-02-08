@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\City;
+use App\Models\CustomerAddress;
 use App\Models\Product;
 use App\Models\Province;
 use Database\Seeders\ProvinceSeeder;
+use Dotenv\Validator;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -142,5 +144,24 @@ class CartController extends Controller
     {
         $provinces = City::where('province_id', $provinceId)->get();
         return response()->json($provinces);
+    }
+    public function processCheckout(Request $request){
+        // dd('clicked');
+        $validateData=$request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'nullable',
+            'province_id' => 'required',
+            'city_id' => 'required',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'address' => 'required',
+        ]);
+        // dd($validateData);
+        $user=Auth::user();
+        CustomerAddress::updateOrCreate(['user_id'=>$user->id],$validateData);
+        return response()->json(['message' => 'Customer Address collected  successfully']);
+
+
+
+
     }
 }
