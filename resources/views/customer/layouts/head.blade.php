@@ -9,14 +9,16 @@
 
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{ asset('admin_asset/images/logos/webmart-light.svg') }}">
-      <!-- Filepond Css -->
-      <link rel="stylesheet" href="{{ asset('admin_asset/libs/filepond/filepond.min.css') }}" type="text/css" />
-      <link rel="stylesheet" href="{{ asset('admin_asset/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css') }}">
+    <!-- Filepond Css -->
+    <link rel="stylesheet" href="{{ asset('admin_asset/libs/filepond/filepond.min.css') }}" type="text/css" />
+    <link rel="stylesheet"
+        href="{{ asset('admin_asset/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.css') }}">
     <!-- jsvectormap css -->
     <link href="{{ asset('admin_asset/libs/jsvectormap/css/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
 
     <!--Swiper slider css-->
     <link href="{{ asset('admin_asset/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css" />
+
 
     <!-- Layout config Js -->
     <script src="{{ asset('admin_asset/js/layout.js') }}"></script>
@@ -28,56 +30,87 @@
     <link href="{{ asset('admin_asset/css/app.min.css') }}" rel="stylesheet" type="text/css" />
     <!-- custom Css-->
     <link href="{{ asset('admin_asset/css/custom.min.css') }}" rel="stylesheet" type="text/css" />
+    <!--Range slider css-->
+    <link href="{{ asset('admin_asset/css/ion.rangeSlider.min.css') }}" rel="stylesheet" type="text/css" />
+
+
 
 
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
     <!--datatable css-->
-   <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
-   <!--datatable responsive css-->
-   <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/dataTables.bootstrap5.min.css" />
+    <!--datatable responsive css-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.2.9/css/responsive.bootstrap.min.css" />
 
-   <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.2.2/css/buttons.dataTables.min.css">
 
 
-   <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-   @vite(['resources/js/app.js'])
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    @vite(['resources/js/app.js'])
 
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
-    integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer" />
-   <style>
-    .select2-container--default .select2-selection--single {
-        background-color: #fff;
-        border: 1px solid #d7d8d9;
-        height: 37px
-    }
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css"
+        integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-        height: 26px;
-        position: absolute;
-        top: 5px;
-        right: 1px;
-        width: 20px;
-    }
+    {{-- fonts   --}}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;600&family=Merriweather:wght@300;700&family=Mukta:wght@200;300;400;500;600;700;800&family=Roboto+Mono:ital,wght@1,700&family=Sofia+Sans:wght@500&display=swap"
+        rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        .brands {
+            font-family: "Roboto Condensed", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            color: #363e61;
+            font-style: normal;
+            font-size: 40px;
+        }
 
-    .select2-container--default .select2-selection--single .select2-selection__rendered {
-        color: #444;
-        margin-top: 3px;
-    }
+        .price {
+            font-family: "Roboto", sans-serif;
+            font-weight: 500;
+            font-style: normal;
+        }
 
-    .select2-container--default .select2-selection--multiple {
-        background-color: white;
-        border: 1px solid rgb(170, 170, 170);
-        border-radius: 20px;
-        cursor: text;
+        .select2-container--default .select2-selection--single {
+            background-color: #fff;
+            border: 1px solid #d7d8d9;
+            height: 37px
+        }
 
-    }
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 26px;
+            position: absolute;
+            top: 5px;
+            right: 1px;
+            width: 20px;
+        }
 
-    .select2-container--default .select2-selection--multiple .select2-selection__choice {
-        background-color: #405189;
-        margin-top: 6px;
-        margin-left: 3px;
-    }
-</style>
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            color: #444;
+            margin-top: 3px;
+        }
+
+        .select2-container--default .select2-selection--multiple {
+            background-color: white;
+            border: 1px solid rgb(170, 170, 170);
+            border-radius: 20px;
+            cursor: text;
+
+        }
+
+        .select2-container--default .select2-selection--multiple .select2-selection__choice {
+            background-color: #405189;
+            margin-top: 6px;
+            margin-left: 3px;
+        }
+    </style>
 
 </head>

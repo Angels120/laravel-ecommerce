@@ -17,12 +17,10 @@ class BrandController extends Controller
     public function index(Request $request)
     {
         $breadcrumb = [
-
             'breadcrumbs' => [
                 'Dashboard' => route('admin.dashboard'),
                 'current_menu' => 'Brands',
             ],
-
         ];
         $index = 1;
         if ($request->ajax()) {

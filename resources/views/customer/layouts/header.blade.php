@@ -13,21 +13,36 @@
 </style>
 
 <header id="page-topbar">
+    <div class="d-none" id="toast-box">
+        <div class="mainText d-flex align-items-center px-3">
+            <i class="las la-bell fs-24 me-2"></i>
+            <span id="toastContent" class="me-2"></span>
+            <span id="closeToast" onclick="closeIt()" class="fs-19 text-strong cursor-pointer">x</span>
+        </div>
+    </div>
+
+    <div class="d-none" id="toast-error-box">
+        <div class="mainErrorText d-flex align-items-center px-3">
+            <i class="las la-bell fs-24 me-2"></i>
+            <span id="toastErrorContent" class="me-2"></span>
+            <span id="closeErrorToast" onclick="closeThis()" class="fs-19 text-strong cursor-pointer">x</span>
+        </div>
+    </div>
     <div class="layout-width">
         <div class="navbar-header">
             <div class="d-flex align-items-center">
                 <!-- LOGO -->
                 <div class="navbar-brand-box horizontal-logo" style="overflow: hidden;">
                     <a href="{{ route('home.page') }}" class="logo logo-dark">
-                       
+
                         <img src="{{ asset('admin_asset/images/logos/webmart-light.svg') }}" alt="" style="height:100px">
                     </a>
 
                     <a href="{{ route('home.page') }}" class="logo logo-light">
-                        
+
                         <img src="{{ asset('admin_asset/images/logos/webmart-dark.svg') }}" alt="" style="height: 100px;">
                     </a>
-                </div> 
+                </div>
 
                 <button type="button" class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
                     <span class="hamburger-icon">
@@ -674,13 +689,15 @@
                                 </a>
                                 <div class="collapse menu-dropdown" id="sidebarSignIn">
                                     <ul class="nav nav-sm flex-column">
-                                        <li class="nav-item">
+
                                             @foreach ($category->subcategories ?? [] as $subcategory)
                                             @if ($subcategory->status == 1)
-                                            <a href="{{ route('product.detail',[ $category->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link">{{ $subcategory->subcategory_name }}</a>
+                                            <li class="nav-item">
+                                            <a href="{{ route('lists',[ $category->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link item-{{ $subcategory->subcategory_name }}">{{ $subcategory->subcategory_name }}</a>
+                                        </li>
                                             @endif
                                             @endforeach
-                                        </li>
+
 
                                     </ul>
                                 </div>
@@ -701,15 +718,17 @@
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarLayouts">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                @foreach ($firstCategory->subcategories ?? [] as $subcategory)
+                            @foreach ($firstCategory->subcategories ?? [] as $subcategory)
                                 @if ($subcategory->status == 1)
-                                <a href="apps-calendar.html" class="nav-link">{{ $subcategory->subcategory_name }}</a>
+                                    <li class="nav-item">
+                                        <a href="{{ route('lists', [$firstCategory->category_slug, $subcategory->subcategory_slug]) }}" class="nav-link item-{{ $subcategory->subcategory_name }}">
+                                            {{ $subcategory->subcategory_name }}
+                                        </a>
+                                    </li>
                                 @endif
-                                @endforeach
-                            </li>
-
+                            @endforeach
                         </ul>
+
                     </div>
                 </li> <!-- end Dashboard Menu -->
                 @endif
@@ -726,7 +745,7 @@
                             <li class="nav-item">
                                 @foreach ($secondCategory->subcategories ?? [] as $subcategory)
                                 @if ($subcategory->status == 1)
-                                <a href="apps-calendar.html" class="nav-link">{{ $subcategory->subcategory_name }}</a>
+                                <a href="{{ route('lists',[ $secondCategory->category_slug,$subcategory->subcategory_slug]) }}" class="nav-link">{{ $subcategory->subcategory_name }}</a>
                                 @endif
                                 @endforeach
 
@@ -740,21 +759,19 @@
                 <li class="nav-item" style="padding: 10px;">
                     <a href="#sidebarPages" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarPages">
                         <span data-key="t-layouts" class="category d-flex align-items-center">Featured Product <span class="badge badge-pill bg-success">New</span> <i class="ri-arrow-down-s-fill fs-22" style="color: white;"></i>
-
-
                     </a>
                     <div class="collapse menu-dropdown" id="sidebarLayouts">
                         <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                @foreach ($products as $product)
-                                @if ($product->featured == 1)
-                                <a href="apps-calendar.html" class="nav-link">{{ $product->name }}</a>
+                            @foreach ($products as $product)
+                            @if ($product->featured == 1)
+                                    <li class="nav-item">
+                                        <a href="{{ route('product.detail', $product->slug) }}"  class="nav-link item-{{ $product->slug }}">{{ $product->name }}</a>
+
+                                    </li>
                                 @endif
-                                @endforeach
-
-                            </li>
-
+                            @endforeach
                         </ul>
+
                     </div>
                 </li> <!-- end Dashboard Menu -->
 
@@ -770,10 +787,10 @@
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
 
+
 <script>
     function showToast(a) {
         const toastBox = document.getElementById('toast-box');
-        console.log("toast showing");
         toastBox.classList.remove('d-none');
         document.getElementById('toastContent').textContent = a;
         toastBox.classList.add('show');

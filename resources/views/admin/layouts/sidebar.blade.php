@@ -3,7 +3,7 @@
     <!-- LOGO -->
     <div class="navbar-brand-box">
         <!-- Dark Logo-->
-        <a href="index.html" class="logo logo-dark">
+        <a href="{{ route('home.page') }}" class="logo logo-dark">
             <span class="logo-sm">
                 <img src="{{ asset('admin_asset/images/logos/webmart-dark.svg')}}" alt="" height="22">
             </span>
@@ -12,7 +12,7 @@
             </span>
         </a>
         <!-- Light Logo-->
-        <a href="index.html" class="logo logo-light">
+        <a href="{{ route('home.page') }}" class="logo logo-light">
             <span class="logo-sm">
                 <img src="{{ asset('admin_asset/images/logos/webmart-light.svg')}}" alt="" height="22">
             </span>
@@ -55,8 +55,6 @@
                <!-- end Dashboard Menu -->
 
                 <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Pages</span></li>
-
-
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.products.index') }}"  role="button" aria-expanded="false">
