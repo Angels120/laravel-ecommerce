@@ -32,6 +32,7 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
  <script src="{{ asset('admin_asset/js/pages/dashboard-ecommerce.init.js') }}"></script>
  <script src="{{ asset('admin_asset/js/pages/ecommerce-product-details.init.js') }}"></script>
 
+ <script src="{{ asset('admin_asset/js/pages/ecommerce-product-checkout.init.js') }}"></script>
 
 
 
@@ -58,6 +59,9 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
  <!-- include jQuery library -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
  <script src="{{ asset('admin_asset/js/pages/datatables.init.js') }}"></script>
+
+
+
 
  <!--datatable js-->
  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>

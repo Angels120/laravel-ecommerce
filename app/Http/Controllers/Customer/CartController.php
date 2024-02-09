@@ -123,6 +123,7 @@ class CartController extends Controller
         $breadcrumb = [
             'breadcrumbs' => [
                 'WebMart' => route('home.page'),
+                'Carts' => route('carts.details'),
                 'current_menu' => 'Checkout',
             ],
         ];
@@ -160,8 +161,21 @@ class CartController extends Controller
         CustomerAddress::updateOrCreate(['user_id'=>$user->id],$validateData);
         return response()->json(['message' => 'Customer Address collected  successfully']);
 
-
-
+        // dd($request->all());
 
     }
+
+    public function userInformation(Request $request) {
+        $user = Auth::user();
+
+        $userAddresses = CustomerAddress::where('user_id', $user->id)->get();
+
+        if ($userAddresses->isNotEmpty()) {
+            return response()->json($userAddresses);
+        } else {
+
+            return response()->json(['error' => 'User information not found'], 404);
+        }
+    }
+
 }

@@ -26,9 +26,10 @@ Route::get('/auth/github/callback', [GithubController::class,  'handleGithubCall
     Route::post('/delete-cart', [CartController::class,  'delteItem'])->name('carts.item.delete');
 //--------------------------------------Ends Here--------------------------------------------------------//
 //--------------------------------------Route for Checkout--------------------------------------------------------//
-    Route::get('/checkout', [CartController::class,  'checkout'])->name('checkout.details');
+Route::get('/checkout', [CartController::class,  'checkout'])->name('checkout.details');
     Route::get('get-cities/{id}', [CartController::class,'getCity'])->name('cities.get');
     Route::post('process-checkout', [CartController::class,'processCheckout'])->name('process.checkout');
+    Route::get('user-information', [CartController::class,'userInformation'])->name('user.address');
 
 
 
