@@ -158,10 +158,10 @@ class CartController extends Controller
         ]);
         // dd($validateData);
         $user=Auth::user();
-        CustomerAddress::updateOrCreate(['user_id'=>$user->id],$validateData);
-        return response()->json(['message' => 'Customer Address collected  successfully']);
+        // CustomerAddress::updateOrCreate(['user_id'=>$user->id],$validateData);
+        // return response()->json(['message' => 'Customer Address collected  successfully']);
 
-        // dd($request->all());
+        dd($request->all());
 
     }
 
@@ -174,7 +174,7 @@ class CartController extends Controller
             return response()->json($userAddresses);
         } else {
 
-            return response()->json(['error' => 'User information not found'], 404);
+            return response()->json(['message' => 'User information not found Please fill below form'], 404);
         }
     }
 

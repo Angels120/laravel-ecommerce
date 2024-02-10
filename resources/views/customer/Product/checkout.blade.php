@@ -83,8 +83,8 @@
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <h5 class="mb-0">Billing Information</h5>
                                                     <button type="button"
-                                                        class="btn btn-success btn-label right ms-auto nexttab"
-                                                        id="import_user_info" data-nexttab="pills-bill-address-tab">
+                                                        class="btn btn-success btn-label right ms-auto"
+                                                        id="import_user_info" >
                                                         <i class="ri-download-line label-icon align-middle fs-16 ms-2"></i>
                                                         Import User Address
                                                     </button>
@@ -204,22 +204,29 @@
 
                                             <div class="row g-4">
                                                 <div class="col-lg-4 col-sm-6">
-                                                    <div data-bs-toggle="collapse" data-bs-target="#paymentmethodCollapse.show" aria-expanded="false" aria-controls="paymentmethodCollapse">
+                                                    <div data-bs-toggle="collapse"
+                                                        data-bs-target="#paymentmethodCollapse.show" aria-expanded="false"
+                                                        aria-controls="paymentmethodCollapse">
                                                         <div class="form-check card-radio">
-                                                            <input id="paymentMethod01" name="paymentMethod" type="radio" class="form-check-input">
+                                                            <input id="paymentMethod01" name="paymentMethod"
+                                                                type="radio" class="form-check-input">
                                                             <label class="form-check-label" for="paymentMethod01">
-                                                                <span class="fs-16 text-muted me-2"><i class="ri-paypal-fill align-bottom"></i></span>
+                                                                <span class="fs-16 text-muted me-2"><i
+                                                                        class="ri-paypal-fill align-bottom"></i></span>
                                                                 <span class="fs-14 text-wrap">Paypal</span>
                                                             </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 col-sm-6">
-                                                    <div data-bs-toggle="collapse" data-bs-target="#paymentmethodCollapse" aria-expanded="true" aria-controls="paymentmethodCollapse">
+                                                    <div data-bs-toggle="collapse" data-bs-target="#paymentmethodCollapse"
+                                                        aria-expanded="true" aria-controls="paymentmethodCollapse">
                                                         <div class="form-check card-radio">
-                                                            <input id="paymentMethod02" name="paymentMethod" type="radio" class="form-check-input" checked>
+                                                            <input id="paymentMethod02" name="paymentMethod"
+                                                                type="radio" class="form-check-input" checked>
                                                             <label class="form-check-label" for="paymentMethod02">
-                                                                <span class="fs-16 text-muted me-2"><i class="ri-bank-card-fill align-bottom"></i></span>
+                                                                <span class="fs-16 text-muted me-2"><i
+                                                                        class="ri-bank-card-fill align-bottom"></i></span>
                                                                 <span class="fs-14 text-wrap">Credit / Debit Card</span>
                                                             </label>
                                                         </div>
@@ -227,11 +234,15 @@
                                                 </div>
 
                                                 <div class="col-lg-4 col-sm-6">
-                                                    <div data-bs-toggle="collapse" data-bs-target="#paymentmethodCollapse.show" aria-expanded="false" aria-controls="paymentmethodCollapse">
+                                                    <div data-bs-toggle="collapse"
+                                                        data-bs-target="#paymentmethodCollapse.show" aria-expanded="false"
+                                                        aria-controls="paymentmethodCollapse">
                                                         <div class="form-check card-radio">
-                                                            <input id="paymentMethod03" name="paymentMethod" type="radio" class="form-check-input">
+                                                            <input id="paymentMethod03" name="paymentMethod"
+                                                                type="radio" class="form-check-input">
                                                             <label class="form-check-label" for="paymentMethod03">
-                                                                <span class="fs-16 text-muted me-2"><i class="ri-money-dollar-box-fill align-bottom"></i></span>
+                                                                <span class="fs-16 text-muted me-2"><i
+                                                                        class="ri-money-dollar-box-fill align-bottom"></i></span>
                                                                 <span class="fs-14 text-wrap">Cash on Delivery</span>
                                                             </label>
                                                         </div>
@@ -244,33 +255,44 @@
                                                     <div class="row gy-3">
                                                         <div class="col-md-12">
                                                             <label for="cc-name" class="form-label">Name on card</label>
-                                                            <input type="text" class="form-control" id="cc-name" placeholder="Enter name">
-                                                            <small class="text-muted">Full name as displayed on card</small>
+                                                            <input type="text" class="form-control" id="cc-name"
+                                                                placeholder="Enter name">
+                                                            <small class="text-muted">Full name as displayed on
+                                                                card</small>
                                                         </div>
 
                                                         <div class="col-md-6">
-                                                            <label for="cc-number" class="form-label">Credit card number</label>
-                                                            <input type="text" class="form-control" id="cc-number" placeholder="xxxx xxxx xxxx xxxx">
+                                                            <label for="cc-number" class="form-label">Credit card
+                                                                number</label>
+                                                            <input type="text" class="form-control" id="cc-number"
+                                                                placeholder="xxxx xxxx xxxx xxxx">
                                                         </div>
 
                                                         <div class="col-md-3">
-                                                            <label for="cc-expiration" class="form-label">Expiration</label>
-                                                            <input type="text" class="form-control" id="cc-expiration" placeholder="MM/YY">
+                                                            <label for="cc-expiration"
+                                                                class="form-label">Expiration</label>
+                                                            <input type="text" class="form-control" id="cc-expiration"
+                                                                placeholder="MM/YY">
                                                         </div>
 
                                                         <div class="col-md-3">
                                                             <label for="cc-cvv" class="form-label">CVV</label>
-                                                            <input type="text" class="form-control" id="cc-cvv" placeholder="xxx">
+                                                            <input type="text" class="form-control" id="cc-cvv"
+                                                                placeholder="xxx">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="text-muted mt-2 fst-italic">
-                                                    <i data-feather="lock" class="text-muted icon-xs"></i> Your transaction is secured with SSL encryption
+                                                    <i data-feather="lock" class="text-muted icon-xs"></i> Your
+                                                    transaction is secured with SSL encryption
                                                 </div>
                                             </div>
 
                                             <div class="d-flex align-items-start gap-3 mt-4">
-                                                <button type="button" class="btn btn-light btn-label previestab" data-previous="pills-bill-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>Back to Personal Info</button>
+                                                <button type="button" class="btn btn-light btn-label previestab"
+                                                    data-previous="pills-bill-info-tab"><i
+                                                        class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>Back
+                                                    to Personal Info</button>
                                                 <button type="button"
                                                     class="btn btn-primary btn-label right ms-auto nexttab"
                                                     id="order_complete" data-nexttab="pills-finish-tab"><i
@@ -560,6 +582,12 @@
 
                         showToast("User information loaded successfully.");
                     },
+                    error: function(error) {
+                        var errorResponse = JSON.parse(error.responseText);
+                        var errorMessage = errorResponse.message;
+                        showErrorToast(errorMessage);
+
+                    }
 
                 });
             });
