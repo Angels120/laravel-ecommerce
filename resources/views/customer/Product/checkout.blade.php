@@ -41,7 +41,7 @@
                         <div class="card">
                             <div class="card-body checkout-tab">
 
-                                <form action="#" id="Billing-information-form">
+                                <form id="Billing-information-form">
                                     <div class="step-arrow-nav mt-n3 mx-n3 mb-3">
 
                                         <ul class="nav nav-pills nav-justified custom-nav" role="tablist">
@@ -58,21 +58,20 @@
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link fs-15 p-3" id="pills-payment-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-payment" type="button"
-                                                    role="tab" aria-controls="pills-payment" aria-selected="false">
-                                                    <i
-                                                        class="ri-bank-card-line fs-16 p-2 bg-soft-primary text-primary rounded-circle align-middle me-2"></i>
+                                                    role="tab" aria-controls="pills-payment" aria-selected="false" disabled>
+                                                    <i class="ri-bank-card-line fs-16 p-2 bg-soft-primary text-primary rounded-circle align-middle me-2"></i>
                                                     Payment Info
                                                 </button>
                                             </li>
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link fs-15 p-3" id="pills-finish-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-finish" type="button"
-                                                    role="tab" aria-controls="pills-finish" aria-selected="false">
-                                                    <i
-                                                        class="ri-checkbox-circle-line fs-16 p-2 bg-soft-primary text-primary rounded-circle align-middle me-2"></i>
+                                                    role="tab" aria-controls="pills-finish" aria-selected="false" disabled>
+                                                    <i class="ri-checkbox-circle-line fs-16 p-2 bg-soft-primary text-primary rounded-circle align-middle me-2"></i>
                                                     Finish
                                                 </button>
                                             </li>
+
                                         </ul>
                                     </div>
 
@@ -82,9 +81,8 @@
                                             <div>
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <h5 class="mb-0">Billing Information</h5>
-                                                    <button type="button"
-                                                        class="btn btn-success btn-label right ms-auto"
-                                                        id="import_user_info" >
+                                                    <button type="button" class="btn btn-success btn-label right ms-auto"
+                                                        id="import_user_info">
                                                         <i class="ri-download-line label-icon align-middle fs-16 ms-2"></i>
                                                         Import User Address
                                                     </button>
@@ -109,7 +107,7 @@
                                                         <div class="mb-3">
                                                             <label for="billinginfo-email" class="form-label">Email<span
                                                                     class="text-muted">(Optional)</span></label>
-                                                            <input type="email" class="form-control"
+                                                            <input type="email" name="email" class="form-control"
                                                                 id="billinginfo-email" placeholder="Enter email">
                                                             <div class="invalid-feedback" id="EmailError"></div>
                                                         </div>
@@ -182,7 +180,7 @@
                                                 <div class="d-flex align-items-start gap-3 mt-3">
                                                     <button type="button"
                                                         class="btn btn-primary btn-label right ms-auto nexttab"
-                                                        id="save-information" data-nexttab="pills-payment-tab">
+                                                        id="save-information">
                                                         <i
                                                             class="ri-bank-card-line label-icon align-middle fs-16 ms-2"></i>
                                                         Proceed to Payment Info
@@ -209,7 +207,7 @@
                                                         aria-controls="paymentmethodCollapse">
                                                         <div class="form-check card-radio">
                                                             <input id="paymentMethod01" name="paymentMethod"
-                                                                type="radio" class="form-check-input">
+                                                                type="radio" value="paypal" class="form-check-input">
                                                             <label class="form-check-label" for="paymentMethod01">
                                                                 <span class="fs-16 text-muted me-2"><i
                                                                         class="ri-paypal-fill align-bottom"></i></span>
@@ -223,7 +221,8 @@
                                                         aria-expanded="true" aria-controls="paymentmethodCollapse">
                                                         <div class="form-check card-radio">
                                                             <input id="paymentMethod02" name="paymentMethod"
-                                                                type="radio" class="form-check-input" checked>
+                                                                type="radio" value="credit_card"
+                                                                class="form-check-input" checked>
                                                             <label class="form-check-label" for="paymentMethod02">
                                                                 <span class="fs-16 text-muted me-2"><i
                                                                         class="ri-bank-card-fill align-bottom"></i></span>
@@ -239,7 +238,7 @@
                                                         aria-controls="paymentmethodCollapse">
                                                         <div class="form-check card-radio">
                                                             <input id="paymentMethod03" name="paymentMethod"
-                                                                type="radio" class="form-check-input">
+                                                                type="radio" value="cod" class="form-check-input">
                                                             <label class="form-check-label" for="paymentMethod03">
                                                                 <span class="fs-16 text-muted me-2"><i
                                                                         class="ri-money-dollar-box-fill align-bottom"></i></span>
@@ -295,31 +294,26 @@
                                                     to Personal Info</button>
                                                 <button type="button"
                                                     class="btn btn-primary btn-label right ms-auto nexttab"
-                                                    id="order_complete" data-nexttab="pills-finish-tab"><i
+                                                    id="order_complete" ><i
                                                         class="ri-shopping-basket-line label-icon align-middle fs-16 ms-2"></i>Complete
                                                     Order</button>
                                             </div>
                                         </div>
                                         <!-- end tab pane -->
 
-                                        <div class="tab-pane fade" id="pills-finish" role="tabpanel"
-                                            aria-labelledby="pills-finish-tab">
+                                        <div class="tab-pane fade" id="pills-finish" role="tabpanel" aria-labelledby="pills-finish-tab">
                                             <div class="text-center py-5">
-
                                                 <div class="mb-4">
                                                     <lord-icon src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop"
-                                                        colors="primary:#0ab39c,secondary:#405189"
-                                                        style="width:120px;height:120px"></lord-icon>
+                                                        colors="primary:#0ab39c,secondary:#405189" style="width:120px;height:120px"></lord-icon>
                                                 </div>
                                                 <h5>Thank you ! Your Order is Completed !</h5>
-                                                <p class="text-muted">You will receive an order confirmation email with
-                                                    details of your order.</p>
+                                                <p class="text-muted">You will receive an order confirmation email with details of your order.</p>
 
-                                                <h3 class="fw-semibold">Order ID: <a
-                                                        href="apps-ecommerce-order-details.html"
-                                                        class="text-decoration-underline">VZ2451</a></h3>
+                                                <h3 class="fw-semibold">Order ID: <span id="orderID" class="text-decoration-underline"></span></h3>
                                             </div>
                                         </div>
+
                                         <!-- end tab pane -->
                                     </div>
                                     <!-- end tab content -->
@@ -382,10 +376,7 @@
                                                 <td colspan="2">Shipping Charge :</td>
                                                 <td class="text-end">$ 24.99</td>
                                             </tr>
-                                            <tr>
-                                                <td colspan="2">Estimated Tax (12%): </td>
-                                                <td class="text-end">$ 18.20</td>
-                                            </tr>
+
                                             <tr class="table-active">
                                                 <th colspan="2">Total (USD) :</th>
                                                 <td class="text-end">
@@ -467,11 +458,11 @@
     {{-- Address customer Form  and Payment Detail --}}
     <script>
         $(document).ready(function() {
-            function handleCheckout(source) {
+            $('#save-information').click(function(e) {
                 var data = $('#Billing-information-form').serializeArray();
                 $.ajax({
                     type: 'POST',
-                    url: "{{ route('process.checkout') }}",
+                    url: "{{ route('process.checkout.address') }}",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -480,8 +471,10 @@
                         console.log("finally");
                         showToast(response.message);
                         // Switch to the next tab
-                        var nextTabId = $('#' + source).data('nexttab');
-                        $('#' + nextTabId).tab('show');
+                        if (!response.errors) {
+                            $('#pills-payment-tab').removeAttr('disabled');
+                            $('#pills-payment-tab').tab('show');
+                        }
                     },
                     error: function(error) {
                         document.getElementById('FullNameError').style.display = "none";
@@ -510,7 +503,8 @@
                                 var errMsg = document.getElementById('ProvinceError');
                                 if (error.responseJSON.errors.province_id[0]) {
                                     errMsg.style.display = "block";
-                                    errMsg.textContent = error.responseJSON.errors.province_id[0];
+                                    errMsg.textContent = error.responseJSON.errors.province_id[
+                                        0];
                                 }
                             }
                             if (error.responseJSON.errors.city_id) {
@@ -538,15 +532,39 @@
                         }
                     }
                 });
-            }
-            $('#save-information').click(function(e) {
-                e.preventDefault();
-                handleCheckout('save-information');
             });
 
+        });
+    </script>
+
+
+    <script>
+        $(document).ready(function() {
             $('#order_complete').click(function(e) {
-                e.preventDefault();
-                handleCheckout('order_complete');
+                var data = $('#Billing-information-form').serializeArray();
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('process.checkout.payment') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: data,
+                    success: function(response) {
+                        console.log("finally");
+                        showToast(response.message);
+                        // Switch to the next tab
+                        if (!response.errors) {
+                            $('#pills-finish-tab').removeAttr('disabled');
+                            $('#pills-finish-tab').tab('show');
+                            $('#orderID').text(response.order_id);
+                            $('#pills-payment-tab').prop('disabled', true);
+                            $('#pills-bill-info-tab').prop('disabled', true);
+                        }
+                    },
+                    error: function(error) {
+
+                    }
+                });
             });
         });
     </script>
@@ -595,13 +613,5 @@
 
         });
     </script>
-
-
-
-
-
-
-
-
 
 @endsection

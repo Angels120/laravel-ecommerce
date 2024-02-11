@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\City;
 use App\Models\CustomerAddress;
+use App\Models\Order;
+use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Province;
 use Database\Seeders\ProvinceSeeder;
@@ -146,8 +148,9 @@ class CartController extends Controller
         $provinces = City::where('province_id', $provinceId)->get();
         return response()->json($provinces);
     }
-    public function processCheckout(Request $request){
-        // dd('clicked');
+    public function processCheckoutAddress(Request $request){
+
+        //Step 1 store User Address in Address table
         $validateData=$request->validate([
             'full_name' => 'required|string|max:255',
             'email' => 'nullable',
@@ -158,12 +161,53 @@ class CartController extends Controller
         ]);
         // dd($validateData);
         $user=Auth::user();
-        // CustomerAddress::updateOrCreate(['user_id'=>$user->id],$validateData);
-        // return response()->json(['message' => 'Customer Address collected  successfully']);
-
-        dd($request->all());
-
+        CustomerAddress::updateOrCreate(['user_id'=>$user->id],$validateData);
+        return response()->json(['message' => 'Customer Address collected  successfully']);
     }
+
+    public function processCheckoutPayment(Request $request){
+        $user = Auth::user();
+        //Step 2 store Order in Order Table
+        if($request->paymentMethod=='cod'){
+            $shipping = 0;
+            $discount = 0;
+            $subTotal = Cart::subtotal(2,'.','');
+            $grandTotal = $subTotal + $shipping;
+
+            $order = new Order;
+            $order->user_id = $user->id;
+            $order->subtotal = $subTotal;
+            $order->shipping = $shipping;
+            $order->grand_total = $grandTotal;
+
+            $order->full_name = $request->full_name;
+            $order->email = $request->email;
+            $order->phone = $request->phone;
+            $order->province_id = $request->province_id;
+            $order->city_id = $request->city_id;
+            $order->address = $request->address;
+            $order->save();
+
+            // Store order items in order items table
+            foreach(Cart::content() as $item){
+                $orderItem = new OrderItem();
+                $orderItem->product_id = $item->id;
+                $orderItem->order_id = $order->id;
+                $orderItem->name = $item->name;
+                $orderItem->qty = $item->qty;
+                $orderItem->price = $item->price;
+                $orderItem->total = $item->price * $item->qty;
+                $orderItem->save();
+            }
+            Cart::destroy();
+            return response()->json(['message' => 'Orders Placed successfully', 'order_id' => $order->id]);
+
+        } else {
+            // Handle other payment methods here
+        }
+    }
+
+
 
     public function userInformation(Request $request) {
         $user = Auth::user();
