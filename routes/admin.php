@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\admin\LoginController as AdminLoginController;
+use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UserController;
@@ -73,6 +74,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     Route::post('/brands/update', [BrandController::class,'update'])->name('brand.update');
     Route::post('/brands/status/update/{id}', [BrandController::class, 'updateStatus'])->name('brand.status.update');
     Route::delete('/brands/delete/{id}', [BrandController::class,'destroy'])->name('brand.delete');
+
+    //--------------------------------------Ends HEre--------------------------------------------------------//
+    //--------------------------------------Brands starts here--------------------------------------------------------//
+    Route::get('/shippings', [ShippingController::class,'index'])->name('shipping.index');
+    Route::post('/shippings/create', [ShippingController::class,'store'])->name('shipping.create');
+    Route::get('/shippings/edit', [ShippingController::class,'edit'])->name('shipping.edit');
+    Route::post('/shippings/update', [ShippingController::class,'update'])->name('shipping.update');
+    Route::delete('/shippings/delete/{id}', [ShippingController::class,'destroy'])->name('shipping.delete');
 
     //--------------------------------------Ends HEre--------------------------------------------------------//
 

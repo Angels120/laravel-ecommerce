@@ -33,6 +33,9 @@
     <!--Range slider css-->
     <link href="{{ asset('admin_asset/css/ion.rangeSlider.min.css') }}" rel="stylesheet" type="text/css" />
 
+    {{-- Custom Card For Product --}}
+    <link href="{{ asset('admin_asset/css/product-card.css') }}" rel="stylesheet" type="text/css" />
+
 
 
 
@@ -110,6 +113,12 @@
             background-color: #405189;
             margin-top: 6px;
             margin-left: 3px;
+        }
+
+        h1.titlecard {
+            font-family: "Mukta", sans-serif;
+            font-weight: 400;
+            font-style: normal;
         }
     </style>
 

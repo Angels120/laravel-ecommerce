@@ -98,6 +98,7 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
                     localStorage.setItem("successMessage", response.message);
                     window.location.href="{{ route('carts.details') }}"
                 }else{
+                    alert('Your Product already added');
                     $('#cartErrorModal').modal('show');
 
                 }

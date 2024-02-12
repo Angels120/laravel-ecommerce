@@ -1,23 +1,7 @@
 @extends('customer.layouts.app')
 
 @section('container')
-    <style>
-        .card {
-            cursor: pointer;
-            transition: 0.3s;
-            padding: 10px;
-        }
 
-        .card:hover {
-            box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-        }
-
-        h1.titlecard {
-            font-family: "Mukta", sans-serif;
-            font-weight: 400;
-            font-style: normal;
-        }
-    </style>
 
 
 
@@ -102,7 +86,7 @@
                 <div class="col-sm-6 col-xl-3">
                     <!-- Simple card -->
                     <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
-                        <div class="card">
+                        <div class="card card-product">
                             <img class="card-img-top img-fluid" src="{{ asset('uploads/products/' . $product->image[0]) }}"
                                 alt="" style="height: 200px; object-fit: cover;">
                             <div class="card-body">
@@ -126,6 +110,12 @@
                                     </span>
                                 @endif
                                 </p>
+                                <div class="add-to-cart-btn">
+                                    <button class="btn btn-primary" onclick="addToCart({{ $product->id }})"><i class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </button>
+                                </div>
+                                <div class="favorite-btn">
+                                    <button class="btn btn-outline-danger btn-favorite"><i class="ri-heart-line"></i></button>
+                                </div>
                             </div>
                         </div><!-- end card -->
                     </a>
@@ -144,7 +134,7 @@
                     @if ($product->featured == 1)
                         <div class="col-sm-6 col-xl-3">
                             <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
-                                <div class="card">
+                                <div class="card card-product">
                                     <img class="img-fluid d-block"
                                         src="{{ asset('uploads/products/' . $product->image[0]) }}" alt=""
                                         style="height: 200px; object-fit: cover;">
@@ -170,7 +160,15 @@
                                         @endif
                                         </p>
                                     </div>
+                                    <div class="add-to-cart-btn">
+                                        <button class="btn btn-primary" onclick="addToCart({{ $product->id }})"><i class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </button>
+                                    </div>
+                                    <div class="favorite-btn">
+                                        <button class="btn btn-outline-danger btn-favorite"><i class="ri-heart-line"></i></button>
+                                    </div>
                                 </div><!-- end card -->
+
+
                             </a>
                         </div><!-- end col -->
                     @endif
@@ -182,6 +180,7 @@
         </div>
     </div>
     </div>
+
 @endsection
 @section('script')
     <script>

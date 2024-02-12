@@ -89,7 +89,7 @@
                                         <div class="col-md-4">
                                             <!-- Simple card with a link -->
                                             <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
-                                                <div class="card">
+                                                <div class="card card-product">
                                                     <img class="card-img-top img-fluid"
                                                         src="{{ asset('uploads/products/' . $product->image[0]) }}"
                                                         alt="Card image cap" style="height: 200px; width:300px">
@@ -114,6 +114,12 @@
                                                                 </span>
                                                             @endif
                                                         </p>
+                                                    </div>
+                                                    <div class="add-to-cart-btn">
+                                                        <button class="btn btn-primary" onclick="addToCart({{ $product->id }})"><i class="ri-shopping-cart-2-line fs-16"> Add To Cart </i> </button>
+                                                    </div>
+                                                    <div class="favorite-btn">
+                                                        <button class="btn btn-outline-danger btn-favorite"><i class="ri-heart-line"></i></button>
                                                     </div>
                                                 </div><!-- end card -->
                                             </a>

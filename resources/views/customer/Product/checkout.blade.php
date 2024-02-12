@@ -381,7 +381,7 @@
                                                 <th colspan="2">Total (USD) :</th>
                                                 <td class="text-end">
                                                     <span class="fw-semibold">
-                                                        $353.15
+                                                        Rs. {{ Cart::subTotal() }}
                                                     </span>
                                                 </td>
                                             </tr>

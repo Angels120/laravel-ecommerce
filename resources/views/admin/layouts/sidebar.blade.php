@@ -76,6 +76,11 @@
                         <i class="ri-flag-line"></i><span>Brands</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('admin.shipping.index') }}"  role="button" aria-expanded="false">
+                        <i class="ri-truck-line"></i><span>Shipping</span>
+                    </a>
+                </li>
 
             </ul>
         </div>
