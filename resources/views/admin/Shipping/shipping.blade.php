@@ -45,7 +45,7 @@
     <!-- end row -->
 
     <!-- Modal -->
-    <div class="modal fade zoomIn" id="deleteSubCategory" tabindex="-1" aria-hidden="true">
+    <div class="modal fade zoomIn" id="deleteShipping" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -63,7 +63,7 @@
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                         <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn w-sm btn-danger " id="deleteSubCategoryButton">Yes, Delete
+                        <button type="button" class="btn w-sm btn-danger " id="deleteShippinhButton">Yes, Delete
                             It!</button>
                     </div>
                 </div>
@@ -72,7 +72,7 @@
     </div>
     <!--end modal -->
     @include('admin.Shipping.AddShipping')
-    {{-- @include('admin.subcategory.EditSubCategory') --}}
+    @include('admin.Shipping.EditShipping')
 
 
 
@@ -113,14 +113,14 @@
         var urlWithId = "";
         $(document).ready(function() {
             $('.data-table').on("click", ".delete", function() {
-                var subcategoryId = $(this).data('id');
-                const deleteUrl = "{{ route('admin.subcategory.delete', ['id' => ':id']) }}";
-                urlWithId = deleteUrl.replace(':id', subcategoryId);
-                $('#deleteSubCategoryButton').data('subcategory-id', subcategoryId);
-                $('#deleteSubCategory').modal('show');
+                var shippingId = $(this).data('id');
+                const deleteUrl = "{{ route('admin.shipping.delete', ['id' => ':id']) }}";
+                urlWithId = deleteUrl.replace(':id', shippingId);
+                $('#deleteShippinhButton').data('shippingId-id', shippingId);
+                $('#deleteShipping').modal('show');
             });
-            $('#deleteSubCategoryButton').click(function() {
-                var subcategoryId = $(this).data('category-id');
+            $('#deleteShippinhButton').click(function() {
+                var shippingId = $(this).data('shippingId-id');
                 $.ajax({
                     type: 'DELETE',
                     url: urlWithId,
@@ -129,7 +129,7 @@
                     },
                     success: function(response) {
                         showToast(response.message);
-                        $('#deleteSubCategory').modal('hide');
+                        $('#deleteShipping').modal('hide');
                         $('#datatable-crud').DataTable().ajax.reload();
                     },
                     error: function(error) {

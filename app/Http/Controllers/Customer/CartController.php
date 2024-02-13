@@ -9,6 +9,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Province;
+use App\Models\ShippingCharge;
 use Database\Seeders\ProvinceSeeder;
 use Dotenv\Validator;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -121,7 +122,8 @@ class CartController extends Controller
     }
 
 
-    public function checkout(Request $request){
+    public function checkout(Request $request)
+    {
         $breadcrumb = [
             'breadcrumbs' => [
                 'WebMart' => route('home.page'),
@@ -129,29 +131,44 @@ class CartController extends Controller
                 'current_menu' => 'Checkout',
             ],
         ];
-        $provinces=Province::orderBy('name','ASC')->get();
-        $cities=City::orderBy('name','ASC')->get();
-
-        if(Cart::count()==0){
+        $provinces = Province::orderBy('name', 'ASC')->get();
+        $cities = City::orderBy('name', 'ASC')->get();
+        if (Cart::count() == 0) {
             return redirect()->route('carts.details');
         }
-        if(Auth::check()==false){
-            if(!session()->has('url.intended')){
-            session(['url.intended'=>url()->current()]);
+        if (Auth::check() == false) {
+            if (!session()->has('url.intended')) {
+                session(['url.intended' => url()->current()]);
             }
             return redirect()->route('login');
         }
-        return view('customer.Product.checkout',  compact('breadcrumb','provinces','cities'));
+        // Calculate shipping here
+        $customerAddress = CustomerAddress::where('user_id', Auth::user()->id)->first();
+        $totalQty = 0;
+        $totalShippingCharge = 0;
+        if ($customerAddress != null) {
+            $userCity = $customerAddress->city_id;
+            $shippingInfo = ShippingCharge::where('city_id', $userCity)->first();
+            if ($shippingInfo != null) {
+                foreach (Cart::content() as $item) {
+                    $totalQty += $item->qty;
+                }
+                $totalShippingCharge = $totalQty * $shippingInfo->amount;
+            }
+        }
+        $grandTotal=Cart::subtotal(2,'.','')+ $totalShippingCharge;
+        return view('customer.Product.checkout',  compact('breadcrumb', 'provinces', 'cities', 'totalShippingCharge','grandTotal'));
     }
     public function getCity($provinceId)
     {
         $provinces = City::where('province_id', $provinceId)->get();
         return response()->json($provinces);
     }
-    public function processCheckoutAddress(Request $request){
+    public function processCheckoutAddress(Request $request)
+    {
 
         //Step 1 store User Address in Address table
-        $validateData=$request->validate([
+        $validateData = $request->validate([
             'full_name' => 'required|string|max:255',
             'email' => 'nullable',
             'province_id' => 'required',
@@ -160,18 +177,19 @@ class CartController extends Controller
             'address' => 'required',
         ]);
         // dd($validateData);
-        $user=Auth::user();
-        CustomerAddress::updateOrCreate(['user_id'=>$user->id],$validateData);
+        $user = Auth::user();
+        CustomerAddress::updateOrCreate(['user_id' => $user->id], $validateData);
         return response()->json(['message' => 'Customer Address collected  successfully']);
     }
 
-    public function processCheckoutPayment(Request $request){
+    public function processCheckoutPayment(Request $request)
+    {
         $user = Auth::user();
         //Step 2 store Order in Order Table
-        if($request->paymentMethod=='cod'){
+        if ($request->paymentMethod == 'cod') {
             $shipping = 0;
             $discount = 0;
-            $subTotal = Cart::subtotal(2,'.','');
+            $subTotal = Cart::subtotal(2, '.', '');
             $grandTotal = $subTotal + $shipping;
 
             $order = new Order;
@@ -189,7 +207,7 @@ class CartController extends Controller
             $order->save();
 
             // Store order items in order items table
-            foreach(Cart::content() as $item){
+            foreach (Cart::content() as $item) {
                 $orderItem = new OrderItem();
                 $orderItem->product_id = $item->id;
                 $orderItem->order_id = $order->id;
@@ -201,7 +219,6 @@ class CartController extends Controller
             }
             Cart::destroy();
             return response()->json(['message' => 'Orders Placed successfully', 'order_id' => $order->id]);
-
         } else {
             // Handle other payment methods here
         }
@@ -209,7 +226,8 @@ class CartController extends Controller
 
 
 
-    public function userInformation(Request $request) {
+    public function userInformation(Request $request)
+    {
         $user = Auth::user();
 
         $userAddresses = CustomerAddress::where('user_id', $user->id)->get();
@@ -221,5 +239,4 @@ class CartController extends Controller
             return response()->json(['message' => 'User information not found Please fill below form'], 404);
         }
     }
-
 }

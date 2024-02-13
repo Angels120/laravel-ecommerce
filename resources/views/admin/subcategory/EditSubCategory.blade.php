@@ -56,7 +56,7 @@
                 <div class="modal-footer">
                     <div class="hstack gap-2 justify-content-end">
                         <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-success" id="edit-SubCategory">Add Category</button>
+                        <button type="submit" class="btn btn-success" id="edit-SubCategory">Edit Category</button>
                         <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
                     </div>
                 </div>
@@ -87,7 +87,6 @@
 
                 $('#EditSubCategory').modal('hide');
                 $('#datatable-crud').DataTable().ajax.reload();
-                $('#successAlertContainer').html(successAlert);
             },
                 error: function(error) {
                     console.log(error);

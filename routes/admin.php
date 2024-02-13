@@ -82,7 +82,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     Route::get('/shippings/edit', [ShippingController::class,'edit'])->name('shipping.edit');
     Route::post('/shippings/update', [ShippingController::class,'update'])->name('shipping.update');
     Route::delete('/shippings/delete/{id}', [ShippingController::class,'destroy'])->name('shipping.delete');
-
     //--------------------------------------Ends HEre--------------------------------------------------------//
 
     // Route::resource('products',ProductController::class);

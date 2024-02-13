@@ -374,14 +374,13 @@
                                             </tr>
                                             <tr>
                                                 <td colspan="2">Shipping Charge :</td>
-                                                <td class="text-end">$ 24.99</td>
+                                                <td class="text-end">Rs. {{ number_format($totalShippingCharge,2) }}</td>
                                             </tr>
-
                                             <tr class="table-active">
                                                 <th colspan="2">Total (USD) :</th>
                                                 <td class="text-end">
                                                     <span class="fw-semibold">
-                                                        Rs. {{ Cart::subTotal() }}
+                                                        Rs. {{ number_format($grandTotal,2) }}
                                                     </span>
                                                 </td>
                                             </tr>

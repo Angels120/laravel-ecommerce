@@ -12,4 +12,7 @@ class City extends Model
         'id'
       ];
 
+    public function shippings(){
+        return $this->hasmany(Shipping::class);
+    }
 }

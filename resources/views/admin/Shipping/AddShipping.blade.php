@@ -60,7 +60,7 @@
             var data = $('#Shipping-create-form').serialize();
             $.ajax({
                 type: 'POST',
-                url: "{{ route('admin.subcategory.create') }}",
+                url: "{{ route('admin.shipping.create') }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
@@ -70,7 +70,6 @@
                     showToast(response.message);
                     $('#AddShipping').modal('hide');
                     $('#datatable-crud').DataTable().ajax.reload();
-                    $('#successAlertContainer').html(successAlert);
                 },
                 error: function(error) {
                     console.log(error);
