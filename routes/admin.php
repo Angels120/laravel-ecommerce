@@ -76,12 +76,20 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     Route::delete('/brands/delete/{id}', [BrandController::class,'destroy'])->name('brand.delete');
 
     //--------------------------------------Ends HEre--------------------------------------------------------//
-    //--------------------------------------Brands starts here--------------------------------------------------------//
+    //--------------------------------------Shipping starts here--------------------------------------------------------//
     Route::get('/shippings', [ShippingController::class,'index'])->name('shipping.index');
     Route::post('/shippings/create', [ShippingController::class,'store'])->name('shipping.create');
     Route::get('/shippings/edit', [ShippingController::class,'edit'])->name('shipping.edit');
     Route::post('/shippings/update', [ShippingController::class,'update'])->name('shipping.update');
     Route::delete('/shippings/delete/{id}', [ShippingController::class,'destroy'])->name('shipping.delete');
+    //--------------------------------------Ends HEre--------------------------------------------------------//
+    //--------------------------------------Coupon starts here--------------------------------------------------------//
+    Route::get('/coupons', [CouponController::class,'index'])->name('coupon.index');
+    Route::post('/coupons/create', [CouponController::class,'store'])->name('coupon.create');
+    Route::post('/coupons/status/update/{id}', [CouponController::class, 'updateStatus'])->name('coupon.status.update');
+    Route::get('/coupons/edit', [CouponController::class,'edit'])->name('coupon.edit');
+    Route::post('/coupons/update', [CouponController::class,'update'])->name('coupon.update');
+    Route::delete('/coupons/delete/{id}', [CouponController::class,'destroy'])->name('coupon.delete');
     //--------------------------------------Ends HEre--------------------------------------------------------//
 
     // Route::resource('products',ProductController::class);

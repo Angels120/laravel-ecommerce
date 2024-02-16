@@ -63,7 +63,7 @@
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                         <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn w-sm btn-danger " id="deleteShippinhButton">Yes, Delete
+                        <button type="button" class="btn w-sm btn-danger " id="deleteShippingButton">Yes, Delete
                             It!</button>
                     </div>
                 </div>
@@ -116,10 +116,10 @@
                 var shippingId = $(this).data('id');
                 const deleteUrl = "{{ route('admin.shipping.delete', ['id' => ':id']) }}";
                 urlWithId = deleteUrl.replace(':id', shippingId);
-                $('#deleteShippinhButton').data('shippingId-id', shippingId);
+                $('#deleteShippingButton').data('shippingId-id', shippingId);
                 $('#deleteShipping').modal('show');
             });
-            $('#deleteShippinhButton').click(function() {
+            $('#deleteShippingButton').click(function() {
                 var shippingId = $(this).data('shippingId-id');
                 $.ajax({
                     type: 'DELETE',

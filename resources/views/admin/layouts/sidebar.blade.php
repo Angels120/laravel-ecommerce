@@ -81,6 +81,11 @@
                         <i class="ri-truck-line"></i><span>Shipping</span>
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('admin.coupon.index') }}"  role="button" aria-expanded="false">
+                        <i class="ri-coupon-3-line"></i><span>Coupon</span>
+                    </a>
+                </li>
 
             </ul>
         </div>
