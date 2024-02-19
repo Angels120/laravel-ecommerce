@@ -4,12 +4,14 @@ namespace App\Http\Controllers\Customer;
 
 use App\Http\Controllers\Controller;
 use App\Models\City;
+use App\Models\Coupon;
 use App\Models\CustomerAddress;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Province;
 use App\Models\ShippingCharge;
+use Carbon\Carbon;
 use Database\Seeders\ProvinceSeeder;
 use Dotenv\Validator;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -142,6 +144,7 @@ class CartController extends Controller
             }
             return redirect()->route('login');
         }
+        $discount=0;
         // Calculate shipping here
         $customerAddress = CustomerAddress::where('user_id', Auth::user()->id)->first();
         $totalQty = 0;
@@ -154,10 +157,13 @@ class CartController extends Controller
                     $totalQty += $item->qty;
                 }
                 $totalShippingCharge = $totalQty * $shippingInfo->amount;
+                $grandTotal= Cart::subtotal(2,'.','')+$totalShippingCharge;
+            }else{
+                $grandTotal= Cart::subtotal(2,'.','');
             }
         }
         $grandTotal=Cart::subtotal(2,'.','')+ $totalShippingCharge;
-        return view('customer.Product.checkout',  compact('breadcrumb', 'provinces', 'cities', 'totalShippingCharge','grandTotal'));
+        return view('customer.Product.checkout',  compact('breadcrumb','customerAddress', 'provinces', 'discount','cities', 'totalShippingCharge','grandTotal'));
     }
     public function getCity($provinceId)
     {
@@ -166,7 +172,6 @@ class CartController extends Controller
     }
     public function processCheckoutAddress(Request $request)
     {
-
         //Step 1 store User Address in Address table
         $validateData = $request->validate([
             'full_name' => 'required|string|max:255',
@@ -224,19 +229,87 @@ class CartController extends Controller
         }
     }
 
+    public function getOrderSummary(Request $request){
+        $subTotal=Cart::subtotal(2,'.','');
+        $discount=0;
+        $ShippingCharge=0;
+        $grandTotal=$subTotal;
+        //Apply Discount
+        if(session()->has('code')){
+            $code=session()->get('code');
+            $discountCode=$code->code;
+            if($code->type=='percent' ){
+                $discount=($code->discount_amount/100)*$subTotal;
+            }else{
+                $discount=$code->discount_amount;
+            }
 
-
-    public function userInformation(Request $request)
-    {
-        $user = Auth::user();
-
-        $userAddresses = CustomerAddress::where('user_id', $user->id)->get();
-
-        if ($userAddresses->isNotEmpty()) {
-            return response()->json($userAddresses);
-        } else {
-
-            return response()->json(['message' => 'User information not found Please fill below form'], 404);
         }
+        if($request->cities_id > 0){
+            $shippingInfo = ShippingCharge::where('city_id', $request->cities_id)->first();
+            $totalQty = 0;
+            foreach (Cart::content() as $item) {
+                $totalQty += $item->qty;
+            }
+            if ($shippingInfo != null) {
+                $ShippingCharge = $totalQty * $shippingInfo->amount;
+                $grandTotal=($subTotal-$discount)+$ShippingCharge;
+                return response()->json([
+                    'status'=>true,
+                    'discount'=>$discount,
+                    'discountCode'=>$discountCode,
+                    'grandTotal'=>number_format($grandTotal,2),
+                    'shippingCharge'=>number_format($ShippingCharge),
+
+                ]);
+            }else{
+                $grandTotal=($subTotal-$subTotal);
+                return response()->json([
+                    'status'=>true,
+                    'discount'=>$discount,
+                    'discountCode'=>$discountCode,
+                    'grandTotal'=>number_format($grandTotal,2),
+                    'shippingCharge'=>number_format(0),
+
+                ]);
+            }
+        }else{
+            return response()->json([
+                'status'=>true,
+                'message'=>'Discount Coupon added succesfully',
+                'discount'=>$discount,
+                'discountCode'=>$discountCode,
+                'grandTotal'=>number_format($grandTotal,2),
+                'shippingCharge'=>number_format($ShippingCharge),
+
+            ]);
+        }
+
+
+
+    }
+    public function applyDiscount(Request $request){
+        // dd('clicked');
+        $code=Coupon::where('code',$request->code)->first();
+        if($code==null){
+            return response()->json([
+                'status'=>false,
+                'message'=>'Invalid discount Coupon',
+            ]);
+        }
+        //check if coupon start date is valid or not
+        $now= Carbon::now();
+
+        if($code->expires_at!=""){
+            $endDate = Carbon::parse($code->expires_at);
+            if($now->gt($endDate)){
+                return response()->json([
+                    'status'=>false,
+                    'message'=>'Coupon Code has already expired',
+                ]);
+            }
+        }
+        session()->put('code',$code);
+        return $this->getOrderSummary($request);
     }
 }

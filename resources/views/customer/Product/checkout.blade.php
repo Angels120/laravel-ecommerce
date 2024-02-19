@@ -58,16 +58,20 @@
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link fs-15 p-3" id="pills-payment-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-payment" type="button"
-                                                    role="tab" aria-controls="pills-payment" aria-selected="false" disabled>
-                                                    <i class="ri-bank-card-line fs-16 p-2 bg-soft-primary text-primary rounded-circle align-middle me-2"></i>
+                                                    role="tab" aria-controls="pills-payment" aria-selected="false"
+                                                    disabled>
+                                                    <i
+                                                        class="ri-bank-card-line fs-16 p-2 bg-soft-primary text-primary rounded-circle align-middle me-2"></i>
                                                     Payment Info
                                                 </button>
                                             </li>
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link fs-15 p-3" id="pills-finish-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-finish" type="button"
-                                                    role="tab" aria-controls="pills-finish" aria-selected="false" disabled>
-                                                    <i class="ri-checkbox-circle-line fs-16 p-2 bg-soft-primary text-primary rounded-circle align-middle me-2"></i>
+                                                    role="tab" aria-controls="pills-finish" aria-selected="false"
+                                                    disabled>
+                                                    <i
+                                                        class="ri-checkbox-circle-line fs-16 p-2 bg-soft-primary text-primary rounded-circle align-middle me-2"></i>
                                                     Finish
                                                 </button>
                                             </li>
@@ -81,11 +85,7 @@
                                             <div>
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <h5 class="mb-0">Billing Information</h5>
-                                                    <button type="button" class="btn btn-success btn-label right ms-auto"
-                                                        id="import_user_info">
-                                                        <i class="ri-download-line label-icon align-middle fs-16 ms-2"></i>
-                                                        Import User Address
-                                                    </button>
+
                                                 </div>
                                                 <p class="text-muted mb-4">Please fill all information below</p>
                                             </div>
@@ -96,7 +96,7 @@
                                                         <div class="mb-3">
                                                             <label for="billinginfo-firstName" class="form-label">Full
                                                                 Name<span class="ms-1 text-danger">*</span></label>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control" value="{{ $customerAddress->full_name??'' }}"
                                                                 id="billinginfo-FullName" placeholder="Enter first name"
                                                                 name="full_name">
                                                             <div class="invalid-feedback" id="FullNameError"></div>
@@ -108,7 +108,7 @@
                                                             <label for="billinginfo-email" class="form-label">Email<span
                                                                     class="text-muted">(Optional)</span></label>
                                                             <input type="email" name="email" class="form-control"
-                                                                id="billinginfo-email" placeholder="Enter email">
+                                                            value="{{ $customerAddress->email??'' }}" id="billinginfo-email" placeholder="Enter email">
                                                             <div class="invalid-feedback" id="EmailError"></div>
                                                         </div>
                                                     </div>
@@ -124,8 +124,9 @@
                                                                 <option value="">Select Province...</option>
                                                                 @if ($provinces->isNotEmpty())
                                                                     @foreach ($provinces as $province)
-                                                                        <option value="{{ $province->id }}">
-                                                                            {{ $province->name }}</option>
+                                                                    <option {{ (!empty($customerAddress) && $customerAddress->province_id == $province->id) ? 'selected' : '' }} value="{{ $province->id }}">
+                                                                        {{ $province->name }}
+                                                                    </option>
                                                                     @endforeach
                                                                 @endif
                                                             </select>
@@ -143,8 +144,9 @@
                                                                 id="cities_id" name="city_id" data-plugin="choices">
                                                                 <option value="">Select City/Municipality...</option>
                                                                 @foreach ($cities as $city)
-                                                                    <option value="{{ $city->id }}">
-                                                                        {{ $city->name ?? '' }}</option>
+                                                                <option {{ (!empty($customerAddress) && $customerAddress->city_id == $city->id) ? 'selected' : '' }} value="{{ $city->id }}">
+                                                                    {{ $city->name }}
+                                                                </option>
                                                                 @endforeach
                                                             </select>
                                                             <div class="invalid-feedback" id="CityError"></div>
@@ -156,7 +158,7 @@
                                                         <div class="mb-3">
                                                             <label for="billinginfo-phone" class="form-label">Mobile
                                                                 no<span class="ms-1 text-danger">*</span></label>
-                                                            <input type="text" class="form-control"
+                                                            <input type="text" class="form-control" value="{{ $customerAddress->phone??'' }}"
                                                                 id="billinginfo-phone" name="phone"
                                                                 placeholder="Enter mobile no.">
                                                             <div class="invalid-feedback" id="mobileError"></div>
@@ -167,7 +169,7 @@
                                                             <label for="billinginfo-address"
                                                                 class="form-label">Address<span
                                                                     class="ms-1 text-danger">*</span></label>
-                                                            <input class="form-control" name="address"
+                                                            <input class="form-control" name="address" value="{{ $customerAddress->address??'' }}"
                                                                 id="billinginfo-address"
                                                                 placeholder="House no. /building /street/area"
                                                                 rows="3"></input>
@@ -294,23 +296,27 @@
                                                     to Personal Info</button>
                                                 <button type="button"
                                                     class="btn btn-primary btn-label right ms-auto nexttab"
-                                                    id="order_complete" ><i
+                                                    id="order_complete"><i
                                                         class="ri-shopping-basket-line label-icon align-middle fs-16 ms-2"></i>Complete
                                                     Order</button>
                                             </div>
                                         </div>
                                         <!-- end tab pane -->
 
-                                        <div class="tab-pane fade" id="pills-finish" role="tabpanel" aria-labelledby="pills-finish-tab">
+                                        <div class="tab-pane fade" id="pills-finish" role="tabpanel"
+                                            aria-labelledby="pills-finish-tab">
                                             <div class="text-center py-5">
                                                 <div class="mb-4">
                                                     <lord-icon src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop"
-                                                        colors="primary:#0ab39c,secondary:#405189" style="width:120px;height:120px"></lord-icon>
+                                                        colors="primary:#0ab39c,secondary:#405189"
+                                                        style="width:120px;height:120px"></lord-icon>
                                                 </div>
                                                 <h5>Thank you ! Your Order is Completed !</h5>
-                                                <p class="text-muted">You will receive an order confirmation email with details of your order.</p>
+                                                <p class="text-muted">You will receive an order confirmation email with
+                                                    details of your order.</p>
 
-                                                <h3 class="fw-semibold">Order ID: <span id="orderID" class="text-decoration-underline"></span></h3>
+                                                <h3 class="fw-semibold">Order ID: <span id="orderID"
+                                                        class="text-decoration-underline"></span></h3>
                                             </div>
                                         </div>
 
@@ -333,6 +339,21 @@
                                         <h5 class="card-title mb-0">Order Summary</h5>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-header bg-soft-light border-bottom-dashed">
+                                <div class="text-center">
+                                    <h6 class="mb-2">
+                                        Have a <span class="fw-semibold">Coupon</span> code ?
+                                    </h6>
+                                </div>
+                                <div class="hstack gap-3 px-3 mx-n3">
+                                    <input class="form-control me-auto" type="text" name="code" id="discount_code"
+                                        placeholder="Enter coupon code" aria-label="Add Promo Code here..." />
+                                    <button type="button" id="apply-discount" class="btn btn-success w-xs">
+                                        Apply
+                                    </button>
+                                </div>
+                                <span class="mt-2 fs-4">[{{ Session::get('code')->code }}]</span>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive table-card">
@@ -368,19 +389,21 @@
                                                 <td class="fw-semibold text-end">Rs. {{ Cart::subTotal() }}</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2">Discount <span class="text-muted">(VELZON15)</span> :
-                                                </td>
-                                                <td class="text-end">- $ 50.00</td>
+                                                @if (Session::has('code'))
+                                                    <td colspan="2">Discount :
+                                                    </td>
+                                                @endif
+                                                <td class="text-end" id="discount_value">- </td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">Shipping Charge :</td>
-                                                <td class="text-end">Rs. {{ number_format($totalShippingCharge,2) }}</td>
+                                                <td class="text-end" id="shippingAmount">Rs. {{ number_format($totalShippingCharge, 2) }}</td>
                                             </tr>
                                             <tr class="table-active">
-                                                <th colspan="2">Total (USD) :</th>
+                                                <th colspan="2">Total (Rs) :</th>
                                                 <td class="text-end">
-                                                    <span class="fw-semibold">
-                                                        Rs. {{ number_format($grandTotal,2) }}
+                                                    <span class="fw-semibold" id="grandTotal">
+                                                        Rs. {{ number_format($grandTotal, 2) }}
                                                     </span>
                                                 </td>
                                             </tr>
@@ -419,7 +442,7 @@
     {{-- Dynamic Dropdown for Province and City --}}
     <script>
         $(document).ready(function() {
-            $('#cities_id').prop('disabled', true);
+
             $('#province_id').change(function() {
                 var provinceId = $(this).val();
                 if (provinceId) {
@@ -569,48 +592,67 @@
     </script>
 
 
-    {{-- Append the values from get request --}}
+
+
+    {{-- Shipping charge change Script --}}
     <script>
         $(document).ready(function() {
-            $('#import_user_info').click(function(e) {
+            $('#cities_id').change(function() {
+
                 $.ajax({
-                    type: 'GET',
-                    url: "{{ route('user.address') }}",
+                    url: "{{route('order.summary')  }}",
+                    type: 'POST',
                     headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
+                    data: { cities_id:$(this).val()},
+                    dataType:'json',
                     success: function(response) {
-                        if (response.length > 0) {
-                            var userData = response[
-                                0];
-
-                            $('#billinginfo-FullName').val(userData.full_name);
-                            $('#billinginfo-email').val(userData.email);
-
-                            $('#province_id').val(userData.province_id).trigger(
-                                'change.select2');
-                            $('#cities_id').val(userData.city_id).trigger(
-                                'change.select2');
-
-                            $('#billinginfo-phone').val(userData.phone);
-                            $('#billinginfo-address').val(userData.address);
-                            $('#cities_id').prop('disabled', false);
+                        if(response.status==true){
+                            console.log('here');
+                            $("#shippingAmount").html('Rs '+response.shippingCharge);
+                            $("#grandTotal").html('Rs ' +response.grandTotal);
                         }
-
-                        showToast("User information loaded successfully.");
                     },
-                    error: function(error) {
-                        var errorResponse = JSON.parse(error.responseText);
-                        var errorMessage = errorResponse.message;
-                        showErrorToast(errorMessage);
-
+                    error: function(xhr, status, error) {
+                        console.error(error);
                     }
-
                 });
             });
-
-
         });
     </script>
 
+
+
+    {{-- script for discount coupon --}}
+    <script>
+        $(document).ready(function() {
+            $("#apply-discount").click(function(e) {
+                console.log('clicked');
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('discountcode') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        code: $("#discount_code").val(),
+                        city: $("#city").val()
+                    },
+                    success: function(response) {
+                        if(response.status==true){
+                            showToast(response.message);
+                            $("#shippingAmount").html('Rs '+response.shippingCharge);
+                            $("#grandTotal").html('Rs ' +response.grandTotal);
+                            $("#discount_value").html('-Rs '+response.discount);
+
+                        }
+                        if(response.status==false){
+                            showErrorToast(response.message);
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 @endsection

@@ -1,0 +1,47 @@
+[33m33151ca[m[33m ([m[1;36mHEAD -> [m[1;32maayush_kalikote[m[33m, [m[1;31morigin/aayush_kalikote[m[33m)[m HEAD@{0}: reset: moving to origin/aayush_kalikote
+[33m4fc032b[m HEAD@{1}: commit: Coupon Crud from both backend and frontend erro while storing coupon black fade b=model needt o ffix
+[33m20377c4[m HEAD@{2}: commit: Shipping Crud from admin done and shipping implementation currently working in checkout pages and from both front and backend
+[33m753a5b8[m HEAD@{3}: commit: started working in shipping process created model table and blades for adding shippping
+[33m5feb6a9[m HEAD@{4}: commit: Cart and checkout fix and work on cash on delivery for now code added in checkout, ajax request and controller for checkout process work properly
+[33m1b5afbf[m HEAD@{5}: commit: changes in cart controller
+[33m6712fea[m HEAD@{6}: commit: Created get method for user information from db if there is. Checkout method dynamic and post method added ajax request and required js. in checkout blade
+[33m76e5f38[m HEAD@{7}: commit: customer address table and validation with messages is done from ajax reqeust
+[33med27708[m HEAD@{8}: commit: checkout page fix added seeder for province and city, js also done for dynamic select dropdown still work need to be done in it
+[33m185ba1b[m HEAD@{9}: commit: checkout and shipping pages fix
+[33m4d77f17[m[33m ([m[1;32msubash_tamang[m[33m)[m HEAD@{10}: commit: Cart fetured added success and can be add delete edit cart easily also fix some toast issues and design issues in different parts
+[33m53001a7[m HEAD@{11}: commit: Cart fetured added with package of laravel required page, controller created and js also used.
+[33m19c867d[m HEAD@{12}: commit: fixes the front home page slider into crousel of bs , fix the product category by soriting from both front and backend and share button work of fb and twitter using popover of bs but still design issues is there.
+[33m3503c43[m HEAD@{13}: commit: changes in sorting filter from both backend and frontend js but design need to fix for that select form cause it is just placing right side using postiition that might cause issues later
+[33m620382e[m[33m ([m[1;31morigin/aaditya_chaudhary[m[33m)[m HEAD@{14}: pull origin aaditya_chaudhary: Fast-forward
+[33m2a19e9e[m HEAD@{15}: commit: changes in categories filters and pages also login page error message show fix
+[33maa958da[m HEAD@{16}: commit: made the brand filter blade when clicked from the home page brands then it will redirect to that page with filter. fix some issues in header and id selection
+[33m7612e6b[m HEAD@{17}: commit: working on filter of shop page from brand filter and price filter still frontend work is left to maintain the design
+[33mf503dbd[m HEAD@{18}: commit: changes in home page added brands images and recently added backend codes.
+[33m52438a2[m HEAD@{19}: commit: home page product list fix and added cards and design fix
+[33m0ec0178[m HEAD@{20}: merge origin/aaditya_chaudhary: Merge made by the 'ort' strategy.
+[33m8025632[m HEAD@{21}: commit: for pull
+[33m9fa1861[m HEAD@{22}: commit: some issues fix related product details images and try to implement popover in share button of product
+[33mf596b69[m HEAD@{23}: commit: changes in layouts file and product details js used for incrment and decrement quantity try showing images of product and magnify
+[33m06b1aad[m HEAD@{24}: commit: created product details page view and routes controller productcontroller from customer for products details and lists.
+[33m87cc3d6[m HEAD@{25}: commit: Made home blade page and layout managment
+[33m5cfae59[m HEAD@{26}: commit: Socialite package install and login with gmail and login with github done with test from local
+[33m6b52117[m HEAD@{27}: pull --rebase origin aaditya_chaudhary (finish): returning to refs/heads/aayush_kalikote
+[33m6b52117[m HEAD@{28}: pull --rebase origin aaditya_chaudhary (pick): for pull
+[33mec9aa30[m HEAD@{29}: commit: changes for issue fix in header cuastomer
+[33m02ae02f[m HEAD@{30}: commit: changes in almost all layouts file for js and css console error fix and some dynamic navbar in home page
+[33m7ba6197[m HEAD@{31}: commit: changes in layout
+[33mc7943c6[m HEAD@{32}: commit: Admin crud finished customer left and fix issues with dropdown in admin view layout like customer by removing bs script
+[33m2552faf[m HEAD@{33}: commit: home page added for customer and many thing added
+[33m7a360ea[m HEAD@{34}: commit: Install Spatie packages for roles and permision db and seeder created according to need but still implementaion or middleware placement is left. Register page and controller ALso fixed.
+[33mb7cd6f5[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{35}: checkout: moving from master to aayush_kalikote
+[33mb7cd6f5[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{36}: pull origin aayush_kalikote: Fast-forward
+[33mca740a2[m HEAD@{37}: checkout: moving from aayush_kalikote to master
+[33mb7cd6f5[m[33m ([m[1;32mmaster[m[33m)[m HEAD@{38}: commit: All status can updated just by clicking button from tables
+[33m0cff25c[m HEAD@{39}: commit: Fix the console data issues of datatbles, Validation of store and update fix including the image erro message but still some issues in image udpate message error, no almost product is finished.
+[33m4419daf[m HEAD@{40}: commit: Finally Select2 issues all fixed with position of dropdown
+[33mf640999[m HEAD@{41}: commit: dattables horizontal scroll, select 2 alternatives choosen integrating in product still facing some issues and sizes array in db and model of product, status of product can be change directly from the datatbles just by clicked
+[33m169f473[m HEAD@{42}: commit: product crud finished and some issues fixed in category crud multiselect and some css in images field of edit model is left
+[33m55d6e29[m HEAD@{43}: commit: changes in product controller and its baldes for crud create completed, working on edit and delete fix issues with ckeditor data append and store request, fixing issues with filepond image upload and append.
+[33mca740a2[m HEAD@{44}: checkout: moving from master to aayush_kalikote
+[33mca740a2[m HEAD@{45}: commit: changes in product controlller and blade store completed, working on edit product model and backend
+[33mabd34fc[m HEAD@{46}: commit (initial): deploying project in my repository

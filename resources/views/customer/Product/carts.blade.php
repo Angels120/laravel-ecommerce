@@ -159,6 +159,7 @@
                                 <div class="card-header border-bottom-dashed">
                                     <h5 class="card-title mb-0">Order Summary</h5>
                                 </div>
+
                                 <div class="card-body pt-2">
                                     <div class="table-responsive">
                                         <table class="table table-borderless mb-0">
