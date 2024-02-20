@@ -96,7 +96,8 @@
                                                         <div class="mb-3">
                                                             <label for="billinginfo-firstName" class="form-label">Full
                                                                 Name<span class="ms-1 text-danger">*</span></label>
-                                                            <input type="text" class="form-control" value="{{ $customerAddress->full_name??'' }}"
+                                                            <input type="text" class="form-control"
+                                                                value="{{ $customerAddress->full_name ?? '' }}"
                                                                 id="billinginfo-FullName" placeholder="Enter first name"
                                                                 name="full_name">
                                                             <div class="invalid-feedback" id="FullNameError"></div>
@@ -108,7 +109,8 @@
                                                             <label for="billinginfo-email" class="form-label">Email<span
                                                                     class="text-muted">(Optional)</span></label>
                                                             <input type="email" name="email" class="form-control"
-                                                            value="{{ $customerAddress->email??'' }}" id="billinginfo-email" placeholder="Enter email">
+                                                                value="{{ $customerAddress->email ?? '' }}"
+                                                                id="billinginfo-email" placeholder="Enter email">
                                                             <div class="invalid-feedback" id="EmailError"></div>
                                                         </div>
                                                     </div>
@@ -124,9 +126,11 @@
                                                                 <option value="">Select Province...</option>
                                                                 @if ($provinces->isNotEmpty())
                                                                     @foreach ($provinces as $province)
-                                                                    <option {{ (!empty($customerAddress) && $customerAddress->province_id == $province->id) ? 'selected' : '' }} value="{{ $province->id }}">
-                                                                        {{ $province->name }}
-                                                                    </option>
+                                                                        <option
+                                                                            {{ !empty($customerAddress) && $customerAddress->province_id == $province->id ? 'selected' : '' }}
+                                                                            value="{{ $province->id }}">
+                                                                            {{ $province->name }}
+                                                                        </option>
                                                                     @endforeach
                                                                 @endif
                                                             </select>
@@ -144,9 +148,11 @@
                                                                 id="cities_id" name="city_id" data-plugin="choices">
                                                                 <option value="">Select City/Municipality...</option>
                                                                 @foreach ($cities as $city)
-                                                                <option {{ (!empty($customerAddress) && $customerAddress->city_id == $city->id) ? 'selected' : '' }} value="{{ $city->id }}">
-                                                                    {{ $city->name }}
-                                                                </option>
+                                                                    <option
+                                                                        {{ !empty($customerAddress) && $customerAddress->city_id == $city->id ? 'selected' : '' }}
+                                                                        value="{{ $city->id }}">
+                                                                        {{ $city->name }}
+                                                                    </option>
                                                                 @endforeach
                                                             </select>
                                                             <div class="invalid-feedback" id="CityError"></div>
@@ -158,7 +164,8 @@
                                                         <div class="mb-3">
                                                             <label for="billinginfo-phone" class="form-label">Mobile
                                                                 no<span class="ms-1 text-danger">*</span></label>
-                                                            <input type="text" class="form-control" value="{{ $customerAddress->phone??'' }}"
+                                                            <input type="text" class="form-control"
+                                                                value="{{ $customerAddress->phone ?? '' }}"
                                                                 id="billinginfo-phone" name="phone"
                                                                 placeholder="Enter mobile no.">
                                                             <div class="invalid-feedback" id="mobileError"></div>
@@ -169,7 +176,8 @@
                                                             <label for="billinginfo-address"
                                                                 class="form-label">Address<span
                                                                     class="ms-1 text-danger">*</span></label>
-                                                            <input class="form-control" name="address" value="{{ $customerAddress->address??'' }}"
+                                                            <input class="form-control" name="address"
+                                                                value="{{ $customerAddress->address ?? '' }}"
                                                                 id="billinginfo-address"
                                                                 placeholder="House no. /building /street/area"
                                                                 rows="3"></input>
@@ -353,7 +361,20 @@
                                         Apply
                                     </button>
                                 </div>
-                                <span class="mt-2 fs-4">[{{ Session::get('code')->code }}]</span>
+                                <div id="discount-response-wrapper">
+                                    @if (Session::has('code'))
+                                        <div id="discount-response">
+                                            <button type="button" class="btn btn-primary btn-label right mt-2"
+                                                id="delete-coupon-code">
+                                                <i
+                                                    class="ri-delete-bin-5-line label-icon align-middle fs-16 ms-2 text-danger"></i>
+                                                {{ Session::get('code')->code }}
+                                            </button>
+                                        </div>
+                                    @endif
+                                </div>
+
+
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive table-card">
@@ -389,15 +410,15 @@
                                                 <td class="fw-semibold text-end">Rs. {{ Cart::subTotal() }}</td>
                                             </tr>
                                             <tr>
-                                                @if (Session::has('code'))
-                                                    <td colspan="2">Discount :
-                                                    </td>
-                                                @endif
-                                                <td class="text-end" id="discount_value">- </td>
+                                                <td colspan="2">Discount :
+                                                </td>
+
+                                                <td class="text-end" id="discount_value">-Rs {{ $discount }}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">Shipping Charge :</td>
-                                                <td class="text-end" id="shippingAmount">Rs. {{ number_format($totalShippingCharge, 2) }}</td>
+                                                <td class="text-end" id="shippingAmount">Rs.
+                                                    {{ number_format($totalShippingCharge, 2) }}</td>
                                             </tr>
                                             <tr class="table-active">
                                                 <th colspan="2">Total (Rs) :</th>
@@ -600,18 +621,20 @@
             $('#cities_id').change(function() {
 
                 $.ajax({
-                    url: "{{route('order.summary')  }}",
+                    url: "{{ route('order.summary') }}",
                     type: 'POST',
                     headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    data: { cities_id:$(this).val()},
-                    dataType:'json',
+                    data: {
+                        cities_id: $(this).val()
+                    },
+                    dataType: 'json',
                     success: function(response) {
-                        if(response.status==true){
+                        if (response.status == true) {
                             console.log('here');
-                            $("#shippingAmount").html('Rs '+response.shippingCharge);
-                            $("#grandTotal").html('Rs ' +response.grandTotal);
+                            $("#shippingAmount").html('Rs ' + response.shippingCharge);
+                            $("#grandTotal").html('Rs ' + response.grandTotal);
                         }
                     },
                     error: function(xhr, status, error) {
@@ -637,22 +660,51 @@
                     },
                     data: {
                         code: $("#discount_code").val(),
-                        city: $("#city").val()
+                        cities_id: $("#cities_id").val()
                     },
                     success: function(response) {
-                        if(response.status==true){
-                            showToast(response.message);
-                            $("#shippingAmount").html('Rs '+response.shippingCharge);
-                            $("#grandTotal").html('Rs ' +response.grandTotal);
-                            $("#discount_value").html('-Rs '+response.discount);
-
+                        if (response.status == true) {
+                            showToast('Discount Coupon added succesfully');
+                            $("#shippingAmount").html('Rs ' + response.shippingCharge);
+                            $("#grandTotal").html('Rs ' + response.grandTotal);
+                            $("#discount_value").html('-Rs ' + response.discount);
+                            $("#discount-response-wrapper").html(response.discountString);
                         }
-                        if(response.status==false){
+                        if (response.status == false) {
                             showErrorToast(response.message);
                         }
                     }
                 });
             });
+        });
+        $(document).ready(function() {
+            $('body').on('click', "#delete-coupon-code", function() {
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('remove.discountcode') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        cities_id: $("#cities_id").val()
+                    },
+                    success: function(response) {
+                        if (response.status == true) {
+                            showToast('Discount coupon Removed Succesfully');
+                            $("#shippingAmount").html('Rs ' + response
+                                .shippingCharge);
+                            $("#grandTotal").html('Rs ' + response.grandTotal);
+                            $("#discount_value").html('-Rs ' + response.discount);
+                            $("#discount-response-wrapper").html('');
+                            $("#discount_code").val('');
+                        }
+                        if (response.status == false) {
+                            showErrorToast(response.message);
+                        }
+                    }
+                });
+            })
+
         });
     </script>
 @endsection

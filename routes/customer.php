@@ -31,6 +31,7 @@ Route::get('/auth/github/callback', [GithubController::class,  'handleGithubCall
     Route::post('process-checkout-address', [CartController::class,'processCheckoutAddress'])->name('process.checkout.address');
     Route::post('process-checkout-payment', [CartController::class,'processCheckoutPayment'])->name('process.checkout.payment');
     Route::post('/apply-discount', [CartController::class,'applyDiscount'])->name('discountcode');
+    Route::post('/remove-discount', [CartController::class,'removeCoupon'])->name('remove.discountcode');
     Route::post('/get/ordersummary', [CartController::class,'getOrderSummary'])->name('order.summary');
 
 
