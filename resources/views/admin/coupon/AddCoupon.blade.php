@@ -66,17 +66,18 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label>Max Uses User</label>
-                            <input id="max_uses_users" name="max_uses_users" type="number" class="form-control"
-                                placeholder="Enter Max Uses For User">
+                            <label>Max Uses</label>
+                            <input id="max_uses" name="max_uses" type="number" class="form-control"
+                                placeholder="Enter Max Uses">
                             <div class="invalid-feedback" id="UsesError"></div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label>Max User</label>
-                            <input id="max_users" name="max_users" type="number" class="form-control"
-                                placeholder="Enter Max User">
-                            <div class="invalid-feedback" id="UserError"></div>
+                            <label>Max Uses User</label>
+                            <input id="max_uses_users" name="max_uses_user" type="number" class="form-control"
+                                placeholder="Enter Max Uses For User">
+                            <div class="invalid-feedback" id="UsesUserError"></div>
                         </div>
+
                     </div>
                     <div class="row">
                         <div class="col-md-6 mb-3">
@@ -176,15 +177,15 @@
                             }
                         }
 
-                        if (error.responseJSON.errors.max_users) {
-                            var errMsg = document.getElementById('UserError');
-                            if (error.responseJSON.errors.max_users[0]) {
+                        if (error.responseJSON.errors.max_uses) {
+                            var errMsg = document.getElementById('UsesError');
+                            if (error.responseJSON.errors.max_uses[0]) {
                                 errMsg.style.display = "block";
-                                errMsg.textContent = error.responseJSON.errors.max_users[0];
+                                errMsg.textContent = error.responseJSON.errors.max_uses[0];
                             }
                         }
                         if (error.responseJSON.errors.max_uses_user) {
-                            var errMsg = document.getElementById('UsesError');
+                            var errMsg = document.getElementById('UsesUserError');
                             if (error.responseJSON.errors.max_uses_user[0]) {
                                 errMsg.style.display = "block";
                                 errMsg.textContent = error.responseJSON.errors

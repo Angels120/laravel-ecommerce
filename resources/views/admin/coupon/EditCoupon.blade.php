@@ -66,16 +66,16 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label>Max Uses User</label>
-                            <input id="Editmax_uses_users" name="max_uses_users" type="number" class="form-control"
-                                placeholder="Enter Max Uses For User">
+                            <label>Max Uses</label>
+                            <input id="Editmax_uses" name="max_uses" type="number" class="form-control"
+                                placeholder="Enter Max Uses">
                             <div class="invalid-feedback" id="EditUsesError"></div>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label>Max User</label>
-                            <input id="Editmax_users" name="max_users" type="number" class="form-control"
-                                placeholder="Enter Max User">
-                            <div class="invalid-feedback" id="EditUserError"></div>
+                            <label>Max Uses User</label>
+                            <input id="Editmax_uses_users" name="max_uses_user" type="number" class="form-control"
+                                placeholder="Enter Max Uses For User">
+                            <div class="invalid-feedback" id="EditUserUsesError"></div>
                         </div>
                     </div>
                     <div class="row">
@@ -133,7 +133,7 @@
                     document.getElementById('EditCouponNameError').style.display = "none";
                     document.getElementById('EditDiscountAmountError').style.display ="none";
                     document.getElementById('EditMinAmountError').style.display = "none";
-                    document.getElementById('EditUserError').style.display = "none";
+                    document.getElementById('EditUserUsesError').style.display = "none";
                     document.getElementById('EditUsesError').style.display = "none";
                     document.getElementById('EditDescriptionError').style.display = "none";
                     document.getElementById('EditTypeError').style.display = "none";
@@ -173,15 +173,15 @@
                             }
                         }
 
-                        if (error.responseJSON.errors.max_users) {
-                            var errMsg = document.getElementById('EditUserError');
-                            if (error.responseJSON.errors.max_users[0]) {
+                        if (error.responseJSON.errors.max_uses) {
+                            var errMsg = document.getElementById('EditUsesError');
+                            if (error.responseJSON.errors.max_uses[0]) {
                                 errMsg.style.display = "block";
-                                errMsg.textContent = error.responseJSON.errors.max_users[0];
+                                errMsg.textContent = error.responseJSON.errors.max_uses[0];
                             }
                         }
                         if (error.responseJSON.errors.max_uses_user) {
-                            var errMsg = document.getElementById('EditUsesError');
+                            var errMsg = document.getElementById('EditUserUsesError');
                             if (error.responseJSON.errors.max_uses_user[0]) {
                                 errMsg.style.display = "block";
                                 errMsg.textContent = error.responseJSON.errors
@@ -255,7 +255,7 @@
                     $('#Editmin_amount').val(response.min_amount);
                     $('#Editdescription').val(response.description);
                     $('#Editmax_uses_users').val(response.max_uses_user);
-                    $('#Editmax_users').val(response.max_users);
+                    $('#Editmax_uses').val(response.max_uses);
                     $('#Editstarts_at').val(response.starts_at);
                     $('#Editexpires_at').val(response.expires_at);
                     var CouponType = response.type;

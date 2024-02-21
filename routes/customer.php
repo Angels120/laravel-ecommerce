@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\GithubController;
 use App\Http\Controllers\Auth\GoogleController;
+use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Customer\CartController;
 use App\Http\Controllers\Customer\HomeController;
 use App\Http\Controllers\Customer\ProductController;
@@ -17,6 +18,13 @@ Route::get('/auth/google/callback', [GoogleController::class,  'handleGoogleCall
 Route::get('/auth/github/redirect', [GithubController::class,  'handleGithubRedirect'])->name('redirect.github');
 Route::get('/auth/github/callback', [GithubController::class,  'handleGithubCallback'])->name('callback.github');
 //--------------------------------------Ends here--------------------------------------------------------//
+
+//--------------------------------------Route for Profile--------------------------------------------------------//
+Route::get('/user/profile', [ProfileController::class,  'profile'])->name('user.profile');
+
+
+//--------------------------------------Ends Here--------------------------------------------------------//
+
 
 //--------------------------------------Route for Carts--------------------------------------------------------//
 

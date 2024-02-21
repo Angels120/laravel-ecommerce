@@ -280,7 +280,7 @@
                                 </div>
                             </div>
 
-                            <a href="apps-ecommerce-checkout.html" class="btn btn-success text-center w-100">
+                            <a href="{{ route('checkout.details') }}" class="btn btn-success text-center w-100">
                                 Checkout
                             </a>
                         </div>

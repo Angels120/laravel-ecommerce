@@ -26,7 +26,7 @@ class StoreCouponRequest extends FormRequest
             'code'=>'required',
             'name'=>'required',
             'descripition'=>'nullable',
-            'max_users'=>'nullable',
+            'max_uses'=>'nullable',
             'max_uses_user'=>'nullable',
             'type'=>'required',
             'discount_amount'=>'required|numeric',

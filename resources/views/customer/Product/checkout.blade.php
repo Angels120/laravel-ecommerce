@@ -602,6 +602,8 @@
                             $('#orderID').text(response.order_id);
                             $('#pills-payment-tab').prop('disabled', true);
                             $('#pills-bill-info-tab').prop('disabled', true);
+                            $("#discount-response-wrapper").html('');
+                            $("#discount_code").val('');
                         }
                     },
                     error: function(error) {
