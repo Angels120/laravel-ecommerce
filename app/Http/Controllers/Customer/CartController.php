@@ -242,6 +242,8 @@ class CartController extends Controller
             $order->coupon_code_id = $discountCodeId;
             $order->discount = $discount;
             $order->grand_total = $grandTotal;
+            $order->payment_status = 'not_paid';
+            $order->status = 'pending';
 
             $order->full_name = $request->full_name;
             $order->email = $request->email;
