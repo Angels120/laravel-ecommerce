@@ -22,11 +22,17 @@
                                 @foreach ($orders as $order)
                                     <tr>
                                         <td>
-                                            <a href="order-detail.php">{{ $order->id }}</a>
+                                            <a href="{{ route('user.orderDetail', $order->id ) }}">{{ $order->id }}</a>
                                         </td>
                                         <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d M, Y') }}</td>
                                         <td>
-                                            <span class="badge bg-success">{{ $order->status }}</span>
+                                            @if( $order->status=='pending')
+                                            <span class="badge bg-danger">Pending</span>
+                                            @elseif( $order->status=='shipped' )
+                                            <span class="badge bg-info">Shipped</span>
+                                            @else
+                                            <span class="badge bg-success">Status</span>
+                                            @endif
                                         </td>
                                         <td>Rs. {{number_format($order->grand_total,2)}}</td>
                                     </tr>
