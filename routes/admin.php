@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\admin\LoginController as AdminLoginController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SubCategoryController;
@@ -33,6 +34,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     Route::delete('/customer-users/delete/{id}', [UserController::class,'DestroyCustomerUser'])->name('customer.delete');
 
     //-------------------------------------Ends Here--------------------------------------------------------//
+
+    //--------------------------------------Orders starts here--------------------------------------------------------//
+    Route::get('/orders', [OrderController::class,'index'])->name('orders.index');
+    Route::get('/orders/edit', [OrderController::class,'edit'])->name('order.edit');
+    Route::post('/shippings/update', [ShippingController::class,'update'])->name('shipping.update');
+    Route::delete('/shippings/delete/{id}', [ShippingController::class,'destroy'])->name('shipping.delete');
+    //--------------------------------------Ends HEre--------------------------------------------------------//
+
+
 
     //--------------------------------------Route for Products--------------------------------------------------------//
     Route::get('/products', [ProductController::class,'index'])->name('products.index');
@@ -83,6 +93,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     Route::post('/shippings/update', [ShippingController::class,'update'])->name('shipping.update');
     Route::delete('/shippings/delete/{id}', [ShippingController::class,'destroy'])->name('shipping.delete');
     //--------------------------------------Ends HEre--------------------------------------------------------//
+
     //--------------------------------------Coupon starts here--------------------------------------------------------//
     Route::get('/coupons', [CouponController::class,'index'])->name('coupon.index');
     Route::post('/coupons/create', [CouponController::class,'store'])->name('coupon.create');

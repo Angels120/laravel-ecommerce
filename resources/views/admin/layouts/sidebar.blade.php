@@ -51,6 +51,11 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('admin.orders.index') }}"  role="button" aria-expanded="false">
+                        <i class="ri-shopping-bag-fill"></i> <span>Orders</span>
+                    </a>
+                </li>
 
                <!-- end Dashboard Menu -->
 

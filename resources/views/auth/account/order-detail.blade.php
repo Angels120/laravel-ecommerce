@@ -70,18 +70,17 @@
                         <!-- List group -->
                         <ul>
                             @foreach ($orderItems as $item)
-
                             <li class="list-group-item">
                                 <div class="row align-items-center">
                                     <div class="col-4 col-md-3 col-xl-2">
                                         <!-- Image -->
-                                        <a href="product.html"><img src="{{ asset('uploads/products/' . ($item->product->image[0] ?? '')) }}"
-                                            alt="..." class="img-fluid"></a>
+                                        <a href="{{ route('product.detail', $item->product->slug) }}"><img src="{{ asset('uploads/products/' . ($item->product->image[0] ?? '')) }}"
+                                            alt="..." class="img-fluid d-block"></a>
                                     </div>
                                     <div class="col">
                                         <!-- Title -->
-                                        <p class="mb-4 fs-md fw-bold">
-                                            <a class="text-body" href="product.html">{{ $item->name }} x {{ $item->qty }}</a> <br>
+                                        <p class="mb-4 fs-5 fw-bold">
+                                            <a  href="{{ route('product.detail', $item->product->slug) }}">{{ $item->name }} x {{ $item->qty }}</a> <br>
                                             <span class="text-muted">Rs {{ number_format($item->total,2) }}</span>
                                         </p>
                                     </div>
