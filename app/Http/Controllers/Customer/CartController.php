@@ -205,8 +205,8 @@ class CartController extends Controller
         //Step 2 store Order in Order Table
         if ($request->paymentMethod == 'cod') {
             $ShippingCharge = 0;
-            $discountCodeId = '';
-            $promoCode = '';
+            $discountCodeId = null;
+            $promoCode = null;
             $discount = 0;
             $subTotal = Cart::subtotal(2, '.', '');
             $grandTotal = $subTotal + $ShippingCharge;

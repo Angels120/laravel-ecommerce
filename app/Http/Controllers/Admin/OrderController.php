@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Order;
+use App\Models\OrderItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\HtmlString;
 use Yajra\DataTables\Facades\DataTables;
@@ -62,16 +63,33 @@ class OrderController extends Controller
                         </a>
                     </td>';
                 })
-                ->rawColumns(['id', 'customer_name', 'email','phone_number','amount','action'])
+                ->rawColumns(['id', 'customer_name', 'email', 'phone_number', 'amount', 'action'])
                 ->make(true);
         }
 
-        return view('admin.order.orders',compact('breadcrumb'));
+        return view('admin.order.orders', compact('breadcrumb'));
     }
     public function edit(Request $request)
     {
-        $order=Order::findOrFail($request->id);
-        return response()->json($order);
+        $order = Order::with('province', 'city')->findOrFail($request->id);
+        $orderItems = OrderItem::with('product')->where('order_id', $request->id)->get();
+        $responseData = [
+            'order' => $order,
+            'orderItems' => $orderItems
+        ];
+        return response()->json($responseData);
     }
 
+    public function update(Request $request)
+    {
+        $validatedData = $request->validate([
+            'status' => 'required|in:pending,delivered,shipped',
+            'shipped_date' => 'nullable|date_format:Y-m-d\TH:i',
+        ]);
+
+        $order = Order::findOrFail($request->id);
+        $order->update($validatedData);
+
+        return response()->json(['message' => 'Order details updated successfully', 'data' => $order], 200);
+    }
 }

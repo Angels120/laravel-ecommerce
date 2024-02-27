@@ -38,7 +38,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     //--------------------------------------Orders starts here--------------------------------------------------------//
     Route::get('/orders', [OrderController::class,'index'])->name('orders.index');
     Route::get('/orders/edit', [OrderController::class,'edit'])->name('order.edit');
-    Route::post('/shippings/update', [ShippingController::class,'update'])->name('shipping.update');
+    Route::post('/orders/update', [OrderController::class,'update'])->name('order.update');
     Route::delete('/shippings/delete/{id}', [ShippingController::class,'destroy'])->name('shipping.delete');
     //--------------------------------------Ends HEre--------------------------------------------------------//
 
