@@ -7,6 +7,8 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\admin\LoginController as AdminLoginController;
+use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UserController;
@@ -32,6 +34,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     Route::delete('/customer-users/delete/{id}', [UserController::class,'DestroyCustomerUser'])->name('customer.delete');
 
     //-------------------------------------Ends Here--------------------------------------------------------//
+
+    //--------------------------------------Orders starts here--------------------------------------------------------//
+    Route::get('/orders', [OrderController::class,'index'])->name('orders.index');
+    Route::get('/orders/edit', [OrderController::class,'edit'])->name('order.edit');
+    Route::post('/orders/update', [OrderController::class,'update'])->name('order.update');
+    Route::delete('/shippings/delete/{id}', [ShippingController::class,'destroy'])->name('shipping.delete');
+    //--------------------------------------Ends HEre--------------------------------------------------------//
+
+
 
     //--------------------------------------Route for Products--------------------------------------------------------//
     Route::get('/products', [ProductController::class,'index'])->name('products.index');
@@ -74,6 +85,22 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     Route::post('/brands/status/update/{id}', [BrandController::class, 'updateStatus'])->name('brand.status.update');
     Route::delete('/brands/delete/{id}', [BrandController::class,'destroy'])->name('brand.delete');
 
+    //--------------------------------------Ends HEre--------------------------------------------------------//
+    //--------------------------------------Shipping starts here--------------------------------------------------------//
+    Route::get('/shippings', [ShippingController::class,'index'])->name('shipping.index');
+    Route::post('/shippings/create', [ShippingController::class,'store'])->name('shipping.create');
+    Route::get('/shippings/edit', [ShippingController::class,'edit'])->name('shipping.edit');
+    Route::post('/shippings/update', [ShippingController::class,'update'])->name('shipping.update');
+    Route::delete('/shippings/delete/{id}', [ShippingController::class,'destroy'])->name('shipping.delete');
+    //--------------------------------------Ends HEre--------------------------------------------------------//
+
+    //--------------------------------------Coupon starts here--------------------------------------------------------//
+    Route::get('/coupons', [CouponController::class,'index'])->name('coupon.index');
+    Route::post('/coupons/create', [CouponController::class,'store'])->name('coupon.create');
+    Route::post('/coupons/status/update/{id}', [CouponController::class, 'updateStatus'])->name('coupon.status.update');
+    Route::get('/coupons/edit', [CouponController::class,'edit'])->name('coupon.edit');
+    Route::post('/coupons/update', [CouponController::class,'update'])->name('coupon.update');
+    Route::delete('/coupons/delete/{id}', [CouponController::class,'destroy'])->name('coupon.delete');
     //--------------------------------------Ends HEre--------------------------------------------------------//
 
     // Route::resource('products',ProductController::class);

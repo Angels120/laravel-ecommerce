@@ -41,7 +41,7 @@
                         <div class="card">
                             <div class="card-body checkout-tab">
 
-                                <form action="#" id="Billing-information-form">
+                                <form id="Billing-information-form">
                                     <div class="step-arrow-nav mt-n3 mx-n3 mb-3">
 
                                         <ul class="nav nav-pills nav-justified custom-nav" role="tablist">
@@ -58,7 +58,8 @@
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link fs-15 p-3" id="pills-payment-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-payment" type="button"
-                                                    role="tab" aria-controls="pills-payment" aria-selected="false">
+                                                    role="tab" aria-controls="pills-payment" aria-selected="false"
+                                                    disabled>
                                                     <i
                                                         class="ri-bank-card-line fs-16 p-2 bg-soft-primary text-primary rounded-circle align-middle me-2"></i>
                                                     Payment Info
@@ -67,12 +68,14 @@
                                             <li class="nav-item" role="presentation">
                                                 <button class="nav-link fs-15 p-3" id="pills-finish-tab"
                                                     data-bs-toggle="pill" data-bs-target="#pills-finish" type="button"
-                                                    role="tab" aria-controls="pills-finish" aria-selected="false">
+                                                    role="tab" aria-controls="pills-finish" aria-selected="false"
+                                                    disabled>
                                                     <i
                                                         class="ri-checkbox-circle-line fs-16 p-2 bg-soft-primary text-primary rounded-circle align-middle me-2"></i>
                                                     Finish
                                                 </button>
                                             </li>
+
                                         </ul>
                                     </div>
 
@@ -82,12 +85,7 @@
                                             <div>
                                                 <div class="d-flex justify-content-between align-items-center">
                                                     <h5 class="mb-0">Billing Information</h5>
-                                                    <button type="button"
-                                                        class="btn btn-success btn-label right ms-auto nexttab"
-                                                        id="import_user_info" data-nexttab="pills-bill-address-tab">
-                                                        <i class="ri-download-line label-icon align-middle fs-16 ms-2"></i>
-                                                        Import User Address
-                                                    </button>
+
                                                 </div>
                                                 <p class="text-muted mb-4">Please fill all information below</p>
                                             </div>
@@ -99,6 +97,7 @@
                                                             <label for="billinginfo-firstName" class="form-label">Full
                                                                 Name<span class="ms-1 text-danger">*</span></label>
                                                             <input type="text" class="form-control"
+                                                                value="{{ $customerAddress->full_name ?? '' }}"
                                                                 id="billinginfo-FullName" placeholder="Enter first name"
                                                                 name="full_name">
                                                             <div class="invalid-feedback" id="FullNameError"></div>
@@ -109,7 +108,8 @@
                                                         <div class="mb-3">
                                                             <label for="billinginfo-email" class="form-label">Email<span
                                                                     class="text-muted">(Optional)</span></label>
-                                                            <input type="email" class="form-control"
+                                                            <input type="email" name="email" class="form-control"
+                                                                value="{{ $customerAddress->email ?? '' }}"
                                                                 id="billinginfo-email" placeholder="Enter email">
                                                             <div class="invalid-feedback" id="EmailError"></div>
                                                         </div>
@@ -126,8 +126,11 @@
                                                                 <option value="">Select Province...</option>
                                                                 @if ($provinces->isNotEmpty())
                                                                     @foreach ($provinces as $province)
-                                                                        <option value="{{ $province->id }}">
-                                                                            {{ $province->name }}</option>
+                                                                        <option
+                                                                            {{ !empty($customerAddress) && $customerAddress->province_id == $province->id ? 'selected' : '' }}
+                                                                            value="{{ $province->id }}">
+                                                                            {{ $province->name }}
+                                                                        </option>
                                                                     @endforeach
                                                                 @endif
                                                             </select>
@@ -145,8 +148,11 @@
                                                                 id="cities_id" name="city_id" data-plugin="choices">
                                                                 <option value="">Select City/Municipality...</option>
                                                                 @foreach ($cities as $city)
-                                                                    <option value="{{ $city->id }}">
-                                                                        {{ $city->name ?? '' }}</option>
+                                                                    <option
+                                                                        {{ !empty($customerAddress) && $customerAddress->city_id == $city->id ? 'selected' : '' }}
+                                                                        value="{{ $city->id }}">
+                                                                        {{ $city->name }}
+                                                                    </option>
                                                                 @endforeach
                                                             </select>
                                                             <div class="invalid-feedback" id="CityError"></div>
@@ -159,6 +165,7 @@
                                                             <label for="billinginfo-phone" class="form-label">Mobile
                                                                 no<span class="ms-1 text-danger">*</span></label>
                                                             <input type="text" class="form-control"
+                                                                value="{{ $customerAddress->phone ?? '' }}"
                                                                 id="billinginfo-phone" name="phone"
                                                                 placeholder="Enter mobile no.">
                                                             <div class="invalid-feedback" id="mobileError"></div>
@@ -170,6 +177,7 @@
                                                                 class="form-label">Address<span
                                                                     class="ms-1 text-danger">*</span></label>
                                                             <input class="form-control" name="address"
+                                                                value="{{ $customerAddress->address ?? '' }}"
                                                                 id="billinginfo-address"
                                                                 placeholder="House no. /building /street/area"
                                                                 rows="3"></input>
@@ -182,7 +190,7 @@
                                                 <div class="d-flex align-items-start gap-3 mt-3">
                                                     <button type="button"
                                                         class="btn btn-primary btn-label right ms-auto nexttab"
-                                                        id="save-information" data-nexttab="pills-payment-tab">
+                                                        id="save-information">
                                                         <i
                                                             class="ri-bank-card-line label-icon align-middle fs-16 ms-2"></i>
                                                         Proceed to Payment Info
@@ -204,22 +212,30 @@
 
                                             <div class="row g-4">
                                                 <div class="col-lg-4 col-sm-6">
-                                                    <div data-bs-toggle="collapse" data-bs-target="#paymentmethodCollapse.show" aria-expanded="false" aria-controls="paymentmethodCollapse">
+                                                    <div data-bs-toggle="collapse"
+                                                        data-bs-target="#paymentmethodCollapse.show" aria-expanded="false"
+                                                        aria-controls="paymentmethodCollapse">
                                                         <div class="form-check card-radio">
-                                                            <input id="paymentMethod01" name="paymentMethod" type="radio" class="form-check-input">
+                                                            <input id="paymentMethod01" name="paymentMethod"
+                                                                type="radio" value="paypal" class="form-check-input">
                                                             <label class="form-check-label" for="paymentMethod01">
-                                                                <span class="fs-16 text-muted me-2"><i class="ri-paypal-fill align-bottom"></i></span>
+                                                                <span class="fs-16 text-muted me-2"><i
+                                                                        class="ri-paypal-fill align-bottom"></i></span>
                                                                 <span class="fs-14 text-wrap">Paypal</span>
                                                             </label>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-4 col-sm-6">
-                                                    <div data-bs-toggle="collapse" data-bs-target="#paymentmethodCollapse" aria-expanded="true" aria-controls="paymentmethodCollapse">
+                                                    <div data-bs-toggle="collapse" data-bs-target="#paymentmethodCollapse"
+                                                        aria-expanded="true" aria-controls="paymentmethodCollapse">
                                                         <div class="form-check card-radio">
-                                                            <input id="paymentMethod02" name="paymentMethod" type="radio" class="form-check-input" checked>
+                                                            <input id="paymentMethod02" name="paymentMethod"
+                                                                type="radio" value="credit_card"
+                                                                class="form-check-input" checked>
                                                             <label class="form-check-label" for="paymentMethod02">
-                                                                <span class="fs-16 text-muted me-2"><i class="ri-bank-card-fill align-bottom"></i></span>
+                                                                <span class="fs-16 text-muted me-2"><i
+                                                                        class="ri-bank-card-fill align-bottom"></i></span>
                                                                 <span class="fs-14 text-wrap">Credit / Debit Card</span>
                                                             </label>
                                                         </div>
@@ -227,11 +243,15 @@
                                                 </div>
 
                                                 <div class="col-lg-4 col-sm-6">
-                                                    <div data-bs-toggle="collapse" data-bs-target="#paymentmethodCollapse.show" aria-expanded="false" aria-controls="paymentmethodCollapse">
+                                                    <div data-bs-toggle="collapse"
+                                                        data-bs-target="#paymentmethodCollapse.show" aria-expanded="false"
+                                                        aria-controls="paymentmethodCollapse">
                                                         <div class="form-check card-radio">
-                                                            <input id="paymentMethod03" name="paymentMethod" type="radio" class="form-check-input">
+                                                            <input id="paymentMethod03" name="paymentMethod"
+                                                                type="radio" value="cod" class="form-check-input">
                                                             <label class="form-check-label" for="paymentMethod03">
-                                                                <span class="fs-16 text-muted me-2"><i class="ri-money-dollar-box-fill align-bottom"></i></span>
+                                                                <span class="fs-16 text-muted me-2"><i
+                                                                        class="ri-money-dollar-box-fill align-bottom"></i></span>
                                                                 <span class="fs-14 text-wrap">Cash on Delivery</span>
                                                             </label>
                                                         </div>
@@ -244,36 +264,47 @@
                                                     <div class="row gy-3">
                                                         <div class="col-md-12">
                                                             <label for="cc-name" class="form-label">Name on card</label>
-                                                            <input type="text" class="form-control" id="cc-name" placeholder="Enter name">
-                                                            <small class="text-muted">Full name as displayed on card</small>
+                                                            <input type="text" class="form-control" id="cc-name"
+                                                                placeholder="Enter name">
+                                                            <small class="text-muted">Full name as displayed on
+                                                                card</small>
                                                         </div>
 
                                                         <div class="col-md-6">
-                                                            <label for="cc-number" class="form-label">Credit card number</label>
-                                                            <input type="text" class="form-control" id="cc-number" placeholder="xxxx xxxx xxxx xxxx">
+                                                            <label for="cc-number" class="form-label">Credit card
+                                                                number</label>
+                                                            <input type="text" class="form-control" id="cc-number"
+                                                                placeholder="xxxx xxxx xxxx xxxx">
                                                         </div>
 
                                                         <div class="col-md-3">
-                                                            <label for="cc-expiration" class="form-label">Expiration</label>
-                                                            <input type="text" class="form-control" id="cc-expiration" placeholder="MM/YY">
+                                                            <label for="cc-expiration"
+                                                                class="form-label">Expiration</label>
+                                                            <input type="text" class="form-control" id="cc-expiration"
+                                                                placeholder="MM/YY">
                                                         </div>
 
                                                         <div class="col-md-3">
                                                             <label for="cc-cvv" class="form-label">CVV</label>
-                                                            <input type="text" class="form-control" id="cc-cvv" placeholder="xxx">
+                                                            <input type="text" class="form-control" id="cc-cvv"
+                                                                placeholder="xxx">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="text-muted mt-2 fst-italic">
-                                                    <i data-feather="lock" class="text-muted icon-xs"></i> Your transaction is secured with SSL encryption
+                                                    <i data-feather="lock" class="text-muted icon-xs"></i> Your
+                                                    transaction is secured with SSL encryption
                                                 </div>
                                             </div>
 
                                             <div class="d-flex align-items-start gap-3 mt-4">
-                                                <button type="button" class="btn btn-light btn-label previestab" data-previous="pills-bill-info-tab"><i class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>Back to Personal Info</button>
+                                                <button type="button" class="btn btn-light btn-label previestab"
+                                                    data-previous="pills-bill-info-tab"><i
+                                                        class="ri-arrow-left-line label-icon align-middle fs-16 me-2"></i>Back
+                                                    to Personal Info</button>
                                                 <button type="button"
                                                     class="btn btn-primary btn-label right ms-auto nexttab"
-                                                    id="order_complete" data-nexttab="pills-finish-tab"><i
+                                                    id="order_complete"><i
                                                         class="ri-shopping-basket-line label-icon align-middle fs-16 ms-2"></i>Complete
                                                     Order</button>
                                             </div>
@@ -283,7 +314,6 @@
                                         <div class="tab-pane fade" id="pills-finish" role="tabpanel"
                                             aria-labelledby="pills-finish-tab">
                                             <div class="text-center py-5">
-
                                                 <div class="mb-4">
                                                     <lord-icon src="https://cdn.lordicon.com/lupuorrc.json" trigger="loop"
                                                         colors="primary:#0ab39c,secondary:#405189"
@@ -293,11 +323,11 @@
                                                 <p class="text-muted">You will receive an order confirmation email with
                                                     details of your order.</p>
 
-                                                <h3 class="fw-semibold">Order ID: <a
-                                                        href="apps-ecommerce-order-details.html"
-                                                        class="text-decoration-underline">VZ2451</a></h3>
+                                                <h3 class="fw-semibold">Order ID: <span id="orderID"
+                                                        class="text-decoration-underline"></span></h3>
                                             </div>
                                         </div>
+
                                         <!-- end tab pane -->
                                     </div>
                                     <!-- end tab content -->
@@ -317,6 +347,34 @@
                                         <h5 class="card-title mb-0">Order Summary</h5>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-header bg-soft-light border-bottom-dashed">
+                                <div class="text-center">
+                                    <h6 class="mb-2">
+                                        Have a <span class="fw-semibold">Coupon</span> code ?
+                                    </h6>
+                                </div>
+                                <div class="hstack gap-3 px-3 mx-n3">
+                                    <input class="form-control me-auto" type="text" name="code" id="discount_code"
+                                        placeholder="Enter coupon code" aria-label="Add Promo Code here..." />
+                                    <button type="button" id="apply-discount" class="btn btn-success w-xs">
+                                        Apply
+                                    </button>
+                                </div>
+                                <div id="discount-response-wrapper">
+                                    @if (Session::has('code'))
+                                        <div id="discount-response">
+                                            <button type="button" class="btn btn-primary btn-label right mt-2"
+                                                id="delete-coupon-code">
+                                                <i
+                                                    class="ri-delete-bin-5-line label-icon align-middle fs-16 ms-2 text-danger"></i>
+                                                {{ Session::get('code')->code }}
+                                            </button>
+                                        </div>
+                                    @endif
+                                </div>
+
+
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive table-card">
@@ -352,23 +410,21 @@
                                                 <td class="fw-semibold text-end">Rs. {{ Cart::subTotal() }}</td>
                                             </tr>
                                             <tr>
-                                                <td colspan="2">Discount <span class="text-muted">(VELZON15)</span> :
+                                                <td colspan="2">Discount :
                                                 </td>
-                                                <td class="text-end">- $ 50.00</td>
+
+                                                <td class="text-end" id="discount_value">-Rs {{ $discount }}</td>
                                             </tr>
                                             <tr>
                                                 <td colspan="2">Shipping Charge :</td>
-                                                <td class="text-end">$ 24.99</td>
-                                            </tr>
-                                            <tr>
-                                                <td colspan="2">Estimated Tax (12%): </td>
-                                                <td class="text-end">$ 18.20</td>
+                                                <td class="text-end" id="shippingAmount">Rs.
+                                                    {{ number_format($totalShippingCharge, 2) }}</td>
                                             </tr>
                                             <tr class="table-active">
-                                                <th colspan="2">Total (USD) :</th>
+                                                <th colspan="2">Total (Rs) :</th>
                                                 <td class="text-end">
-                                                    <span class="fw-semibold">
-                                                        $353.15
+                                                    <span class="fw-semibold" id="grandTotal">
+                                                        Rs. {{ number_format($grandTotal, 2) }}
                                                     </span>
                                                 </td>
                                             </tr>
@@ -407,7 +463,7 @@
     {{-- Dynamic Dropdown for Province and City --}}
     <script>
         $(document).ready(function() {
-            $('#cities_id').prop('disabled', true);
+
             $('#province_id').change(function() {
                 var provinceId = $(this).val();
                 if (provinceId) {
@@ -445,11 +501,11 @@
     {{-- Address customer Form  and Payment Detail --}}
     <script>
         $(document).ready(function() {
-            function handleCheckout(source) {
+            $('#save-information').click(function(e) {
                 var data = $('#Billing-information-form').serializeArray();
                 $.ajax({
                     type: 'POST',
-                    url: "{{ route('process.checkout') }}",
+                    url: "{{ route('process.checkout.address') }}",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
@@ -458,8 +514,10 @@
                         console.log("finally");
                         showToast(response.message);
                         // Switch to the next tab
-                        var nextTabId = $('#' + source).data('nexttab');
-                        $('#' + nextTabId).tab('show');
+                        if (!response.errors) {
+                            $('#pills-payment-tab').removeAttr('disabled');
+                            $('#pills-payment-tab').tab('show');
+                        }
                     },
                     error: function(error) {
                         document.getElementById('FullNameError').style.display = "none";
@@ -488,7 +546,8 @@
                                 var errMsg = document.getElementById('ProvinceError');
                                 if (error.responseJSON.errors.province_id[0]) {
                                     errMsg.style.display = "block";
-                                    errMsg.textContent = error.responseJSON.errors.province_id[0];
+                                    errMsg.textContent = error.responseJSON.errors.province_id[
+                                        0];
                                 }
                             }
                             if (error.responseJSON.errors.city_id) {
@@ -516,64 +575,138 @@
                         }
                     }
                 });
-            }
-            $('#save-information').click(function(e) {
-                e.preventDefault();
-                handleCheckout('save-information');
             });
 
-            $('#order_complete').click(function(e) {
-                e.preventDefault();
-                handleCheckout('order_complete');
-            });
         });
     </script>
 
 
-    {{-- Append the values from get request --}}
     <script>
         $(document).ready(function() {
-            $('#import_user_info').click(function(e) {
+            $('#order_complete').click(function(e) {
+                var data = $('#Billing-information-form').serializeArray();
                 $.ajax({
-                    type: 'GET',
-                    url: "{{ route('user.address') }}",
+                    type: 'POST',
+                    url: "{{ route('process.checkout.payment') }}",
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
+                    data: data,
                     success: function(response) {
-                        if (response.length > 0) {
-                            var userData = response[
-                                0];
-
-                            $('#billinginfo-FullName').val(userData.full_name);
-                            $('#billinginfo-email').val(userData.email);
-
-                            $('#province_id').val(userData.province_id).trigger(
-                                'change.select2');
-                            $('#cities_id').val(userData.city_id).trigger(
-                                'change.select2');
-
-                            $('#billinginfo-phone').val(userData.phone);
-                            $('#billinginfo-address').val(userData.address);
-                            $('#cities_id').prop('disabled', false);
+                        console.log("finally");
+                        showToast(response.message);
+                        // Switch to the next tab
+                        if (!response.errors) {
+                            $('#pills-finish-tab').removeAttr('disabled');
+                            $('#pills-finish-tab').tab('show');
+                            $('#orderID').text(response.order_id);
+                            $('#pills-payment-tab').prop('disabled', true);
+                            $('#pills-bill-info-tab').prop('disabled', true);
+                            $("#discount-response-wrapper").html('');
+                            $("#discount_code").val('');
                         }
-
-                        showToast("User information loaded successfully.");
                     },
+                    error: function(error) {
 
+                    }
                 });
             });
-
-
         });
     </script>
 
 
 
 
+    {{-- Shipping charge change Script --}}
+    <script>
+        $(document).ready(function() {
+            $('#cities_id').change(function() {
+
+                $.ajax({
+                    url: "{{ route('order.summary') }}",
+                    type: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        cities_id: $(this).val()
+                    },
+                    dataType: 'json',
+                    success: function(response) {
+                        if (response.status == true) {
+                            console.log('here');
+                            $("#shippingAmount").html('Rs ' + response.shippingCharge);
+                            $("#grandTotal").html('Rs ' + response.grandTotal);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
+        });
+    </script>
 
 
 
+    {{-- script for discount coupon --}}
+    <script>
+        $(document).ready(function() {
+            $("#apply-discount").click(function(e) {
+                console.log('clicked');
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('discountcode') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        code: $("#discount_code").val(),
+                        cities_id: $("#cities_id").val()
+                    },
+                    success: function(response) {
+                        if (response.status == true) {
+                            showToast('Discount Coupon added succesfully');
+                            $("#shippingAmount").html('Rs ' + response.shippingCharge);
+                            $("#grandTotal").html('Rs ' + response.grandTotal);
+                            $("#discount_value").html('-Rs ' + response.discount);
+                            $("#discount-response-wrapper").html(response.discountString);
+                        }
+                        if (response.status == false) {
+                            showErrorToast(response.message);
+                        }
+                    }
+                });
+            });
+        });
+        $(document).ready(function() {
+            $('body').on('click', "#delete-coupon-code", function() {
+                $.ajax({
+                    type: 'POST',
+                    url: "{{ route('remove.discountcode') }}",
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data: {
+                        cities_id: $("#cities_id").val()
+                    },
+                    success: function(response) {
+                        if (response.status == true) {
+                            showToast('Discount coupon Removed Succesfully');
+                            $("#shippingAmount").html('Rs ' + response
+                                .shippingCharge);
+                            $("#grandTotal").html('Rs ' + response.grandTotal);
+                            $("#discount_value").html('-Rs ' + response.discount);
+                            $("#discount-response-wrapper").html('');
+                            $("#discount_code").val('');
+                        }
+                        if (response.status == false) {
+                            showErrorToast(response.message);
+                        }
+                    }
+                });
+            })
 
-
+        });
+    </script>
 @endsection

@@ -84,16 +84,16 @@
                                                     <i class="ri-share-line"></i>
                                                 </button>
                                                 @role(['Admin', 'Super Admin'])
-                                                <div class="flex-shrink-0">
-                                                    <div>
+                                                    <div class="flex-shrink-0">
+                                                        <div>
 
-                                                        <a href="apps-ecommerce-add-product.html" class="btn btn-light"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top" title="Edit"><i
-                                                                class="ri-pencil-fill align-bottom"></i></a>
+                                                            <a href="apps-ecommerce-add-product.html" class="btn btn-light"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Edit"><i class="ri-pencil-fill align-bottom"></i></a>
 
+                                                        </div>
                                                     </div>
-                                                </div>
-                                            @endrole
+                                                @endrole
                                             </div>
 
 
@@ -177,12 +177,15 @@
                                         </div>
 
 
-                                        <div class="row mt-4">
+                                        <div class=" mt-4">
                                             <div class="col-lg-12">
-                                                <button type="submit" class="btn btn-info btn-lg btn-block me-3"
-                                                    id="save-Category" style="width: 260px;">Buy Now</button>
-                                                <button type="submit" class="btn btn-danger btn-lg btn-block"
-                                                    id="save-Category" style="width: 260px;" onclick="addToCart({{ $product->id }})">Add To Cart</button>
+                                                <div class="row">
+                                                    <button type="submit" class="btn btn-info btn-lg btn-block me-3"
+                                                        id="save-Category" style="width: 260px;">Buy Now</button>
+                                                    <button type="submit" class="btn btn-danger btn-lg btn-block"
+                                                        id="save-Category" style="width: 260px;"
+                                                        onclick="addToCart({{ $product->id }})">Add To Cart</button>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -471,48 +474,46 @@
                 <div class="modal-body">
                     <div class="mt-2 text-center">
                         <lord-icon src="https://cdn.lordicon.com/usownftb.json" trigger="loop"
-                        style="width:100px;height:100px; ">
-                    </lord-icon>
+                            style="width:100px;height:100px; ">
+                        </lord-icon>
                         <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
                             <h4 class="text-danger">Your Product is already added in cart!</h4>
+                        </div>
                     </div>
                 </div>
+                <!-- /.modal-content -->
             </div>
-            <!-- /.modal-content -->
+            <!-- /.modal-dialog -->
         </div>
-        <!-- /.modal-dialog -->
-    </div>
-    <!-- /.modal -->
-@section('script')
-    {{-- Script for increment and decrement quantity --}}
-    <script>
-        $(function() {
-            $('.plus').click(function(e) {
-                e.preventDefault();
-                var input = $(this).siblings('.product-quantity');
-                var quantity = parseInt(input.val());
-                var availableStock = parseInt($('.stock-info').text());
-                console.log(availableStock);
-                if (quantity < availableStock) {
-                    quantity++;
-                    input.val(quantity);
-                }
+        <!-- /.modal -->
+    @section('script')
+        {{-- Script for increment and decrement quantity --}}
+        <script>
+            $(function() {
+                $('.plus').click(function(e) {
+                    e.preventDefault();
+                    var input = $(this).siblings('.product-quantity');
+                    var quantity = parseInt(input.val());
+                    var availableStock = parseInt($('.stock-info').text());
+                    console.log(availableStock);
+                    if (quantity < availableStock) {
+                        quantity++;
+                        input.val(quantity);
+                    }
+                });
+
+                $('.minus').click(function(e) {
+                    e.preventDefault();
+                    var input = $(this).siblings('.product-quantity');
+                    var quantity = parseInt(input.val());
+
+                    if (quantity > 1) {
+                        quantity--;
+                        input.val(quantity);
+                    }
+                });
             });
-
-            $('.minus').click(function(e) {
-                e.preventDefault();
-                var input = $(this).siblings('.product-quantity');
-                var quantity = parseInt(input.val());
-
-                if (quantity > 1) {
-                    quantity--;
-                    input.val(quantity);
-                }
-            });
-        });
-
-    </script>
-
-@endsection
+        </script>
+    @endsection
 
 @endsection

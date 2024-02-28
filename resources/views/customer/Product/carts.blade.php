@@ -159,55 +159,16 @@
                                 <div class="card-header border-bottom-dashed">
                                     <h5 class="card-title mb-0">Order Summary</h5>
                                 </div>
-                                <div class="card-header bg-soft-light border-bottom-dashed">
-                                    <div class="text-center">
-                                        <h6 class="mb-2">
-                                            Have a <span class="fw-semibold">promo</span> code ?
-                                        </h6>
-                                    </div>
-                                    <div class="hstack gap-3 px-3 mx-n3">
-                                        <input class="form-control me-auto" type="text" placeholder="Enter coupon code"
-                                            aria-label="Add Promo Code here..." />
-                                        <button type="button" class="btn btn-success w-xs">
-                                            Apply
-                                        </button>
-                                    </div>
-                                </div>
+
                                 <div class="card-body pt-2">
                                     <div class="table-responsive">
                                         <table class="table table-borderless mb-0">
                                             <tbody>
-                                                <tr>
+
+                                                <tr class="table-active">
                                                     <td>Sub Total :</td>
                                                     <td class="text-end" id="cart-subtotal">
                                                         ${{ Cart::subtotal() }}
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        Discount
-                                                        <span class="text-muted">(VELZON15)</span> :
-                                                    </td>
-                                                    <td class="text-end" id="cart-discount">
-                                                        - Rs. 53.99
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Shipping Charge :</td>
-                                                    <td class="text-end" id="cart-shipping">
-                                                        Rs. 65.00
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Estimated Tax (12.5%) :</td>
-                                                    <td class="text-end" id="cart-tax">Rs. 44.99</td>
-                                                </tr>
-                                                <tr class="table-active">
-                                                    <th>Total (Rs) :</th>
-                                                    <td class="text-end">
-                                                        <span class="fw-semibold" id="cart-total">
-                                                            Rs.415.96
-                                                        </span>
                                                     </td>
                                                 </tr>
                                             </tbody>

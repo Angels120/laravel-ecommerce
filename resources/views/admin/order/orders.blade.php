@@ -1,7 +1,6 @@
-~@extends('admin.layouts.app')
-@section('page_head', 'Customer User')
+@extends('admin.layouts.app')
+@section('page_head', 'Orders Details')
 @section('container')
-
 
     <div class="row">
         <div class="col-lg-12">
@@ -12,18 +11,17 @@
 
                 <div class="card-body">
                     <div class="listjs-table" id="customerList">
-                        <div class="row g-4 mb-3">
 
-                        </div>
                         <div class="card-body">
                             <table class="display table list-data-table data-table" style="width:100%" id="datatable-crud">
                                 <thead>
                                     <tr>
                                         <th>SN</th>
-                                        <th>Customer Name</th>
-                                        <th>Customer Username</th>
-                                        <th>Phone Number</th>
-                                        <th>Status</th>
+                                        <th>Customer</th>
+                                        <th>Email</th>
+                                        <th>Phone</th>
+                                        <th>Staus</th>
+                                        <th>Amount</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -37,10 +35,10 @@
         </div>
         <!-- end col -->
     </div>
-
+    <!-- end row -->
 
     <!-- Modal -->
-    <div class="modal fade zoomIn" id="deleteUser" tabindex="-1" aria-hidden="true">
+    <div class="modal fade zoomIn" id="deleteOrder" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -58,7 +56,7 @@
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                         <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn w-sm btn-danger " id="deleteUserButton">Yes, Delete
+                        <button type="button" class="btn w-sm btn-danger " id="deleteShippingButton">Yes, Delete
                             It!</button>
                     </div>
                 </div>
@@ -66,8 +64,9 @@
         </div>
     </div>
     <!--end modal -->
-    @include('admin.users.customeruser.EditCustomer')
 
+
+    @include('admin.order.view-order')
 
 
     <script>
@@ -76,7 +75,7 @@
                 "processing": true,
                 "serverSide": true,
                 ajax: {
-                    "url": "{{ route('admin.customer.index') }}",
+                    "url": "{{ route('admin.orders.index') }}",
                     "data": function(d) {
                         d._token = "{{ csrf_token() }}";
                     }
@@ -85,41 +84,45 @@
                         data: 'id',
                     },
                     {
-                        data: 'name',
+                        data: 'customer_name',
+
                     },
                     {
-                        data: 'username',
+                        data: 'email',
                     },
                     {
                         data: 'phone_number',
                     },
                     {
-                        data: 'verify',
+                        data: 'status',
+                    },
+                    {
+                        data: 'amount',
                     },
                     {
                         data: 'action',
+
                     }
                 ],
                 order: [
-                    [0, 'asc']
+                    [0, 'asc'] // Sort by the second column (category_name) in ascending order
                 ]
             });
 
+
         });
-    </script>
-    <script>
+
         var urlWithId = "";
         $(document).ready(function() {
-
             $('.data-table').on("click", ".delete", function() {
-                var userId = $(this).data('id');
-                const deleteUrl = "{{ route('admin.customer.delete', ['id' => ':id']) }}";
-                urlWithId = deleteUrl.replace(':id', userId);
-                $('#deleteUserButton').data('user-id', userId);
-                $('#deleteUser').modal('show');
+                var shippingId = $(this).data('id');
+                const deleteUrl = "{{ route('admin.shipping.delete', ['id' => ':id']) }}";
+                urlWithId = deleteUrl.replace(':id', shippingId);
+                $('#deleteShippingButton').data('shippingId-id', shippingId);
+                $('#deleteShipping').modal('show');
             });
-            $('#deleteUserButton').click(function() {
-                var userId = $(this).data('user-id');
+            $('#deleteShippingButton').click(function() {
+                var shippingId = $(this).data('shippingId-id');
                 $.ajax({
                     type: 'DELETE',
                     url: urlWithId,
@@ -128,11 +131,8 @@
                     },
                     success: function(response) {
                         showToast(response.message);
-                        $('#deleteUser').modal('hide');
+                        $('#deleteShipping').modal('hide');
                         $('#datatable-crud').DataTable().ajax.reload();
-                        $('#successAlertContainer').html(successAlert);
-
-
                     },
                     error: function(error) {
                         console.error('Delete error:', error);
@@ -141,8 +141,6 @@
             });
         });
     </script>
-
-
     {{-- For Status Update Script --}}
     <script>
         $(document).on('click', '.btn-status', function(e) {

@@ -61,11 +61,10 @@ class ProductController extends Controller
                 })
                 ->editColumn('discount', function ($row) {
 
-                    return $row->discount . '%' ?? '';
+                    return $row->discount .'%'  ?? '0 %';
                 })
                 ->editColumn('price', function ($row) {
-
-                    return $row->price ?? '';
+                    return 'Rs. ' . number_format($row->price, 2) ?? '';
                 })
                 ->editColumn('image', function ($row) {
                     $images = $row->image;

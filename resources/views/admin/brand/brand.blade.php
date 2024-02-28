@@ -119,7 +119,6 @@
     <script>
         var urlWithId = "";
         $(document).ready(function() {
-
             $('.data-table').on("click", ".delete", function() {
                 var brandId = $(this).data('id');
                 const deleteUrl = "{{ route('admin.brand.delete', ['id' => ':id']) }}";
