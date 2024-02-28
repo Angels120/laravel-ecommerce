@@ -27,9 +27,13 @@
                                         <h6 class=" text-muted">Shipped date:</h6>
                                         <!-- Text -->
                                         <p class="mb-lg-0 fs-sm fw-bold">
-                                            <time datetime="2019-10-01">
-                                                01 Oct, 2019
+                                            @if( $order->shipped_date!=null)
+                                            <time>
+                                                {{ \Carbon\Carbon::parse($order->shipped_date)->format('d M, Y ') }}
                                             </time>
+                                            @else
+                                            <div class="fs-bold">N/A</div>
+                                            @endif
                                         </p>
                                     </div>
                                     <div class="col-6 col-lg-3">

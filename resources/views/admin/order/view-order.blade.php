@@ -21,6 +21,7 @@
                                         <div class="fs-5 my-2" id="province"></div>
                                         <div class="fs-5 my-2" id="city"></div>
                                         <div class="fs-5 my-2" id="address"></div>
+                                        <div class="fs-bold fs-5 my-2" id="shippedDateShow"></div>
                                     </div>
                                     <div class="col-md-6">
                                         <h3>
@@ -33,11 +34,12 @@
                                             <div id="totalorderamount"
                                                 style="display: inline-block; white-space: nowrap;"></div>
                                         </h3>
-                                        <h2>
+                                        <h3>
                                             <span class="fw-bold" style="display: inline-block;">Status:</span>
-                                            <div id="status" style="display: inline-block; white-space: nowrap;">
+                                            <div id="statusShow" style="display: inline-block; white-space: nowrap;">
                                             </div>
-                                        </h2>
+                                        </h3>
+
                                     </div>
 
                                 </div>
@@ -66,7 +68,8 @@
                                     </div>
                                     <div class="col-lg-12 mt-4">
                                         <label>Shipped Date<span class="ms-1 text-danger">*</span></label>
-                                        <input type="datetime-local" class="form-control" name="shipped_date">
+                                        <input type="datetime-local" id="shippeddate_edit" class="form-control"
+                                            name="shipped_date">
                                         <div class="invalid-feedback" id="ShippedEditError"></div>
                                     </div>
                                     <div class="col-lg-12 mt-4">
@@ -164,12 +167,17 @@
 </script>
 
 {{-- ---------------------- show edit for Order -------------------- --}}
-
 <script>
     $(document).ready(function() {
+        // Function to clear table rows
+        function clearTable() {
+            $('#product_table').empty();
+        }
+
         $('.data-table').on("click", ".editOrderButton", function() {
             var id = $(this).data('id');
             $('#EditOrder').modal('show');
+            clearTable(); // Clear table rows before appending new data
             $.ajax({
                 type: 'GET',
                 url: "{{ route('admin.order.edit') }}",
@@ -179,7 +187,17 @@
                 success: function(response) {
                     console.log(response);
                     var selectedStatus = response.order.status;
+
+                    $('#statusShow').text(selectedStatus);
+                    if (selectedStatus === 'shipped') {
+                        $('#statusShow').addClass('text-primary');
+                    } else if (selectedStatus === 'pending') {
+                        $('#statusShow').addClass('text-danger');
+                    } else if (selectedStatus === 'delivered') {
+                        $('#statusShow').addClass('text-success');
+                    }
                     $('#status_edit').val(selectedStatus).trigger('change');
+                    $('#shippeddate_edit').val(response.order.shipped_date);
                     $('#ideditOrder').val(response.order.id);
                     $('#amount_edit').val(response.order.amount);
                     $('#idOrder').text(' #' + response.order.id);
@@ -190,22 +208,16 @@
                     $('#province').text('Province: ' + response.order.province.name);
                     $('#city').text('City: ' + response.order.city.name);
                     $('#address').text('Address: ' + response.order.address);
-
-                    var statusText = response.order.status;
-                    $('#status').text(statusText);
-                    if (statusText === 'shipped') {
-                        $('#status').addClass('text-primary');
-                    } else if (statusText === 'pending') {
-                        $('#status').addClass('text-danger');
-                    } else if (statusText === 'delivered') {
-                        $('#status').addClass('text-success');
+                    if (response.order.shipped_date !== null) {
+                        $('#shippedDateShow').text('Shipped Date: ' + response.order
+                            .shipped_date);
+                    } else {
+                        $('#shippedDateShow').text('Shipped Date: N/A');
                     }
-
 
                     //Tables data from here
                     var orderItems = response.orderItems;
 
-                    // Iterate over order items and append product names to the table
                     // Append OrderItem rows
                     orderItems.forEach(function(item) {
                         var row = '<tr>' +
@@ -242,6 +254,11 @@
                     console.log(error);
                 }
             });
+        });
+
+        // Clear table rows when modal is closed
+        $('#EditOrder').on('hidden.bs.modal', function() {
+            clearTable();
         });
     });
 </script>

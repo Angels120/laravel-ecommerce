@@ -29,7 +29,7 @@
             <div id="two-column-menu">
             </div>
             <ul class="navbar-nav" id="navbar-nav">
-                <li class="menu-title"><span data-key="t-menu">Menu</span></li>
+                <li class="menu-title"><span>Menu</span></li>
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.dashboard') }}"  role="button" aria-expanded="false">
                         <i class="ri-dashboard-2-line"></i> <span>Dashboards</span>
@@ -51,15 +51,18 @@
                         </ul>
                     </div>
                 </li>
+
+
+               <!-- end Dashboard Menu -->
+               <li class="menu-title"><i class="ri-more-fill"></i> <span >Order Management</span></li>
+
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.orders.index') }}"  role="button" aria-expanded="false">
                         <i class="ri-shopping-bag-fill"></i> <span>Orders</span>
                     </a>
                 </li>
 
-               <!-- end Dashboard Menu -->
-
-                <li class="menu-title"><i class="ri-more-fill"></i> <span data-key="t-pages">Pages</span></li>
+                <li class="menu-title"><i class="ri-more-fill"></i> <span >Product Management</span></li>
 
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.products.index') }}"  role="button" aria-expanded="false">
@@ -100,53 +103,3 @@
     <div class="sidebar-background"></div>
 </div>
 <!-- Left Sidebar End -->
-
-
-
-
-
-
-
- {{-- <!-- MENU SIDEBAR-->
- <aside class="menu-sidebar d-none d-lg-block">
-    <div class="logo">
-        <a href="#">
-            <img src="images/icon/logo.png" alt="Cool Admin" />
-        </a>
-    </div>
-    <div class="menu-sidebar__content js-scrollbar1">
-        <nav class="navbar-sidebar">
-            <ul class="list-unstyled navbar__list">
-                <li class="@yield('category_select')">
-                    <a href="{{ route('admin.dashboard') }}">
-                        <i class="fas fa-tachometer-alt"></i>Dashboard</a>
-                </li>
-                <li class="@yield('category_select')">
-                    <a href="{{ route('admin.categories.index') }}">
-                        <i class="fas fa-regular fa-list"></i>Category</a>
-                </li>
-                <li class="@yield('category_select')">
-                    <a href="{{ route('admin.subcategories.index') }}">
-                        <i class="fas fa-regular fa-list"></i>Sub Category</a>
-                </li>
-                <li class="@yield('category_select')">
-                    <a href="{{ route('admin.products.index') }}">
-                        <i class="fa fa-product-hunt"></i>Product</a>
-                </li>
-                <li class="@yield('category_select')">
-                    <a href="{{ route('admin.brands.index') }}">
-                        <i class="fa fa-product-hunt"></i>Brands</a>
-                </li>
-                <li class="@yield('category_select')">
-                    <a href="{{ route('admin.coupons.index') }}">
-                        <i class="fas fa-solid fa-tag"></i>Coupon</a>
-                </li>
-                <li class="@yield('category_select')">
-                    <a href="{{ route('admin.sizes.index') }}">
-                        <i class="fas fa-solid fa-tag"></i>Size</a>
-                </li>
-            </ul>
-        </nav>
-    </div>
-</aside>
-<!-- END MENU SIDEBAR--> --}}

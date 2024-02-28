@@ -16,6 +16,10 @@ class Order extends Model
     {
         return $this->belongsTo(Province::class);
     }
+    public function items()
+    {
+        return $this->hasMany(OrderItem::class);
+    }
     public function city()
     {
         return $this->belongsTo(City::class);

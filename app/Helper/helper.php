@@ -4,7 +4,11 @@
    Write Helper function here
 */
 
+use App\Mail\OrderEmail;
+use App\Models\Order;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class Helper{
 
@@ -59,5 +63,18 @@ class Helper{
 
         return $imageName;
     }
+
+    public static function orderEmail($orderId){
+        $order=Order::where('id',$orderId)->with('items')->first();
+        $recipientEmail = $order->email ?? Auth::user()->email;
+        $mailData=[
+            'subject'=>'Thanks for your order',
+            'url'=>'http://127.0.0.1:8000/',
+            'order'=>$order,
+        ];
+        Mail::to($recipientEmail)->send(new OrderEmail($mailData));
+
+    }
+
 }
 ?>

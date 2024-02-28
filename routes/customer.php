@@ -11,6 +11,8 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Socialite\Facades\Socialite;
 
+
+
 //--------------------------------------Route for Authentications--------------------------------------------------------//
 Auth::routes();
 Route::get('/auth/google/redirect', [GoogleController::class,  'handleGoogleRedirect'])->name('redirect.google');
@@ -23,7 +25,7 @@ Route::get('/auth/github/callback', [GithubController::class,  'handleGithubCall
 Route::middleware(['auth:web'])->group(function () {
     Route::get('/user/profile', [ProfileController::class,  'profile'])->name('user.profile');
     Route::get('/user/myorder', [ProfileController::class,  'order'])->name('user.order');
-    Route::get('/order-detal/{orderId}', [ProfileController::class,  'orderDetail'])->name('user.orderDetail');
+    Route::get('/order-detail/{orderId}', [ProfileController::class,  'orderDetail'])->name('user.orderDetail');
 });
 
 //--------------------------------------Ends Here--------------------------------------------------------//

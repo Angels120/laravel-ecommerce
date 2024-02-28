@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use Database\Seeders\ProvinceSeeder;
 use Dotenv\Validator;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -264,11 +265,13 @@ class CartController extends Controller
                 $orderItem->total = $item->price * $item->qty;
                 $orderItem->save();
             }
+            //Send Order Mail
+            Helper::orderEmail($order->id);
             Cart::destroy();
             session()->forget('code');
             return response()->json(['message' => 'Orders Placed successfully', 'order_id' => $order->id]);
         } else {
-            // Handle other payment methods here
+
         }
     }
 
