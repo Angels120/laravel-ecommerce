@@ -109,7 +109,6 @@ class CartController extends Controller
     }
     public function delteItem(Request $request)
     {
-
         $itemInfo = Cart::get($request->rowId);
         if ($itemInfo == null) {
             return response()->json([
@@ -266,7 +265,7 @@ class CartController extends Controller
                 $orderItem->save();
             }
             //Send Order Mail
-            Helper::orderEmail($order->id);
+            Helper::orderEmail($order->id,'customer');
             Cart::destroy();
             session()->forget('code');
             return response()->json(['message' => 'Orders Placed successfully', 'order_id' => $order->id]);
