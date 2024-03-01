@@ -155,10 +155,6 @@
                 data: form.serialize(),
                 success: function(response) {
                     showToast(response.message);
-                    // You can add additional logic here if needed
-                    // For example, updating the button color and text based on the new status
-
-                    // Reload the DataTable after successful status update
                     $('#datatable-crud').DataTable().ajax.reload();
                 },
                 error: function(error) {

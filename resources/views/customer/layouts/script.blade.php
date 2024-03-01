@@ -106,4 +106,23 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
 
         });
     }
+    function addToWishlist(id) {
+        $.ajax({
+            url: '{{ route("wishlists.add") }}',
+            type: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: { id: id },
+            dataType: 'json',
+            success: function (response) {
+                if(response.status==true){
+                    showToast(response.message);
+                }else{
+                    window.location.href="{{ route('login') }}"
+                }
+            },
+
+        });
+    }
  </script>

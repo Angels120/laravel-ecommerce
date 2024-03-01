@@ -42,7 +42,7 @@
                     @else
                         <span>You have recived an order</span>
                         <br><br>
-                        Id: <span style="font-weight: bold;">#{{ $mailData['order']->id ?? '' }}</span>
+                        Order Id: <span style="font-weight: bold; color: 	#198754"">#{{ $mailData['order']->id ?? '' }}</span>
                         <br><br>
                     @endif
                     <span> Your Products:

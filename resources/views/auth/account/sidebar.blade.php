@@ -72,8 +72,8 @@
                                         </a>
                                     </li>
                                     <li class="w-100 mb-2">
-                                        <a class="custom-nav-buttton-hover my-1 nav-item {{ request()->routeIs('user.order') ? 'active' : '' }}"
-                                            href="{{ route('user.order') }}">
+                                        <a class="custom-nav-buttton-hover my-1 nav-item {{ request()->routeIs('user.wishlist') ? 'active' : '' }}"
+                                            href="{{ route('user.wishlist') }}">
                                             <i class="ri-heart-fill fs-18 me-2"></i> <span class="d-md-inline-block">Wishlist</span>
                                         </a>
                                     </li>

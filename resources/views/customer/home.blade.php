@@ -93,28 +93,30 @@
                                 <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
                                 <p class="card-text price">
                                     @if ($product->price)
-                                    <h5>
-                                        <span class="text-danger">
-                                            Rs.{{ $product->price }}
+                                        <h5>
+                                            <span class="text-danger">
+                                                Rs.{{ $product->price }}
+                                            </span>
+                                        </h5>
+                                        <div class="text-muted">
+                                            <s>
+                                                Rs.{{ $product->compare_price }}
+                                            </s>
+                                            ({{ $product->discount }}% off)
+                                        </div>
+                                    @else
+                                        <span class="text-danger price">
+                                            Rs. {{ $product->compare_price ?? ' ' }}
                                         </span>
-                                    </h5>
-                                    <div class="text-muted">
-                                        <s>
-                                            Rs.{{ $product->compare_price }}
-                                        </s>
-                                        ({{ $product->discount }}% off)
-                                    </div>
-                                @else
-                                    <span class="text-danger price">
-                                        Rs. {{ $product->compare_price ?? ' ' }}
-                                    </span>
-                                @endif
+                                    @endif
                                 </p>
                                 <div class="add-to-cart-btn">
-                                    <button class="btn btn-primary" onclick="addToCart({{ $product->id }})"><i class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </button>
+                                    <button class="btn btn-primary" onclick="addToCart({{ $product->id }})"><i
+                                            class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </button>
                                 </div>
                                 <div class="favorite-btn">
-                                    <button class="btn btn-outline-danger btn-favorite"><i class="ri-heart-line"></i></button>
+                                    <a onclick="addToWishlist({{ $product->id }})"
+                                        class="btn btn-outline-danger btn-favorite"><i class="ri-heart-line"></i></a>
                                 </div>
                             </div>
                         </div><!-- end card -->
@@ -142,29 +144,31 @@
                                         <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
                                         <p class="card-text price">
                                             @if ($product->price)
-                                            <h5>
-                                                <span class="text-danger">
-                                                    Rs.{{ $product->price }}
+                                                <h5>
+                                                    <span class="text-danger">
+                                                        Rs.{{ $product->price }}
+                                                    </span>
+                                                </h5>
+                                                <div class="text-muted">
+                                                    <s>
+                                                        Rs.{{ $product->compare_price }}
+                                                    </s>
+                                                    ({{ $product->discount }}% off)
+                                                </div>
+                                            @else
+                                                <span class="text-danger price">
+                                                    Rs. {{ $product->compare_price ?? ' ' }}
                                                 </span>
-                                            </h5>
-                                            <div class="text-muted">
-                                                <s>
-                                                    Rs.{{ $product->compare_price }}
-                                                </s>
-                                                ({{ $product->discount }}% off)
-                                            </div>
-                                        @else
-                                            <span class="text-danger price">
-                                                Rs. {{ $product->compare_price ?? ' ' }}
-                                            </span>
-                                        @endif
+                                            @endif
                                         </p>
                                     </div>
                                     <div class="add-to-cart-btn">
-                                        <button class="btn btn-primary" onclick="addToCart({{ $product->id }})"><i class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </button>
+                                        <a class="btn btn-primary" onclick="addToCart({{ $product->id }})"><i
+                                                class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </a>
                                     </div>
                                     <div class="favorite-btn">
-                                        <button class="btn btn-outline-danger btn-favorite"><i class="ri-heart-line"></i></button>
+                                        <a onclick="addToWishlist({{ $product->id }})"
+                                            class="btn btn-outline-danger btn-favorite"><i class="ri-heart-line"></i></a>
                                     </div>
                                 </div><!-- end card -->
 

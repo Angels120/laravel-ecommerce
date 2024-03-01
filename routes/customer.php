@@ -26,6 +26,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/user/profile', [ProfileController::class,  'profile'])->name('user.profile');
     Route::get('/user/myorder', [ProfileController::class,  'order'])->name('user.order');
     Route::get('/order-detail/{orderId}', [ProfileController::class,  'orderDetail'])->name('user.orderDetail');
+    Route::get('/user/mywishlist', [ProfileController::class,  'wishlist'])->name('user.wishlist');
 });
 
 //--------------------------------------Ends Here--------------------------------------------------------//
@@ -37,6 +38,12 @@ Route::get('/cart', [CartController::class,  'cart'])->name('carts.details');
 Route::post('/add-to-cart', [CartController::class,  'addToCart'])->name('carts.add');
 Route::post('/cart/update-cart', [CartController::class,  'updateCart'])->name('carts.update');
 Route::post('/delete-cart', [CartController::class,  'delteItem'])->name('carts.item.delete');
+//--------------------------------------Ends Here--------------------------------------------------------//
+//--------------------------------------Route for WishList--------------------------------------------------------//
+
+// Route::get('/wishlists', [HomeController::class,  'cart'])->name('wishlists.details');
+Route::post('/add-to-wishlists', [HomeController::class,  'addToWishlist'])->name('wishlists.add');
+
 //--------------------------------------Ends Here--------------------------------------------------------//
 //--------------------------------------Route for Checkout--------------------------------------------------------//
 Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout.details');

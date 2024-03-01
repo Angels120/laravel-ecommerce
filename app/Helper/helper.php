@@ -73,6 +73,7 @@ class Helper{
         else{
             $subject='You have recived an order';
             $recipientEmail = env('ADMIN_EMAIL');
+
         }
         $mailData=[
             'subject'=>$subject,
