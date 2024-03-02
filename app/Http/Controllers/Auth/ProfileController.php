@@ -57,8 +57,23 @@ class ProfileController extends Controller
             ],
         ];
         $user=Auth::user();
-        $wishlists=Wishlist::where('user_id',$user->id)->get();
+        $wishlists=Wishlist::where('user_id',$user->id)->with('product')->get();
 
         return view('auth.account.wishlist',compact('breadcrumb','wishlists'));
+    }
+    public function removeProductFromWishlist(Request $request){
+        $wishlists=Wishlist::where('user_id',Auth::user()->id)->where('product_id',$request->id)->first();
+        if($wishlists==null){
+            return response()->json([
+                'status'=>true,
+                'message'=>'product removed already'
+            ]);
+        }else{
+            $wishlists=Wishlist::where('user_id',Auth::user()->id)->where('product_id',$request->id)->delete();
+            return response()->json([
+                'status'=>true,
+                'message'=>'product removed successfully'
+            ]);
+        }
     }
 }

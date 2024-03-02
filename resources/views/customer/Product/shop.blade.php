@@ -119,7 +119,8 @@
                                                         <button class="btn btn-primary" onclick="addToCart({{ $product->id }})"><i class="ri-shopping-cart-2-line fs-16"> Add To Cart </i> </button>
                                                     </div>
                                                     <div class="favorite-btn">
-                                                        <button class="btn btn-outline-danger btn-favorite"><i class="ri-heart-line"></i></button>
+                                                        <a onclick="addToWishlist({{ $product->id }})"
+                                                            class="btn btn-outline-danger btn-favorite"><i class="ri-heart-line"></i></a>
                                                     </div>
                                                 </div><!-- end card -->
                                             </a>

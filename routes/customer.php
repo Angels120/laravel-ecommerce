@@ -27,6 +27,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/user/myorder', [ProfileController::class,  'order'])->name('user.order');
     Route::get('/order-detail/{orderId}', [ProfileController::class,  'orderDetail'])->name('user.orderDetail');
     Route::get('/user/mywishlist', [ProfileController::class,  'wishlist'])->name('user.wishlist');
+    Route::post('/user/mywishlist/delete', [ProfileController::class,  'removeProductFromWishlist'])->name('user.wishlist.remove');
 });
 
 //--------------------------------------Ends Here--------------------------------------------------------//
