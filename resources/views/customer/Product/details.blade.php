@@ -182,9 +182,14 @@
                                                 <div class="row">
                                                     <button type="submit" class="btn btn-info btn-lg btn-block me-3"
                                                         id="save-Category" style="width: 260px;">Buy Now</button>
-                                                    <button type="submit" class="btn btn-danger btn-lg btn-block"
-                                                        id="save-Category" style="width: 260px;"
-                                                        onclick="addToCart({{ $product->id }})">Add To Cart</button>
+                                                    @if ($product->stock > 0)
+                                                        <button type="submit" class="btn btn-danger btn-lg btn-block"
+                                                            id="save-Category" style="width: 260px;"
+                                                            onclick="addToCart({{ $product->id }})">Add To Cart</button>
+                                                    @else
+                                                        <button class="btn btn-danger btn-lg btn-block"
+                                                            style="width: 260px;">Out of stock</button>
+                                                    @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -195,7 +200,9 @@
                                                     <div class="d-flex flex-wrap gap-2">
                                                         @foreach (['S', 'M', 'L', 'XL', 'XXL'] as $size)
                                                             @php
-                                                                $sizesArray = is_array($product->sizes) ? $product->sizes : explode(',', $product->sizes);
+                                                                $sizesArray = is_array($product->sizes)
+                                                                    ? $product->sizes
+                                                                    : explode(',', $product->sizes);
                                                                 $isAvailable = in_array($size, $sizesArray);
                                                             @endphp
                                                             <div data-bs-toggle="tooltip" data-bs-trigger="hover"

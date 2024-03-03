@@ -57,12 +57,10 @@
                 </button>
 
                 <!-- App Search-->
-                <form class="app-search d-none d-md-block">
-
+                <form action="{{ route('lists') }}" class="app-search d-none d-md-block" method="get">
                     <div class="position-relative">
-
                         <input type="text" class="form-control" placeholder="Search..." autocomplete="off"
-                            id="search-options" value="">
+                            id="search-options" value="{{ Request::get('search') }}" name="search">
                         <span class="search-widget-icon"><i class="ri-search-line"></i></span>
                         <span class="search-widget-icon search-widget-icon-close d-none" id="search-close-options"> <i
                                 class="ri-close-circle-fill"></i></span>
@@ -79,44 +77,7 @@
                                 <a href="index.html" class="btn btn-soft-secondary btn-sm btn-rounded">buttons <i
                                         class="ri-search-line ms-1"></i></a>
                             </div>
-
-                            <div class="notification-list">
-                                <!-- item -->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
-                                    <div class="d-flex">
-                                        <img src="assets/images/users/avatar-2.jpg"
-                                            class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                        <div class="flex-1">
-                                            <h6 class="m-0">Angela Bernier</h6>
-                                            <span class="fs-11 mb-0 text-muted">Manager</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <!-- item -->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
-                                    <div class="d-flex">
-                                        <img src="assets/images/users/avatar-3.jpg"
-                                            class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                        <div class="flex-1">
-                                            <h6 class="m-0">David Grasso</h6>
-                                            <span class="fs-11 mb-0 text-muted">Web Designer</span>
-                                        </div>
-                                    </div>
-                                </a>
-                                <!-- item -->
-                                <a href="javascript:void(0);" class="dropdown-item notify-item py-2">
-                                    <div class="d-flex">
-                                        <img src="assets/images/users/avatar-5.jpg"
-                                            class="me-3 rounded-circle avatar-xs" alt="user-pic">
-                                        <div class="flex-1">
-                                            <h6 class="m-0">Mike Bunch</h6>
-                                            <span class="fs-11 mb-0 text-muted">React Developer</span>
-                                        </div>
-                                    </div>
-                                </a>
-                            </div>
                         </div>
-
                         <div class="text-center pt-3 pb-1">
                             <a href="pages-search-results.html" class="btn btn-primary btn-sm">View All Results <i
                                     class="ri-arrow-right-line ms-1"></i></a>
@@ -126,7 +87,6 @@
             </div>
 
             <div class="d-flex align-items-center">
-
                 <div class="dropdown d-md-none topbar-head-dropdown header-item">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
                         id="page-header-search-dropdown" data-bs-toggle="dropdown" aria-haspopup="true"

@@ -54,6 +54,7 @@ Route::post('process-checkout-payment', [CartController::class, 'processCheckout
 Route::post('/apply-discount', [CartController::class, 'applyDiscount'])->name('discountcode');
 Route::post('/remove-discount', [CartController::class, 'removeCoupon'])->name('remove.discountcode');
 Route::post('/get/ordersummary', [CartController::class, 'getOrderSummary'])->name('order.summary');
+//--------------------------------------Ends Here--------------------------------------------------------//
 
 
 

@@ -84,53 +84,63 @@
                                 </div>
                             </div>
 
-                                @forelse ($products as $product)
-                                    @if ($product->status == 1)
-                                        <div class="col-md-4">
-                                            <!-- Simple card with a link -->
-                                            <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
-                                                <div class="card card-product">
-                                                    <img class="card-img-top img-fluid"
-                                                        src="{{ asset('uploads/products/' . $product->image[0]) }}"
-                                                        alt="Card image cap" style="height: 200px; width:300px">
-                                                    <div class="card-body">
-                                                        <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
-                                                        <p class="card-text price">
-                                                            @if ($product->discount)
-                                                                <h5>
-                                                                    <span class="text-danger">
-                                                                        Rs.{{ $product->price - ($product->price * $product->discount) / 100 }}
-                                                                    </span>
-                                                                </h5>
-                                                                <div class="text-muted">
-                                                                    <s>
-                                                                        Rs.{{ $product->price }}
-                                                                    </s>
-                                                                    ({{ $product->discount }}% off)
-                                                                </div>
-                                                            @else
+                            @forelse ($products as $product)
+                                @if ($product->status == 1)
+                                    <div class="col-md-4">
+                                        <!-- Simple card with a link -->
+                                        <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
+                                            <div class="card card-product">
+                                                <img class="card-img-top img-fluid"
+                                                    src="{{ asset('uploads/products/' . $product->image[0]) }}"
+                                                    alt="Card image cap" style="height: 200px; width:300px">
+                                                <div class="card-body">
+                                                    <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
+                                                    <p class="card-text price">
+                                                        @if ($product->discount)
+                                                            <h5>
                                                                 <span class="text-danger">
-                                                                    Rs. {{ $product->price ?? ' ' }}
+                                                                    Rs.{{ $product->price - ($product->price * $product->discount) / 100 }}
                                                                 </span>
-                                                            @endif
-                                                        </p>
-                                                    </div>
+                                                            </h5>
+                                                            <div class="text-muted">
+                                                                <s>
+                                                                    Rs.{{ $product->price }}
+                                                                </s>
+                                                                ({{ $product->discount }}% off)
+                                                            </div>
+                                                        @else
+                                                            <span class="text-danger">
+                                                                Rs. {{ $product->price ?? ' ' }}
+                                                            </span>
+                                                        @endif
+                                                    </p>
+                                                </div>
+                                                @if ($product->stock > 0)
                                                     <div class="add-to-cart-btn">
-                                                        <button class="btn btn-primary" onclick="addToCart({{ $product->id }})"><i class="ri-shopping-cart-2-line fs-16"> Add To Cart </i> </button>
+                                                        <a class="btn btn-primary" href="javascript:void(0);"
+                                                            onclick="addToCart({{ $product->id }})"><i
+                                                                class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </a>
                                                     </div>
-                                                    <div class="favorite-btn">
-                                                        <a onclick="addToWishlist({{ $product->id }})"
-                                                            class="btn btn-outline-danger btn-favorite"><i class="ri-heart-line"></i></a>
+                                                @else
+                                                    <div class="add-to-cart-btn">
+                                                        <a class="btn btn-danger" href="javascript:void(0);"><i
+                                                                class="ri-close-fill fs-18"></i> Out Of Stock </i> </a>
                                                     </div>
-                                                </div><!-- end card -->
-                                            </a>
-                                        </div><!-- end col -->
-                                    @endif
-                                @empty
-                                    <div class="col-md-12">
-                                        <h1>No products Available </h1>
-                                    </div>
-                                @endforelse
+                                                @endif
+                                                <div class="favorite-btn">
+                                                    <a onclick="addToWishlist({{ $product->id }})"
+                                                        class="btn btn-outline-danger btn-favorite"><i
+                                                            class="ri-heart-line"></i></a>
+                                                </div>
+                                            </div><!-- end card -->
+                                        </a>
+                                    </div><!-- end col -->
+                                @endif
+                            @empty
+                                <div class="col-md-12">
+                                    <h1>No products Available </h1>
+                                </div>
+                            @endforelse
 
                         </div>
                         {{-- Paginate Div --}}
