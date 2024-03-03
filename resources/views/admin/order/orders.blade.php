@@ -56,7 +56,7 @@
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                         <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn w-sm btn-danger " id="deleteShippingButton">Yes, Delete
+                        <button type="button" class="btn w-sm btn-danger " id="deleteOrderButton">Yes, Delete
                             It!</button>
                     </div>
                 </div>
@@ -115,14 +115,14 @@
         var urlWithId = "";
         $(document).ready(function() {
             $('.data-table').on("click", ".delete", function() {
-                var shippingId = $(this).data('id');
-                const deleteUrl = "{{ route('admin.shipping.delete', ['id' => ':id']) }}";
-                urlWithId = deleteUrl.replace(':id', shippingId);
-                $('#deleteShippingButton').data('shippingId-id', shippingId);
-                $('#deleteShipping').modal('show');
+                var orderId = $(this).data('id');
+                const deleteUrl = "{{ route('admin.order.delete', ['id' => ':id']) }}";
+                urlWithId = deleteUrl.replace(':id', orderId);
+                $('#deleteOrderButton').data('orderId-id', orderId);
+                $('#deleteOrder').modal('show');
             });
-            $('#deleteShippingButton').click(function() {
-                var shippingId = $(this).data('shippingId-id');
+            $('#deleteOrderButton').click(function() {
+                var orderId = $(this).data('orderId-id');
                 $.ajax({
                     type: 'DELETE',
                     url: urlWithId,
@@ -131,7 +131,7 @@
                     },
                     success: function(response) {
                         showToast(response.message);
-                        $('#deleteShipping').modal('hide');
+                        $('#deleteOrder').modal('hide');
                         $('#datatable-crud').DataTable().ajax.reload();
                     },
                     error: function(error) {
@@ -155,10 +155,6 @@
                 data: form.serialize(),
                 success: function(response) {
                     showToast(response.message);
-                    // You can add additional logic here if needed
-                    // For example, updating the button color and text based on the new status
-
-                    // Reload the DataTable after successful status update
                     $('#datatable-crud').DataTable().ajax.reload();
                 },
                 error: function(error) {

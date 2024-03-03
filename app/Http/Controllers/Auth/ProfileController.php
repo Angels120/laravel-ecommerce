@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\User;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -32,6 +33,7 @@ class ProfileController extends Controller
 
         return view('auth.account.order',compact('breadcrumb','orders'));
     }
+
     public function orderDetail($id){
         $breadcrumb = [
             'breadcrumbs' => [
@@ -45,5 +47,33 @@ class ProfileController extends Controller
         $orderItems=OrderItem::where('order_id',$id)->get();
         return view('auth.account.order-detail',compact('breadcrumb','order','orderItems'));
 
+    }
+
+    public function wishlist(){
+        $breadcrumb = [
+            'breadcrumbs' => [
+                'WebMart' => route('home.page'),
+                'current_menu' => 'My Wishlist',
+            ],
+        ];
+        $user=Auth::user();
+        $wishlists=Wishlist::where('user_id',$user->id)->with('product')->get();
+
+        return view('auth.account.wishlist',compact('breadcrumb','wishlists'));
+    }
+    public function removeProductFromWishlist(Request $request){
+        $wishlists=Wishlist::where('user_id',Auth::user()->id)->where('product_id',$request->id)->first();
+        if($wishlists==null){
+            return response()->json([
+                'status'=>true,
+                'message'=>'product removed already'
+            ]);
+        }else{
+            $wishlists=Wishlist::where('user_id',Auth::user()->id)->where('product_id',$request->id)->delete();
+            return response()->json([
+                'status'=>true,
+                'message'=>'product removed successfully'
+            ]);
+        }
     }
 }

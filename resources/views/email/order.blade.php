@@ -8,8 +8,9 @@
 </head>
 
 <body style="background-color: #e8e8e8; font-size: 16px;" cellpadding="0" cellspacing="0">
+
     <table align="center" cellspacing="3" border="0" cellpadding="3"
-    style="
+        style="
         width: 480px !important;
         height: 100%;
         background-color: #fff;
@@ -32,11 +33,22 @@
             <td style="padding: 20px 20px">
                 <div style=" text-align: left; font-size: 13px; line-height: 1.4;">
                     Dear<span style="font-weight: bold;"> {{ $mailData['order']->full_name ?? '' }},</span> <br><br>
-                    <span style="font-weight: bold; color: 	#198754">Your Order is placed successfully</span> <br><br>
-                    Your Order Id <span style="font-weight: bold;">#{{ $mailData['order']->id ?? '' }}</span> <br><br>
+                    @if ($mailData['userType'] == 'customer')
+                        <span >Thanks For Your Order</span><br>
+                        <span style="font-weight: bold; color: 	#198754">Your Order is placed successfully</span>
+                        <br><br>
+                        Your Order Id: <span style="font-weight: bold;">#{{ $mailData['order']->id ?? '' }}</span>
+                        <br><br>
+                    @else
+                        <span>You have recived an order</span>
+                        <br><br>
+                        Order Id: <span style="font-weight: bold; color: 	#198754"">#{{ $mailData['order']->id ?? '' }}</span>
+                        <br><br>
+                    @endif
                     <span> Your Products:
                         <br>
-                        <table align="center" cellspacing="0" border="0" cellpadding="0" style="width: 480px !important; height: 100%; background-color: #fff; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, 'Lucida Grande', sans-serif; font-size: 100%; line-height: 1.6; border-collapse: collapse;">
+                        <table align="center" cellspacing="0" border="0" cellpadding="0"
+                            style="width: 480px !important; height: 100%; background-color: #fff; font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, 'Lucida Grande', sans-serif; font-size: 100%; line-height: 1.6; border-collapse: collapse;">
                             <thead>
                                 <tr>
                                     <th style="background-color: #38414b76; border: 1px solid #38414b76; padding: 8px;">
@@ -63,7 +75,8 @@
                                 <tr>
                                     <td colspan="3"
                                         style="border: 1px solid #38414b76; padding: 8px; text-align: right;">
-                                        <strong>SubTotal:</strong></td>
+                                        <strong>SubTotal:</strong>
+                                    </td>
                                     <td style="border: 1px solid #38414b76; padding: 8px;">Rs.
                                         {{ number_format($mailData['order']->subtotal, 2) }}</td>
                                 </tr>
@@ -78,14 +91,16 @@
                                 <tr>
                                     <td colspan="3"
                                         style="border: 1px solid #38414b76; padding: 8px; text-align: right;">
-                                        <strong>Shipping:</strong></td>
+                                        <strong>Shipping:</strong>
+                                    </td>
                                     <td style="border: 1px solid #38414b76; padding: 8px;">Rs.
                                         {{ number_format($mailData['order']->shipping, 2) }}</td>
                                 </tr>
                                 <tr>
                                     <td colspan="3"
                                         style="border: 1px solid #38414b76; padding: 8px; text-align: right;">
-                                        <strong>Grand Total:</strong></td>
+                                        <strong>Grand Total:</strong>
+                                    </td>
                                     <td style="border: 1px solid #38414b76; padding: 8px;">Rs.
                                         {{ number_format($mailData['order']->grand_total, 2) }}</td>
                                 </tr>
@@ -100,8 +115,8 @@
                 </div>
                 <p style=" font-size: 13px; line-height: 1.4;">
                     <span style="font-weight: bold;">Got a question or want to get in touch?</span><br />
-                    <a href="https://google.com/" target="_blank"
-                        style="font-style: italic; color: #000000;">Get in touch with us here</a>
+                    <a href="https://google.com/" target="_blank" style="font-style: italic; color: #000000;">Get in
+                        touch with us here</a>
                     <br /><br />
                     <span>Kind Regards,</span> <br />
                     <span>The WebMart Team</span>

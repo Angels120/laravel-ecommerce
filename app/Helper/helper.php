@@ -64,13 +64,22 @@ class Helper{
         return $imageName;
     }
 
-    public static function orderEmail($orderId){
+    public static function orderEmail($orderId,$userType="customer"){
         $order=Order::where('id',$orderId)->with('items')->first();
-        $recipientEmail = $order->email ?? Auth::user()->email;
+        if($userType=='customer'){
+            $subject='Thanks for your order';
+            $recipientEmail = $order->email ?? Auth::user()->email;
+        }
+        else{
+            $subject='You have recived an order';
+            $recipientEmail = env('ADMIN_EMAIL');
+
+        }
         $mailData=[
-            'subject'=>'Thanks for your order',
+            'subject'=>$subject,
             'url'=>'http://127.0.0.1:8000/',
             'order'=>$order,
+            'userType'=>$userType,
         ];
         Mail::to($recipientEmail)->send(new OrderEmail($mailData));
 

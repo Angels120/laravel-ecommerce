@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Order;
 use App\Models\OrderItem;
+use Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\HtmlString;
 use Yajra\DataTables\Facades\DataTables;
@@ -91,5 +92,15 @@ class OrderController extends Controller
         $order->update($validatedData);
 
         return response()->json(['message' => 'Order details updated successfully', 'data' => $order], 200);
+    }
+    public function destroy($id){
+        $order=Order::findOrFail($id);
+        $order->delete();
+        return response()->json(['message' => 'Order delete successfully'], 200);
+    }
+
+    public function sendInvoiceEmail(Request $request){
+        Helper::orderEmail($request->id,$request->userType);
+        return response()->json(['message' => 'Order email Send successfully'], 200);
     }
 }

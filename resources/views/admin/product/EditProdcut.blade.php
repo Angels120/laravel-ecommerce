@@ -152,30 +152,43 @@
                         <div class="card" style="width: 50%;">
                             <div class="card-body" style="box-shadow: 0 0 10px rgba(135, 128, 128, 0.2);">
                                 <div class="col-lg-12">
-                                    <h5>
-                                        Product Price
-                                    </h5>
-                                    <div class="col-lg-12 mt-2">
-                                        <label for="name" class="control-label mb-1">Price<span
+                                    <h5>Product Price</h5>
+                                    <h6 class="text-muted">#(Put the actual price of product in compare price field and
+                                        discount price in price field)</h6>
+
+                                        <label for="name" class="control-label mb-1">Compare Price<span
                                                 class="ms-1 text-danger">*</span></label>
                                         <div class="input-group mb-3">
                                             <span class="input-group-text" id="product-discount-addon">Nrs</span>
-                                            <input type="text" name="price" class="form-control"
-                                                id="Editproduct-price" placeholder="Enter Price">
+                                            <input type="text" name="compare_price" class="form-control"
+                                                id="Edit-compare-product-price" placeholder="Enter Actual Price">
                                         </div>
-                                        <div class="invalid-feedback" id="EditProductPriceError"></div>
-                                    </div>
-                                    <div class="col-lg-12 mt-2">
-                                        <label for="name" class="control-label mb-1">Discount</label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="product-discount-addon">%</span>
-                                            <input type="text" name="discount" class="form-control"
-                                                id="Editproduct-discount" placeholder="Enter discount">
+                                        <div class="invalid-feedback" id="EditProductComparePriceError"></div>
+
+                                    <div class="d-flex">
+                                        <div class="me-3">
+                                            <label for="name" class="control-label mb-1">Discount</label>
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="product-discount-addon">%</span>
+                                                <input type="text" name="discount" class="form-control"
+                                                    id="Editproduct-discount" placeholder="Enter discount">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <label for="name" class="control-label mb-1">Price
+                                            <div class="input-group mb-3">
+                                                <span class="input-group-text" id="product-discount-addon">Nrs</span>
+                                                <input type="text" name="price" class="form-control"
+                                                    id="Editproduct-price" placeholder="Enter Discount  Price">
+                                            </div>
                                         </div>
                                     </div>
+                                    <div class="invalid-feedback" id="EditProductPriceError"></div>
                                 </div>
                             </div>
                         </div>
+
+
                         <div class="card" style="width: 50%;">
                             <div class="card-body" style="box-shadow: 0 0 10px rgba(135, 128, 128, 0.2);">
                                 <div class="col-lg-12">
@@ -318,6 +331,13 @@
                                 errMsg.textContent = error.responseJSON.errors.image[0];
                             }
                         }
+                        if (error.responseJSON.errors.compare_price) {
+                            var errMsg = document.getElementById('EditProductComparePriceError');
+                            if (error.responseJSON.errors.compare_price[0]) {
+                                errMsg.style.display = "block";
+                                errMsg.textContent = error.responseJSON.errors.compare_price[0];
+                            }
+                        }
                         if (error.responseJSON.errors.price) {
                             var errMsg = document.getElementById('EditProductPriceError');
                             if (error.responseJSON.errors.price[0]) {
@@ -448,6 +468,7 @@
                         }
                     });
                     $('#Editproduct-price').val(response.price);
+                    $('#Edit-compare-product-price').val(response.compare_price);
                     $('#Editproduct-discount').val(response.discount);
                     $('#EditStock').val(response.stock);
                     $('#Editproductstatus').val(response.status);
@@ -488,4 +509,24 @@
                 console.error(error);
             });
     }
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Function to calculate discounted price and update the "Price" field
+        function updatePrice() {
+            // Get values from the "Compare Price" and "Discount" fields
+            var comparePrice = parseFloat($('#Edit-compare-product-price').val()) || 0;
+            var discount = parseFloat($('#Editproduct-discount').val()) || 0;
+
+            // Calculate discounted price
+            var discountedPrice = comparePrice - (comparePrice * discount / 100);
+
+            // Update the "Price" field with the calculated discounted price
+            $('#Editproduct-price').val(discountedPrice.toFixed(2));
+        }
+
+        // Bind the updatePrice function to the input fields' change events
+        $('#Edit-compare-product-price, #Editproduct-discount').on('input', updatePrice);
+    });
 </script>

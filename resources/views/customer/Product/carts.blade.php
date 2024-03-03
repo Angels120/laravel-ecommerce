@@ -168,7 +168,7 @@
                                                 <tr class="table-active">
                                                     <td>Sub Total :</td>
                                                     <td class="text-end" id="cart-subtotal">
-                                                        ${{ Cart::subtotal() }}
+                                                        Rs {{ Cart::subtotal() }}
                                                     </td>
                                                 </tr>
                                             </tbody>
@@ -305,7 +305,6 @@
         function deleteItem(rowId) {
             $('#removeItemModal').modal('show');
             $('#remove-cart-product').click(function(e) {
-                console.log('clicked');
                 $.ajax({
                     url: "{{ route('carts.item.delete') }}",
                     headers: {

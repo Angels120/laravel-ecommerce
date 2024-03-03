@@ -47,15 +47,11 @@
 
                         </div>
                     </div>
-                    <div style="width: 25%; ">
+                    <div style="width: 25%; height: 40%">
                         <div class="card ">
                             <div class="card-body" style="box-shadow: 0 0 10px rgba(135, 128, 128, 0.2);">
-                                <h5>
-                                    Order Status
-                                </h5>
                                 <form action="#" method="post" id="order-update-form">
                                     <input type="text" name="id" id="ideditOrder" hidden>
-
                                     <div class="col-lg-12">
                                         <label>Status<span class="ms-1 text-danger">*</span></label>
                                         <select id="status_edit" class="form-select" name="status">
@@ -66,27 +62,36 @@
                                         </select>
                                         <div class="invalid-feedback" id="StatusEditError"></div>
                                     </div>
-                                    <div class="col-lg-12 mt-4">
+                                    <div class="col-lg-12 mt-2">
                                         <label>Shipped Date<span class="ms-1 text-danger">*</span></label>
                                         <input type="datetime-local" id="shippeddate_edit" class="form-control"
                                             name="shipped_date">
                                         <div class="invalid-feedback" id="ShippedEditError"></div>
                                     </div>
-                                    <div class="col-lg-12 mt-4">
-                                        <label>Send Invoice Email<span class="ms-1 text-danger">*</span></label>
-                                        <select id="city_edit" class="form-select" name="">
-                                            <option class="" value="">Select Status</option>
-                                            <option value="pending">Pending</option>
-                                            <option value="delivered">Delivered</option>
-                                            <option value="shipped">Shipped</option>
-                                        </select>
-                                    </div>
+
                                     <button type="submit" class="mt-2 btn btn-success" id="update-order">Update
                                         Order</button>
                                 </form>
                             </div>
                         </div>
+                        <div class="card ">
+                            <div class="card-body" style="box-shadow: 0 0 10px rgba(135, 128, 128, 0.2);">
+                                <form action="#" method="post" id="send-invoice-form">
+                                    <input type="text" name="id" id="ideditOrderInvoice" hidden>
+                                    <div class="col-lg-12">
+                                        <label>Send Invoice Email<span class="ms-1 text-danger">*</span></label>
+                                        <select id="city_edit" class="form-select" name="userType">
+                                            <option value="customer">Customer</option>
+                                            <option value="admin">Admin</option>
+                                        </select>
+                                    </div>
+                                    <button  class="mt-2 btn btn-success"
+                                        id="send-invoice">Send</button>
+                                </form>
+                            </div>
+                        </div>
                     </div>
+
                 </div>
 
 
@@ -112,6 +117,33 @@
     </div>
 </div>
 
+<!-- Modal -->
+<div class="modal fade zoomIn" id="SendMail" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    id="btn-close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mt-2 text-center">
+                    <lord-icon src="https://cdn.lordicon.com/aycieyht.json" trigger="loop"
+                        colors="primary:#f7b84b,secondary:#f06548" style="width:100px;height:100px"></lord-icon>
+                    <div class="mt-4 pt-2 fs-15 mx-4 mx-sm-5">
+                        <h4>Are you Sure ?</h4>
+                        <p class="text-muted mx-4 mb-0">Are you Sure You want to Send Mail?</p>
+                    </div>
+                </div>
+                <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
+                    <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn w-sm btn-success " id="SendMailButton">Yes, Send
+                        It!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--end modal -->
 
 
 
@@ -163,6 +195,33 @@
             });
 
         });
+        $('#send-invoice').click(function(e) {
+            e.preventDefault();
+            $('#SendMail').modal('show');
+        });
+
+        $('#SendMailButton').click(function() {
+            var orderId = $(this).data('orderId-id');
+            var data = $('#send-invoice-form').serialize();
+
+            $.ajax({
+                type: 'POST',
+                url: "{{ route('admin.order.sendInvoiceEmail') }}",
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                data: data,
+                success: function(response) {
+                    showToast(response.message);
+                    $('#SendMail').modal('hide');
+                    $('#EditOrder').modal('hide');
+                    $('#datatable-crud').DataTable().ajax.reload();
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
     });
 </script>
 
@@ -199,6 +258,7 @@
                     $('#status_edit').val(selectedStatus).trigger('change');
                     $('#shippeddate_edit').val(response.order.shipped_date);
                     $('#ideditOrder').val(response.order.id);
+                    $('#ideditOrderInvoice').val(response.order.id);
                     $('#amount_edit').val(response.order.amount);
                     $('#idOrder').text(' #' + response.order.id);
                     $('#fullname').text('Fullname: ' + response.order.full_name);

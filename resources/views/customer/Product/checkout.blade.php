@@ -349,6 +349,7 @@
                                 </div>
                             </div>
                             <div class="card-header bg-soft-light border-bottom-dashed">
+                                <div id="coupon-div">
                                 <div class="text-center">
                                     <h6 class="mb-2">
                                         Have a <span class="fw-semibold">Coupon</span> code ?
@@ -361,6 +362,7 @@
                                         Apply
                                     </button>
                                 </div>
+                            </div>
                                 <div id="discount-response-wrapper">
                                     @if (Session::has('code'))
                                         <div id="discount-response">
@@ -593,10 +595,11 @@
                     },
                     data: data,
                     success: function(response) {
-                        console.log("finally");
+                        $('#order_complete').prop('disabled', true);
                         showToast(response.message);
                         // Switch to the next tab
                         if (!response.errors) {
+                            $('#coupon-div').hide();
                             $('#pills-finish-tab').removeAttr('disabled');
                             $('#pills-finish-tab').tab('show');
                             $('#orderID').text(response.order_id);

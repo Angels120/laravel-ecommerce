@@ -80,13 +80,19 @@
                                                     @endif
                                                 </p>
                                             </div>
+                                            @if($product->stock>0)
                                             <div class="add-to-cart-btn">
-                                                <button class="btn btn-primary" onclick="addToCart({{ $product->id }})"><i
-                                                        class="ri-shopping-cart-2-line fs-6"> Add To Cart </i> </button>
+                                                <a class="btn btn-primary" href="javascript:void(0);" onclick="addToCart({{ $product->id }})"><i
+                                                        class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </a>
                                             </div>
+                                            @else
+                                            <div class="add-to-cart-btn">
+                                                <a class="btn btn-danger" href="javascript:void(0);"><i class="ri-close-fill fs-18"></i> Out Of Stock </i> </a>
+                                            </div>
+                                            @endif
                                             <div class="favorite-btn">
-                                                <button class="btn btn-outline-danger btn-favorite"><i
-                                                        class="ri-heart-line"></i></button>
+                                                <a onclick="addToWishlist({{ $product->id }})"
+                                                    class="btn btn-outline-danger btn-favorite"><i class="ri-heart-line"></i></a>
                                             </div>
                                         </div><!-- end card -->
                                     </a>

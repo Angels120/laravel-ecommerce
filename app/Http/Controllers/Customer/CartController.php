@@ -109,7 +109,6 @@ class CartController extends Controller
     }
     public function delteItem(Request $request)
     {
-
         $itemInfo = Cart::get($request->rowId);
         if ($itemInfo == null) {
             return response()->json([
@@ -264,9 +263,16 @@ class CartController extends Controller
                 $orderItem->price = $item->price;
                 $orderItem->total = $item->price * $item->qty;
                 $orderItem->save();
+
+                //Update Product Stock
+                $productData=Product::find($item->id);
+                $currentQty=$productData->stock;
+                $updateQty=$currentQty-$item->qty;
+                $productData->stock=$updateQty;
+                $productData->save();
             }
             //Send Order Mail
-            Helper::orderEmail($order->id);
+            Helper::orderEmail($order->id,'customer');
             Cart::destroy();
             session()->forget('code');
             return response()->json(['message' => 'Orders Placed successfully', 'order_id' => $order->id]);

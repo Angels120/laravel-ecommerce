@@ -53,6 +53,11 @@ class ShopController extends Controller
                 $productsQuery->whereBetween('price', [intval($request->get('price_min')), intval($request->get('price_max'))]);
             }
         }
+        if(!empty($request->get('search'))){
+            dd('ge');
+            $productsQuery->where('name', 'like','%'.$request->get('search').'%');
+        }
+
 
         // Sort the results
         if ($request->has('sort') && $request->get('sort') != '') {
