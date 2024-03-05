@@ -22,25 +22,25 @@
                                 @foreach ($orders as $order)
                                     <tr>
                                         <td>
-                                            <a href="{{ route('user.orderDetail', $order->id ) }}">{{ $order->id }}</a>
+                                            <a href="{{ route('user.orderDetail', $order->id) }}">{{ $order->id }}</a>
                                         </td>
                                         <td>{{ \Carbon\Carbon::parse($order->created_at)->format('d M, Y') }}</td>
                                         <td>
-                                            @if( $order->status=='pending')
-                                            <span class="badge bg-danger">Pending</span>
-                                            @elseif( $order->status=='shipped' )
-                                            <span class="badge bg-info">Shipped</span>
+                                            @if ($order->status == 'pending')
+                                                <span class="badge bg-danger">Pending</span>
+                                            @elseif($order->status == 'shipped')
+                                                <span class="badge bg-info">Shipped</span>
                                             @else
-                                            <span class="badge bg-success">Status</span>
+                                                <span class="badge bg-success">Status</span>
                                             @endif
                                         </td>
-                                        <td>Rs. {{number_format($order->grand_total,2)}}</td>
+                                        <td>Rs. {{ number_format($order->grand_total, 2) }}</td>
                                     </tr>
                                 @endforeach
                             @else
-                            <tr>
-                                <td colspan="3" class="text-center fs-1  font-weight-bold">Orders Not Found</td>
-                            </tr>
+                                <tr>
+                                    <td colspan="3" class="text-center fs-1  font-weight-bold">Orders Not Found</td>
+                                </tr>
                             @endif
                         </tbody>
                     </table>
@@ -48,6 +48,5 @@
             </div>
 
         </div>
-
-
-    @endsection
+    </div>
+@endsection

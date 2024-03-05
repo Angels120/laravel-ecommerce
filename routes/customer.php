@@ -24,6 +24,7 @@ Route::get('/auth/github/callback', [GithubController::class,  'handleGithubCall
 //--------------------------------------Route for Profile--------------------------------------------------------//
 Route::middleware(['auth:web'])->group(function () {
     Route::get('/user/profile', [ProfileController::class,  'profile'])->name('user.profile');
+    Route::post('/user/update-profile', [ProfileController::class,  'updateProfile'])->name('user.updateProfile');
     Route::get('/user/myorder', [ProfileController::class,  'order'])->name('user.order');
     Route::get('/order-detail/{orderId}', [ProfileController::class,  'orderDetail'])->name('user.orderDetail');
     Route::get('/user/mywishlist', [ProfileController::class,  'wishlist'])->name('user.wishlist');
@@ -31,7 +32,8 @@ Route::middleware(['auth:web'])->group(function () {
 });
 
 //--------------------------------------Ends Here--------------------------------------------------------//
-
+Route::get('/shop/{categorySlug?}/{subCategorySlug?}', [ShopController::class,  'index'])->name('lists');
+Route::get('brands/{brandSlug?}', [ShopController::class,  'BrandFilter'])->name('brands.filter');
 
 //--------------------------------------Route for Carts--------------------------------------------------------//
 
@@ -65,5 +67,4 @@ Route::get('/', [HomeController::class,  'index'])->name('home.page');
 Route::prefix('Product')->name('product.')->group(function () {
     Route::get('{slug}', [ProductController::class,  'productDetail'])->name('detail');
 });
-Route::get('brands/{brandSlug?}', [ShopController::class,  'BrandFilter'])->name('brands.filter');
-Route::get('/{categorySlug?}/{subCategorySlug?}', [ShopController::class,  'index'])->name('lists');
+
