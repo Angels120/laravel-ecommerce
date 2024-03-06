@@ -73,7 +73,6 @@
                 error: function(error) {
                     console.log(error);
                 document.getElementById('CategoryNameError').style.display = "none";
-                document.getElementById('CategorySlugError').style.display = "none";
                 if (error.responseJSON.errors.category_name) {
                     // Only show if error is present
                     var errMsg = document.getElementById('CategoryNameError');
@@ -81,14 +80,6 @@
 
                         errMsg.style.display = "block";
                         errMsg.textContent = error.responseJSON.errors.category_name[0];
-                    }
-                }
-                if (error.responseJSON.errors.category_slug) {
-                    // Only show if error is present
-                    var errMsg = document.getElementById('CategorySlugError');
-                    if (error.responseJSON.errors.category_slug[0]) {
-                        errMsg.style.display = "block";
-                        errMsg.textContent = error.responseJSON.errors.category_slug[0];
                     }
                 }
             }
