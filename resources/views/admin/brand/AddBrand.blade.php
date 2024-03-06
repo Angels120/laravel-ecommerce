@@ -17,7 +17,6 @@
                     </div>
                     <div class="mb-3">
                         <label for="Image" class="form-label">Brand Image</label>
-                        {{-- <input type="file" name="filepond" class="filepond" /> --}}
                         <input name="image" type="file" id="BrandImage" class="form-control">
                         <div class="invalid-feedback" id="BrandImageError"></div>
 
@@ -52,7 +51,6 @@
     $(document).ready(function() {
 
         $('#save-Brand').click(function(e) {
-            console.log("You just clicked add");
             e.preventDefault();
             var formData = new FormData($('#Brand-create-form')[0]);
             $.ajax({

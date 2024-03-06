@@ -88,7 +88,7 @@
                     <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
                         <div class="card card-product">
                             <img class="card-img-top img-fluid" src="{{ asset('uploads/products/' . $product->image[0]) }}"
-                                alt="" style="height: 200px; object-fit: cover;">
+                                alt="" style="height: 200px;  object-fit: cover;">
                             <div class="card-body">
                                 <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
                                 <p class="card-text price">
