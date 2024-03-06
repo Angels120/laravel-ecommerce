@@ -23,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+
         View::composer('customer.layouts.header', ProductComposer::class);
         View::composer('customer.layouts.header', CategoryComposer::class);
         View::composer('customer.layouts.header', SubCategoryComposer::class);

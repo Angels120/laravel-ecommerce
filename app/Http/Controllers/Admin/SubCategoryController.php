@@ -19,7 +19,6 @@ class SubCategoryController extends Controller
     public function index(Request $request)
     {
         $breadcrumb = [
-
             'breadcrumbs' => [
                 'Dashboard' => route('admin.dashboard'),
                 'current_menu' => 'Sub-Categories',

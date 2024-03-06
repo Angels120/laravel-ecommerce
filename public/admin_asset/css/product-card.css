@@ -1,0 +1,62 @@
+.card {
+    position: relative;
+    cursor: pointer;
+    transition: 0.3s;
+    padding: 10px;
+}
+
+.card-product {
+    position: relative;
+}
+
+.card-product img {
+    transition: transform 0.3s ease;
+}
+
+.add-to-cart-btn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+
+    transition: opacity 0.3s ease;
+}
+
+.card-product:hover .add-to-cart-btn {
+    opacity: 1;
+    /* Show on hover */
+}
+
+.card-product:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.card-product:hover img {
+    transform: none;
+}
+
+.favorite-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: none;
+
+}
+
+.card-product:hover .favorite-btn {
+    display: block;
+
+}
+
+.add-to-cart-btn {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.card:hover {
+    color: #444;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

@@ -18,6 +18,8 @@ class DatabaseSeeder extends Seeder
             $this->call(RolesSeeder::class);
             $this->call(UserRoleSeeder::class);
             $this->call(UsersPermissionSeeder::class);
+            $this->call(ProvinceSeeder::class);
+            $this->call(CitySeeder::class);
         // \App\Models\User::factory(10)->create();
 
         // \App\Models\User::factory()->create([

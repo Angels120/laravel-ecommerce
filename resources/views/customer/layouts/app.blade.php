@@ -16,6 +16,7 @@
         <i class="ri-arrow-up-line"></i>
     </button>
     <!--end back-to-top-->
+
     @include('customer.layouts.script')
     @yield('script')
 

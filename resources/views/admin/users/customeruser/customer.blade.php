@@ -1,4 +1,4 @@
-@extends('admin.layouts.app')
+~@extends('admin.layouts.app')
 @section('page_head', 'Customer User')
 @section('container')
 
@@ -13,16 +13,7 @@
                 <div class="card-body">
                     <div class="listjs-table" id="customerList">
                         <div class="row g-4 mb-3">
-                            {{-- <div class="col-sm-auto">
-                                                <div>
-                                                    <button type="button" class="btn btn-success add-btn"
-                                                        data-bs-toggle="modal" id="create-btn"
-                                                        data-bs-target="#AddAdminUser"><i
-                                                            class="ri-add-line align-bottom me-1"></i> Add</button>
-                                                    <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
-                                                            class="ri-delete-bin-2-line"></i></button>
-                                                </div>
-                                            </div> --}}
+
                         </div>
                         <div class="card-body">
                             <table class="display table list-data-table data-table" style="width:100%" id="datatable-crud">

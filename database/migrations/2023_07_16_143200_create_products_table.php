@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('name');
             $table->string('image');
             $table->longText('description')->nullable();
-            $table->double('price',10,2);
             $table->double('discount')->nullable();
+            $table->double('price',10,2)->nullable();
             $table->string('slug');
             $table->string('stock');
             $table->Boolean('status')->default(0);

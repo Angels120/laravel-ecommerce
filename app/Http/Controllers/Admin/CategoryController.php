@@ -80,7 +80,6 @@ class CategoryController extends Controller
     public function store(StoreCategoryRequest $request)
     {
         $validatedData = $request->validated();
-
         $category = new Category($validatedData);
         $category->category_slug = Str::slug($category->category_name);
         $category->save();

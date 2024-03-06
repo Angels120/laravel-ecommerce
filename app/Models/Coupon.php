@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Coupon extends Model
 {
-    protected $table = "coupons";
-    protected $fillable = ['title', 'code' , 'value'];
-    use HasFactory;
+    protected $table = "discount_coupons";
+    protected $guarded=[
+        'id'
+      ];    use HasFactory;
 }

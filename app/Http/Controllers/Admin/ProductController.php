@@ -61,11 +61,10 @@ class ProductController extends Controller
                 })
                 ->editColumn('discount', function ($row) {
 
-                    return $row->discount . '%' ?? '';
+                    return $row->discount .'%'  ?? '0 %';
                 })
                 ->editColumn('price', function ($row) {
-
-                    return $row->price ?? '';
+                    return 'Rs. ' . number_format($row->price, 2) ?? '';
                 })
                 ->editColumn('image', function ($row) {
                     $images = $row->image;
@@ -152,7 +151,8 @@ class ProductController extends Controller
             'stock' => 'required',
             'status' => 'required|boolean',
             'featured' => 'required|boolean',
-            'price' => 'required',
+            'compare_price' => 'required',
+            'price' => 'nullable',
             'discount' => 'nullable',
             'sizes' => 'nullable',
         ]);
@@ -187,6 +187,7 @@ class ProductController extends Controller
             'brands_id' => $request->brands_id,
             'stock' => $request->stock,
             'status' => $request->status,
+            'compare_price' => $request->compare_price,
             'price' => $request->price,
             'featured' => $request->featured,
             'discount' => $request->discount,
@@ -262,7 +263,8 @@ class ProductController extends Controller
             'stock' => 'required',
             'status' => 'required|boolean',
             'featured' => 'required|boolean',
-            'price' => 'required',
+            'compare_price' => 'required',
+            'price' => 'nullable',
             'discount' => 'nullable',
             'sizes' => 'nullable',
         ]);
@@ -292,6 +294,7 @@ class ProductController extends Controller
             'brands_id' => $request->brands_id,
             'stock' => $request->stock,
             'status' => $request->status,
+            'compare_price' => $request->compare_price,
             'price' => $request->price,
             'featured' => $request->featured,
             'discount' => $request->discount,

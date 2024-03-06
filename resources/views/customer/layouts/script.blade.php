@@ -1,8 +1,5 @@
 <!-- JAVASCRIPT -->
-
-
- <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
-
+ <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.min.js') }}"></script>
  <script>
     const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
 const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
@@ -35,6 +32,7 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
  <script src="{{ asset('admin_asset/js/pages/dashboard-ecommerce.init.js') }}"></script>
  <script src="{{ asset('admin_asset/js/pages/ecommerce-product-details.init.js') }}"></script>
 
+ <script src="{{ asset('admin_asset/js/pages/ecommerce-product-checkout.init.js') }}"></script>
 
 
 
@@ -62,6 +60,9 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
  <script src="{{ asset('admin_asset/js/pages/datatables.init.js') }}"></script>
 
+
+
+
  <!--datatable js-->
  <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
  <script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
@@ -81,3 +82,47 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
  <!-- range Slider js -->
  <script src="{{ asset('admin_asset/js/ion.rangeSlider.min.js') }}"></script>
+
+ <script>
+    function addToCart(id) {
+        $.ajax({
+            url: '{{ route("carts.add") }}',
+            type: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: { id: id },
+            dataType: 'json',
+            success: function (response) {
+                if(response.status==true){
+                    localStorage.setItem("successMessage", response.message);
+                    window.location.href="{{ route('carts.details') }}"
+                }else{
+                    alert('Your Product already added');
+                    $('#cartErrorModal').modal('show');
+
+                }
+            },
+
+        });
+    }
+    function addToWishlist(id) {
+        $.ajax({
+            url: '{{ route("wishlists.add") }}',
+            type: 'post',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            data: { id: id },
+            dataType: 'json',
+            success: function (response) {
+                if(response.status==true){
+                    showToast(response.message);
+                }else{
+                    window.location.href="{{ route('login') }}"
+                }
+            },
+
+        });
+    }
+ </script>
