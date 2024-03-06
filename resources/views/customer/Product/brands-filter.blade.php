@@ -47,11 +47,11 @@
                 </div><!-- end row -->
 
                 <!-- Products Section (Right Side) -->
-                <div class="col-md-8 mt-3">
-                    <div class="row d-flex align-items-stretch">
+                <div class="row col-md-8 mt-3">
+                    <div class="d-flex align-items-stretch">
                         @foreach ($products as $product)
                             @if ($product->status == 1)
-                                <div class="col-xl-4 mb-3">
+                                <div class="col-xl-4 m-3">
                                     <!-- Simple card with a link -->
                                     <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
                                         <div class="card card-product">
@@ -83,7 +83,7 @@
                                             @if($product->stock>0)
                                             <div class="add-to-cart-btn">
                                                 <a class="btn btn-primary" href="javascript:void(0);" onclick="addToCart({{ $product->id }})"><i
-                                                        class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </a>
+                                                        class="ri-shopping-cart-2-line fs-16"> Add To Cart </i> </a>
                                             </div>
                                             @else
                                             <div class="add-to-cart-btn">
