@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\City;
+use App\Models\CustomerAddress;
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\Province;
 use App\Models\User;
 use App\Models\Wishlist;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+
 
 class ProfileController extends Controller
 {
@@ -20,11 +25,45 @@ class ProfileController extends Controller
             ],
         ];
         $user=User::where('id',Auth::user()->id)->first();
-        return view('auth.account.profile',compact('breadcrumb','user'));
-    }
-    public function updateProfile(Request $request){
-        // dd('heere');
+        $provinces = Province::orderBy('name', 'ASC')->get();
+        $cities = City::orderBy('name', 'ASC')->get();
+        $customerAddress = CustomerAddress::where('user_id', $user->id)->first();
 
+        return view('auth.account.profile',compact('breadcrumb','user','provinces','cities','customerAddress'));
+    }
+
+
+    public function updateProfile(Request $request){
+        $userId = Auth::user()->id;
+        $validateData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$userId.',id',
+            'phone_number' => 'required',
+        ]);
+
+        // Using the 'where' method to find the user by ID and update their profile
+        User::where('id', $userId)->update($validateData);
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Profile updated successfully',
+        ]);
+    }
+
+    public function BillingAddress(Request $request)
+    {
+        //Step 1 store User Address in Address table
+        $validateData = $request->validate([
+            'full_name' => 'required|string|max:255',
+            'email' => 'nullable',
+            'province_id' => 'required',
+            'city_id' => 'required',
+            'phone' => 'required|regex:/^([0-9\s\-\+\(\)]*)$/|min:10',
+            'address' => 'required',
+        ]);
+        $user = Auth::user();
+        CustomerAddress::updateOrCreate(['user_id' => $user->id], $validateData);
+        return response()->json(['message' => 'Billing Address collected  successfully']);
     }
 
     public function order(){

@@ -79,7 +79,6 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
-        dd($request->all());
         $validatedData = $request->validated();
         $category = new Category($validatedData);
         $category->category_slug = Str::slug($category->category_name);
@@ -108,11 +107,13 @@ class CategoryController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCategoryRequest $request, Category $category)
+    public function update(UpdateCategoryRequest $request)
     {
         $category = Category::findOrFail($request->id ?? '');
         $validateData = $request->validated();
         $category->update($validateData);
+        $category->category_slug = Str::slug($category->category_name);
+        $category->save();
         // Custom response message
         return response()->json(['message' => 'Category details updated successfully', 'data' => $category], 200);
     }

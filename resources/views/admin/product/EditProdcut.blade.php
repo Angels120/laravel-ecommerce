@@ -156,14 +156,14 @@
                                     <h6 class="text-muted">#(Put the actual price of product in compare price field and
                                         discount price in price field)</h6>
 
-                                        <label for="name" class="control-label mb-1">Compare Price<span
-                                                class="ms-1 text-danger">*</span></label>
-                                        <div class="input-group mb-3">
-                                            <span class="input-group-text" id="product-discount-addon">Nrs</span>
-                                            <input type="text" name="compare_price" class="form-control"
-                                                id="Edit-compare-product-price" placeholder="Enter Actual Price">
-                                        </div>
-                                        <div class="invalid-feedback" id="EditProductComparePriceError"></div>
+                                    <label for="name" class="control-label mb-1">Compare Price<span
+                                            class="ms-1 text-danger">*</span></label>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="product-discount-addon">Nrs</span>
+                                        <input type="text" name="compare_price" class="form-control"
+                                            id="Edit-compare-product-price" placeholder="Enter Actual Price">
+                                    </div>
+                                    <div class="invalid-feedback" id="EditProductComparePriceError"></div>
 
                                     <div class="d-flex">
                                         <div class="me-3">
@@ -176,11 +176,12 @@
                                         </div>
                                         <div>
                                             <label for="name" class="control-label mb-1">Price
-                                            <div class="input-group mb-3">
-                                                <span class="input-group-text" id="product-discount-addon">Nrs</span>
-                                                <input type="text" name="price" class="form-control"
-                                                    id="Editproduct-price" placeholder="Enter Discount  Price">
-                                            </div>
+                                                <div class="input-group mb-3">
+                                                    <span class="input-group-text"
+                                                        id="product-discount-addon">Nrs</span>
+                                                    <input type="text" name="price" class="form-control"
+                                                        id="Editproduct-price" placeholder="Enter Discount  Price">
+                                                </div>
                                         </div>
                                     </div>
                                     <div class="invalid-feedback" id="EditProductPriceError"></div>
@@ -308,7 +309,7 @@
                         }
                         if (error.responseJSON.errors.category_id) {
                             var errMsg = document.getElementById(
-                            'EditProductCategoryError');
+                                'EditProductCategoryError');
                             if (error.responseJSON.errors.category_id[0]) {
                                 errMsg.style.display = "block";
                                 errMsg.textContent = error.responseJSON.errors.category_id[
@@ -332,10 +333,12 @@
                             }
                         }
                         if (error.responseJSON.errors.compare_price) {
-                            var errMsg = document.getElementById('EditProductComparePriceError');
+                            var errMsg = document.getElementById(
+                                'EditProductComparePriceError');
                             if (error.responseJSON.errors.compare_price[0]) {
                                 errMsg.style.display = "block";
-                                errMsg.textContent = error.responseJSON.errors.compare_price[0];
+                                errMsg.textContent = error.responseJSON.errors
+                                    .compare_price[0];
                             }
                         }
                         if (error.responseJSON.errors.price) {
@@ -467,6 +470,12 @@
                             $(this).prop('selected', true);
                         }
                     });
+                    $('#Editfeatured').val(response.featured).trigger('change');
+                    $('#Editfeatured option').each(function() {
+                        if ($(this).val() == response.featured) {
+                            $(this).prop('selected', true);
+                        }
+                    });
                     $('#Editproduct-price').val(response.price);
                     $('#Edit-compare-product-price').val(response.compare_price);
                     $('#Editproduct-discount').val(response.discount);
@@ -474,9 +483,7 @@
                     $('#Editproductstatus').val(response.status);
                     $('#Editsizes').val(response.sizes);
                 },
-                error: function(error) {
-                    console.log(error);
-                }
+                error: function(error) {}
             });
         });
     });
@@ -511,22 +518,20 @@
     }
 </script>
 
+
 <script>
     $(document).ready(function() {
-        // Function to calculate discounted price and update the "Price" field
+
         function updatePrice() {
-            // Get values from the "Compare Price" and "Discount" fields
+
             var comparePrice = parseFloat($('#Edit-compare-product-price').val()) || 0;
             var discount = parseFloat($('#Editproduct-discount').val()) || 0;
 
-            // Calculate discounted price
             var discountedPrice = comparePrice - (comparePrice * discount / 100);
 
-            // Update the "Price" field with the calculated discounted price
             $('#Editproduct-price').val(discountedPrice.toFixed(2));
         }
 
-        // Bind the updatePrice function to the input fields' change events
         $('#Edit-compare-product-price, #Editproduct-discount').on('input', updatePrice);
     });
 </script>

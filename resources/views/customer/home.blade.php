@@ -1,11 +1,5 @@
 @extends('customer.layouts.app')
-
 @section('container')
-
-
-
-
-
     <div class="main-content">
         <div class="page-content px-0 m-0">
             <div class="px-0 mb-4">
@@ -57,153 +51,159 @@
                 </div>
             </div>
             <div class="container-fluid ">
-                <h1 class="brands">Popular Brands</h1>
-                <hr class="w-100">
-                <div class="row">
-                    @foreach ($brands as $brand)
-                        <div class="col-md-3 mb-3 brand-card" data-brand="{{ $brand->slug }}">
-                            <div class="card">
-                                <img class="card-img-top img-fluid" src="{{ asset('uploads/brands/' . $brand->image) }}"
-                                    alt="Brand Image" style="height: 130px; object-fit: cover;">
-                                <div class="card-body">
-                                    <!-- You can add any additional information or links related to the brand here -->
+                <div>
+                    <h1 class="brands">Popular Brands</h1>
+                    <hr class="w-100">
+                    @if ($brands->count() > 0)
+                        <div class="row">
+                            @foreach ($brands as $brand)
+                                <div class="col-md-3 mb-3 brand-card" data-brand="{{ $brand->slug }}">
+                                    <div class="card">
+                                        <img class="card-img-top img-fluid"
+                                            src="{{ asset('uploads/brands/' . $brand->image) }}" alt="Brand Image"
+                                            style="height: 130px; object-fit: cover;">
+
+                                    </div>
                                 </div>
-                            </div>
+                            @endforeach
                         </div>
-                    @endforeach
+                    @else
+                        <h1>No Brands Available</h1>
+                    @endif
                 </div>
                 @if ($latestProducts->count() > 0)
-                    <div class="row d-flex align-items-center mt-3 mb-3">
-                        <h1 class="titlecard">Recently Added</h1>
-                        <hr class="w-100">
-
+                    <h1 class="titlecard">Recently Added</h1>
+                    <hr class="w-100">
+                    <div class="row">
                         @foreach ($latestProducts as $index => $product)
-                            @if ($index % 4 == 0)
-                    </div>
-                    <div class="row d-flex align-items-center mt-3 mb-3"> <!-- start a new row -->
-                @endif
-
-                <div class="col-sm-6 col-xl-3">
-                    <!-- Simple card -->
-                    <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
-                        <div class="card card-product">
-                            <div class="image-card" style="height: 200px; width: 280px;">
-                                <img class="card-img-top img-fluid" src="{{ asset('uploads/products/' . $product->image[0]) }}"
-                                alt="" style="height:100%; width:100%; object-fit: contain;">
-                            </div>
-                            <div class="card-body">
-                                <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
-                                <p class="card-text price">
-                                    @if ($product->price)
-                                        <h5>
-                                            <span class="text-danger">
-                                                Rs.{{ $product->price }}
-                                            </span>
-                                        </h5>
-                                        <div class="text-muted">
-                                            <s>
-                                                Rs.{{ $product->compare_price }}
-                                            </s>
-                                            ({{ $product->discount }}% off)
+                            <div class="col-md-3">
+                                <!-- Simple card -->
+                                <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
+                                    <div class="card card-product">
+                                        <div class="image-card" style="height: 200px; width: 280px;">
+                                            <img class="card-img-top img-fluid"
+                                                src="{{ asset('uploads/products/' . $product->image[0]) }}" alt=""
+                                                style="height:100%; width:100%; object-fit: contain;">
                                         </div>
-                                    @else
-                                        <span class="text-danger price">
-                                            Rs. {{ $product->compare_price ?? ' ' }}
-                                        </span>
-                                    @endif
-                                </p>
-                                @if($product->stock>0)
-                                <div class="add-to-cart-btn">
-                                    <a class="btn btn-primary" href="javascript:void(0);" onclick="addToCart({{ $product->id }})"><i
-                                            class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </a>
-                                </div>
-                                @else
-                                <div class="add-to-cart-btn">
-                                    <a class="btn btn-danger" href="javascript:void(0);"><i class="ri-close-fill fs-18"></i> Out Of Stock </i> </a>
-                                </div>
-                                @endif
-                                <div class="favorite-btn">
-                                    <a onclick="addToWishlist({{ $product->id }})"
-                                        class="btn btn-outline-danger btn-favorite"><i class="ri-heart-line"></i></a>
-                                </div>
-                            </div>
-                        </div><!-- end card -->
-                    </a>
-                </div><!-- end col -->
-                @endforeach
-            </div>
-        @else
-            <p>No products available.</p>
-            @endif
-
-            <div class="row d-flex align-items-center">
-                <h1 class="titlecard">Featured Products</h1>
-                <hr class="w-100">
-
-                @foreach ($products as $product)
-                    @if ($product->featured == 1)
-                        <div class="col-sm-6 col-xl-3">
-                            <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
-                                <div class="card card-product">
-                                    <img class="img-fluid d-block"
-                                        src="{{ asset('uploads/products/' . $product->image[0]) }}" alt=""
-                                        style="height: 200px; object-fit: cover;">
-                                    <div class="card-body">
-                                        <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
-                                        <p class="card-text price">
-                                            @if ($product->price)
-                                                <h5>
-                                                    <span class="text-danger">
-                                                        Rs.{{ $product->price }}
+                                        <div class="card-body">
+                                            <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
+                                            <p class="card-text price">
+                                                @if ($product->price)
+                                                    <h5>
+                                                        <span class="text-danger">
+                                                            Rs.{{ $product->price }}
+                                                        </span>
+                                                    </h5>
+                                                    <div class="text-muted">
+                                                        <s>
+                                                            Rs.{{ $product->compare_price }}
+                                                        </s>
+                                                        ({{ $product->discount }}% off)
+                                                    </div>
+                                                @else
+                                                    <span class="text-danger price">
+                                                        Rs. {{ $product->compare_price ?? ' ' }}
                                                     </span>
-                                                </h5>
-                                                <div class="text-muted">
-                                                    <s>
-                                                        Rs.{{ $product->compare_price }}
-                                                    </s>
-                                                    ({{ $product->discount }}% off)
+                                                @endif
+                                            </p>
+                                            @if ($product->stock > 0)
+                                                <div class="add-to-cart-btn">
+                                                    <a class="btn btn-primary" href="javascript:void(0);"
+                                                        onclick="addToCart({{ $product->id }})"><i
+                                                            class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </a>
                                                 </div>
                                             @else
-                                                <span class="text-danger price">
-                                                    Rs. {{ $product->compare_price ?? ' ' }}
-                                                </span>
+                                                <div class="add-to-cart-btn">
+                                                    <a class="btn btn-danger" href="javascript:void(0);"><i
+                                                            class="ri-close-fill fs-18"></i> Out Of Stock </i> </a>
+                                                </div>
                                             @endif
-                                        </p>
-                                    </div>
-                                    @if($product->stock>0)
-                                    <div class="add-to-cart-btn">
-                                        <a class="btn btn-primary" href="javascript:void(0);" onclick="addToCart({{ $product->id }})"><i
-                                                class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </a>
-                                    </div>
-                                    @else
-                                    <div class="add-to-cart-btn">
-                                        <a class="btn btn-danger" href="javascript:void(0);"><i class="ri-close-fill fs-18"></i> Out Of Stock </i> </a>
-                                    </div>
-                                    @endif
-                                    <div class="favorite-btn">
-                                        <a onclick="addToWishlist({{ $product->id }})"
-                                            class="btn btn-outline-danger btn-favorite"><i class="ri-heart-line"></i></a>
-                                    </div>
-                                </div><!-- end card -->
+                                            <div class="favorite-btn">
+                                                <a onclick="addToWishlist({{ $product->id }})"
+                                                    class="btn btn-outline-danger btn-favorite"><i
+                                                        class="ri-heart-line"></i></a>
+                                            </div>
+                                        </div>
+                                    </div><!-- end card -->
+                                </a>
+                            </div><!-- end col -->
+                        @endforeach
+                    </div>
+                @else
+                <div class="card d-flex align-items-center justify-content-center">
+                    <img src="{{ asset('admin_asset/images/no-product.png') }}" height="250px" width="auto" class="d-block" alt="...">
+                </div>
+                @endif
+                <div class="row d-flex align-items-center">
+                    <h1 class="titlecard">Featured Products</h1>
+                    <hr class="w-100">
+                    @if ($products->where('featured', 1)->count() > 0)
+                        @foreach ($products as $product)
+                            @if ($product->featured == 1)
+                                <div class="col-sm-6 col-xl-3">
+                                    <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
+                                        <div class="card card-product">
+                                            <img class="img-fluid d-block"
+                                                src="{{ asset('uploads/products/' . $product->image[0]) }}"
+                                                alt="" style="height: 200px; object-fit: cover;">
+                                            <div class="card-body">
+                                                <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
+                                                <p class="card-text price">
+                                                    @if ($product->price)
+                                                        <h5>
+                                                            <span class="text-danger">
+                                                                Rs.{{ $product->price }}
+                                                            </span>
+                                                        </h5>
+                                                        <div class="text-muted">
+                                                            <s>
+                                                                Rs.{{ $product->compare_price }}
+                                                            </s>
+                                                            ({{ $product->discount }}% off)
+                                                        </div>
+                                                    @else
+                                                        <span class="text-danger price">
+                                                            Rs. {{ $product->compare_price ?? ' ' }}
+                                                        </span>
+                                                    @endif
+                                                </p>
+                                            </div>
+                                            @if ($product->stock > 0)
+                                                <div class="add-to-cart-btn">
+                                                    <a class="btn btn-primary" href="javascript:void(0);"
+                                                        onclick="addToCart({{ $product->id }})"><i
+                                                            class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </a>
+                                                </div>
+                                            @else
+                                                <div class="add-to-cart-btn">
+                                                    <a class="btn btn-danger" href="javascript:void(0);"><i
+                                                            class="ri-close-fill fs-18"></i> Out Of Stock </i> </a>
+                                                </div>
+                                            @endif
+                                            <div class="favorite-btn">
+                                                <a onclick="addToWishlist({{ $product->id }})"
+                                                    class="btn btn-outline-danger btn-favorite"><i
+                                                        class="ri-heart-line"></i></a>
+                                            </div>
+                                        </div><!-- end card -->
+                                    </a>
+                                </div><!-- end col -->
+                            @endif
+                        @endforeach
+                    @else
+                    <div class="card d-flex align-items-center justify-content-center">
+                        <img src="{{ asset('admin_asset/images/no-product.png') }}" height="250px" width="auto" class="d-block" alt="...">
+                    </div>
 
-
-                            </a>
-                        </div><!-- end col -->
                     @endif
-                @endforeach
-
+                </div>
             </div>
-
-
         </div>
     </div>
-    </div>
-
 @endsection
 @section('script')
     <script>
         $(document).ready(function() {
-            // Check localStorage for previously selected brands
             var selectedBrands = localStorage.getItem('selectedBrands');
             if (selectedBrands) {
                 selectedBrands = selectedBrands.split(',');
@@ -212,37 +212,30 @@
                 });
             }
 
-            // Handle brand card click
             $('.brand-card').click(function() {
                 console.log('clicked')
                 var brandSlug = $(this).data('brand');
 
-                // Toggle the 'selected' class
                 $(this).toggleClass('selected');
 
-                // Update localStorage with selected brands
                 var selectedBrands = $('.brand-card.selected').map(function() {
                     return $(this).data('brand');
                 }).get();
 
-                // Store the updated selected brands
                 localStorage.setItem('selectedBrands', selectedBrands.join(','));
 
-                // Redirect to another page with selected brands
                 redirectToPage(selectedBrands);
             });
 
             function redirectToPage(selectedBrands) {
                 var baseUrl = "{{ route('brands.filter', ['brandSlug' => '']) }}";
-                // Remove any empty elements from the selectedBrands array
+
                 selectedBrands = selectedBrands.filter(Boolean);
-                // Append the selected brands to the URL
+
                 var brandSlug = selectedBrands.join('/');
                 var url = baseUrl + '/' + brandSlug;
 
-                // Redirect to the constructed URL
                 window.location.href = url;
-                // Clear previous selected brands from local storage
                 localStorage.removeItem('selectedBrands');
 
             }

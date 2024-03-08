@@ -7,16 +7,14 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     id="close-modal"></button>
             </div>
-            <form action="#" method="post" id="SubCategory-create-form">
 
-                <div class="modal-body">
-
-
+            <div class="modal-body">
+                <form action=""  id="SubCategory-create-form">
                     <div class="mb-3">
                         <label for="category_name" class="control-label mb-1">Sub-Category<span
                                 class="ms-1 text-danger">*</span></label>
                         <input id="name" name="subcategory_name" type="text" class="form-control"
-                            value="{{ old('subcategory_name') }}" placeholder="Enter Sub Category Name">
+                            placeholder="Enter Sub Category Name">
                         <div class="invalid-feedback" id="SubcategoryNameError"></div>
                     </div>
 
@@ -28,7 +26,6 @@
                                 <option value="{{ $category->id }}">
                                     {{ $category->category_name ?? '' }}</option>
                             @endforeach
-
                         </select>
                         <div class="invalid-feedback" id="CategoryIdError"></div>
                     </div>
@@ -47,17 +44,16 @@
                         </div>
                     </div>
 
-
-
                     <div class="modal-footer">
                         <div class="hstack gap-2 justify-content-end">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success" id="save-SubCategory">Add Sub Category</button>
-                            <!-- <button type="button" class="btn btn-success" id="edit-btn">Update</button> -->
+                            <button type="submit" class="btn btn-success" id="save-SubCategory">Add Sub
+                                Category</button>
                         </div>
                     </div>
-                </div>
-            </form>
+                </form>
+
+            </div>
         </div>
     </div>
 </div>
@@ -76,7 +72,6 @@
                 },
                 data: data,
                 success: function(response) {
-                    console.log("finally");
                     showToast(response.message);
                     $('#AddSubCategory').modal('hide');
                     $('#datatable-crud').DataTable().ajax.reload();
@@ -90,14 +85,16 @@
                             var errMsg = document.getElementById('SubcategoryNameError');
                             if (error.responseJSON.errors.subcategory_name[0]) {
                                 errMsg.style.display = "block";
-                                errMsg.textContent = error.responseJSON.errors.subcategory_name[0];
+                                errMsg.textContent = error.responseJSON.errors
+                                    .subcategory_name[0];
                             }
                         }
                         if (error.responseJSON.errors.category_id) {
                             var errMsg = document.getElementById('CategoryIdError');
                             if (error.responseJSON.errors.category_id[0]) {
                                 errMsg.style.display = "block";
-                                errMsg.textContent = error.responseJSON.errors.category_id[0];
+                                errMsg.textContent = error.responseJSON.errors.category_id[
+                                    0];
                             }
                         }
                     }
@@ -106,4 +103,3 @@
         });
     });
 </script>
-
