@@ -19,8 +19,14 @@ class ProfileController extends Controller
                 'current_menu' => 'My Profile',
             ],
         ];
-        return view('auth.account.profile',compact('breadcrumb'));
+        $user=User::where('id',Auth::user()->id)->first();
+        return view('auth.account.profile',compact('breadcrumb','user'));
     }
+    public function updateProfile(Request $request){
+        // dd('heere');
+
+    }
+
     public function order(){
         $breadcrumb = [
             'breadcrumbs' => [

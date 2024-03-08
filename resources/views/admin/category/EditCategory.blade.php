@@ -13,7 +13,7 @@
                     <div class="mb-3">
                         <label for="category_name" class="control-label mb-1">Category</label>
                         <input id="category_name_edit" name="category_name" type="text" class="form-control"
-                            value="{{ old('category_name') }}" placeholder="Enter Category Name">
+                             placeholder="Enter Category Name">
                         <div class="invalid-feedback" id="CategoryNameEditError">Please enter a customer name.</div>
                     </div>
                     <div class="mb-3">
@@ -46,7 +46,6 @@
 <script>
     $(document).ready(function() {
         $('#Edit-Category').click(function(e) {
-            console.log("u just clicekd add");
             e.preventDefault();
             var data = $('#Edit_category_form').serialize();
             $.ajax({
@@ -57,31 +56,19 @@
             },
             data: data,
                 success: function(response) {
-                    console.log("finally");
                 showToast(response.message);
                 $('#EditCategory').modal('hide');
                 $('#datatable-crud').DataTable().ajax.reload();
-                $('#successAlertContainer').html(successAlert);
             },
                 error: function(error) {
                     console.log(error);
                 document.getElementById('CategoryNameEditError').style.display = "none";
-                document.getElementById('CategorySlugEditError').style.display = "none";
                 if (error.responseJSON.errors.category_name) {
                     // Only show if error is present
                     var errMsg = document.getElementById('CategoryNameEditError');
                     if (error.responseJSON.errors.category_name[0]) {
-
                         errMsg.style.display = "block";
                         errMsg.textContent = error.responseJSON.errors.category_name[0];
-                    }
-                }
-                if (error.responseJSON.errors.category_slug) {
-                    // Only show if error is present
-                    var errMsg = document.getElementById('CategorySlugEditError');
-                    if (error.responseJSON.errors.category_slug[0]) {
-                        errMsg.style.display = "block";
-                        errMsg.textContent = error.responseJSON.errors.category_slug[0];
                     }
                 }
             }

@@ -16,6 +16,7 @@ class ShopController extends Controller
         $breadcrumb = [
             'breadcrumbs' => [
                 'WebMart' => route('home.page'),
+                'Shop' => url()->current(),
                 $categorySlug   => route('lists', $categorySlug),
                 $subCategorySlug   => route('lists', $subCategorySlug),
             ],
@@ -54,7 +55,6 @@ class ShopController extends Controller
             }
         }
         if(!empty($request->get('search'))){
-            dd('ge');
             $productsQuery->where('name', 'like','%'.$request->get('search').'%');
         }
 
