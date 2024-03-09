@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Customer;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\Page;
 use App\Models\Product;
 use App\Models\Wishlist;
 use Illuminate\Http\Request;
@@ -43,5 +44,10 @@ class HomeController extends Controller
             'status' => true,
             'message' => 'Product added in your wishlist',
         ]);
+    }
+    public function page($slug){
+        $page=Page::where('slug',$slug)->first();
+        return view('customer.page', compact('page'));
+
     }
 }

@@ -45,8 +45,8 @@ Route::post('/delete-cart', [CartController::class,  'delteItem'])->name('carts.
 //--------------------------------------Ends Here--------------------------------------------------------//
 //--------------------------------------Route for WishList--------------------------------------------------------//
 
-Route::post('/add-to-wishlists', [HomeController::class,  'addToWishlist'])->name('wishlists.add');
-
+Route::post('/add-to-wishlists', [HomeController::class,'addToWishlist'])->name('wishlists.add');
+Route::get('/page/{slug}', [HomeController::class,'page'])->name('home.page');
 //--------------------------------------Ends Here--------------------------------------------------------//
 //--------------------------------------Route for Checkout--------------------------------------------------------//
 Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout.details');

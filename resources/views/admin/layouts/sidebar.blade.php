@@ -35,6 +35,7 @@
                         <i class="ri-dashboard-2-line"></i> <span>Dashboards</span>
                     </a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link menu-link" href="#sidebarApps" data-bs-toggle="collapse" role="button" aria-expanded="false" aria-controls="sidebarApps">
                         <i class="ri-team-fill"></i> <span data-key="t-apps">Users</span>
@@ -50,6 +51,11 @@
 
                         </ul>
                     </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('admin.pages.index') }}"  role="button" aria-expanded="false">
+                        <i class="ri-pages-line"></i> <span>Pages</span>
+                    </a>
                 </li>
 
 

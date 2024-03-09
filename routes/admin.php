@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\admin\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ShippingController;
 use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SubCategoryController;
@@ -87,6 +88,7 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     Route::delete('/brands/delete/{id}', [BrandController::class,'destroy'])->name('brand.delete');
 
     //--------------------------------------Ends HEre--------------------------------------------------------//
+
     //--------------------------------------Shipping starts here--------------------------------------------------------//
     Route::get('/shippings', [ShippingController::class,'index'])->name('shipping.index');
     Route::post('/shippings/create', [ShippingController::class,'store'])->name('shipping.create');
@@ -104,15 +106,14 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     Route::delete('/coupons/delete/{id}', [CouponController::class,'destroy'])->name('coupon.delete');
     //--------------------------------------Ends HEre--------------------------------------------------------//
 
-    // Route::resource('products',ProductController::class);
-    // Route::resource('coupons',CouponController::class);
-    // Route::resource('sizes',SizeController::class);
+    //--------------------------------------Pages starts here--------------------------------------------------------//
+    Route::get('/pages', [PageController::class,'index'])->name('pages.index');
+    Route::post('/pages/create', [PageController::class,'store'])->name('page.create');
+    Route::get('/pages/edit', [PageController::class,'edit'])->name('page.edit');
+    Route::post('/pages/update', [PageController::class,'update'])->name('page.update');
+    Route::delete('/pages/delete/{id}', [PageController::class,'destroy'])->name('page.delete');
 
-    // Route::get('admin/categories', [CategoryController::class, 'index'])->name('categories.index');
-    // Route::get('admin/categories/{id?}', [CategoryController::class, 'createOrEdit'])->name('categories.create-edit');
-    // Route::post('admin/categories', [CategoryController::class, 'store'])->name('categories.store');
-    // Route::put('admin/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
-    // Route::delete('admin/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+    //--------------------------------------Ends HEre--------------------------------------------------------//
 
 
 });
