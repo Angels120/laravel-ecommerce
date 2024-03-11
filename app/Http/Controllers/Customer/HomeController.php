@@ -46,8 +46,18 @@ class HomeController extends Controller
         ]);
     }
     public function page($slug){
+        $breadcrumb = [
+            'breadcrumbs' => [
+                'WebMart' => route('home.page'),
+                $slug   => route('lists', $slug),
+            ],
+        ];
+
         $page=Page::where('slug',$slug)->first();
-        return view('customer.page', compact('page'));
+        if($page==null){
+            abort(404);
+        }
+        return view('customer.page', compact('page','breadcrumb'));
 
     }
 }

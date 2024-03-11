@@ -1,19 +1,31 @@
 @extends('customer.layouts.app')
 @section('container')
     <div class="main-content">
-        <div class="page-content px-0 m-0">
+        <div class="page-content ">
             <div class="container-fluid">
                 <!-- start page title -->
                 <div class="row">
                     <div class="col-12">
                         <div class="page-title-box d-sm-flex align-items-center justify-content-between">
-                            <h4 class="mb-sm-0">Privacy Policy</h4>
-
+                            <h4 class="mb-sm-0">{{ $page->name ?? '' }}</h4>
                             <div class="page-title-right">
-                                <ol class="breadcrumb m-0">
-                                    <li class="breadcrumb-item"><a href="javascript: void(0);">Pages</a></li>
-                                    <li class="breadcrumb-item active">Privacy Policy</li>
-                                </ol>
+                                @if ($breadcrumb['breadcrumbs'])
+                                    <ol class="breadcrumb m-0">
+                                        @foreach ($breadcrumb['breadcrumbs'] as $label => $link)
+                                            <li class="breadcrumb-item">
+                                                @if ($label == 'current_menu')
+                                                    <a>
+                                                        {{ $link }}
+                                                    </a>
+                                                @else
+                                                    <a href="{{ $link }}">
+                                                        {{ $label }}
+                                                    </a>
+                                                @endif
+                                            </li>
+                                        @endforeach
+                                    </ol>
+                                @endif
                             </div>
 
                         </div>
@@ -50,7 +62,6 @@
                                     </div>
                                     <div class="flex-grow-1">
                                         <h5>{!! $page->content ?? '' !!}</h5>
-
                                     </div>
                                 </div>
                             </div>

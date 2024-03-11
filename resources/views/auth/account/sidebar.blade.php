@@ -78,8 +78,8 @@
                                         </a>
                                     </li>
                                     <li class="w-100 mb-2">
-                                        <a class="custom-nav-buttton-hover my-1 nav-item {{ request()->routeIs('user.order') ? 'active' : '' }}"
-                                            href="{{ route('user.order') }}">
+                                        <a class="custom-nav-buttton-hover my-1 nav-item {{ request()->routeIs('user.changePassword') ? 'active' : '' }}"
+                                            href="{{ route('user.changePassword') }}">
                                             <i class="ri-lock-fill fs-18 me-2"></i> <span class="d-md-inline-block">Change Password</span>
                                         </a>
                                     </li>

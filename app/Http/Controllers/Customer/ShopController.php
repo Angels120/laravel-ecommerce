@@ -13,6 +13,13 @@ class ShopController extends Controller
 {
     public function index(Request $request, $categorySlug = null, $subCategorySlug = null)
     {
+        if (!$categorySlug || !Category::where('category_slug', $categorySlug)->exists()) {
+            abort(404);
+        }
+        if ($subCategorySlug && !SubCategory::where('subcategory_slug', $subCategorySlug)->exists()) {
+            abort(404);
+        }
+
         $breadcrumb = [
             'breadcrumbs' => [
                 'WebMart' => route('home.page'),
@@ -54,8 +61,8 @@ class ShopController extends Controller
                 $productsQuery->whereBetween('price', [intval($request->get('price_min')), intval($request->get('price_max'))]);
             }
         }
-        if(!empty($request->get('search'))){
-            $productsQuery->where('name', 'like','%'.$request->get('search').'%');
+        if (!empty($request->get('search'))) {
+            $productsQuery->where('name', 'like', '%' . $request->get('search') . '%');
         }
 
 
@@ -84,23 +91,24 @@ class ShopController extends Controller
 
 
 
-    Public function BrandFilter(Request $request,$brandSlug=null){
+    public function BrandFilter(Request $request, $brandSlug = null)
+    {
         $breadcrumb = [
             'breadcrumbs' => [
                 'WebMart' => route('home.page'),
                 'current_menu' => 'Brands',
             ],
         ];
-        $brandsArray=[];
+        $brandsArray = [];
 
-        $brands=Brand::orderBy('name','ASC')->where('status',1)->get();
-        $products=Product::where('status',1)->get();
+        $brands = Brand::orderBy('name', 'ASC')->where('status', 1)->get();
+        $products = Product::where('status', 1)->get();
         //Apply Filters
-        if(!empty($brandSlug)){
-            $brands=Brand::where('slug',$brandSlug)->first();
+        if (!empty($brandSlug)) {
+            $brands = Brand::where('slug', $brandSlug)->first();
 
-            $products=Product::where('brands_id',$brands->id)->get();
+            $products = Product::where('brands_id', $brands->id)->get();
         }
-        return view('customer.Product.brands-filter',compact('products','brands','breadcrumb'));
+        return view('customer.Product.brands-filter', compact('products', 'brands', 'breadcrumb'));
     }
 }
