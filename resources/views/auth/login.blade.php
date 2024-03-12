@@ -57,10 +57,9 @@
 
                                         <div class="mb-3">
                                             <div class="float-end">
-                                                <a href="auth-pass-reset-basic.html" class="text-muted">Forgot password?</a>
+                                                <a href="{{ route('password.request') }}" class="text-muted">Forgot password?</a>
                                             </div>
                                             <label class="form-label" for="password-input">Password</label>
-
                                             <div class="position-relative auth-pass-inputgroup mb-3">
                                                 <input type="password" name="password"
                                                     class="form-control pe-5 password-input @error('password') is-invalid @enderror"

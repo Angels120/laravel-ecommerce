@@ -50,6 +50,7 @@ Route::post('/delete-cart', [CartController::class,  'delteItem'])->name('carts.
 
 Route::post('/add-to-wishlists', [HomeController::class,'addToWishlist'])->name('wishlists.add');
 Route::get('/page/{slug}', [HomeController::class,'page'])->name('footer.page');
+Route::post('/send-contact-email', [HomeController::class,'sendContactEmail'])->name('sendContactEmail');
 //--------------------------------------Ends Here--------------------------------------------------------//
 //--------------------------------------Route for Checkout--------------------------------------------------------//
 Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout.details');

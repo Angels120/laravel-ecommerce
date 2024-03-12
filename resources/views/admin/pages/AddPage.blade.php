@@ -77,7 +77,6 @@
 
                 },
                 error: function(error) {
-                    console.log(error);
                     document.getElementById('PageNameError').style.display = "none";
                     if (error.responseJSON.errors.name) {
                         var errMsg = document.getElementById('PageNameError');
@@ -87,8 +86,6 @@
                             errMsg.textContent = error.responseJSON.errors.name[0];
                         }
                     }
-
-
                 }
             });
 
