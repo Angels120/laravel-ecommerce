@@ -1,5 +1,5 @@
 @extends('admin.layouts.app')
-@section('page_head', 'Category Details')
+@section('page_head', 'Page Details')
 @section('container')
     <div class="row">
         <div class="col-lg-12">
@@ -14,21 +14,22 @@
                             <div class="col-sm-auto">
                                 <div>
                                     <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
-                                        id="create-btn" data-bs-target="#AddCategory"><i
+                                        id="create-btn" data-bs-target="#AddPage"><i
                                             class="ri-add-line align-bottom me-1"></i> Add</button>
                                     <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
                                             class="ri-delete-bin-2-line"></i></button>
                                 </div>
                             </div>
+
                         </div>
+
                         <div class="card-body">
-                            <table class="display table list-data-table data-table" style="width:100%" id="datatable-crud">
+                            <table class="display table data-table" style="width:100%" id="datatable-crud">
                                 <thead>
                                     <tr>
                                         <th>SN</th>
-                                        <th>Category Name</th>
-                                        <th>Category Slug</th>
-                                        <th>Status</th>
+                                        <th>Name</th>
+                                        <th>Slug</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -45,7 +46,7 @@
     <!-- end row -->
 
     <!-- Modal -->
-    <div class="modal fade zoomIn" id="deleteCategory" tabindex="-1" aria-hidden="true">
+    <div class="modal fade zoomIn" id="deletePage" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -63,7 +64,7 @@
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                         <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn w-sm btn-danger " id="deleteCategoryButton">Yes, Delete
+                        <button type="button" class="btn w-sm btn-danger " id="deletePageButton">Yes, Delete
                             It!</button>
                     </div>
                 </div>
@@ -71,9 +72,10 @@
         </div>
     </div>
     <!--end modal -->
-    @include('admin.category.EditCategory')
-    @include('admin.category.AddCategory')
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
 
+    @include('admin.pages.AddPage')
+    @include('admin.pages.EditPage')
 
     <script>
         $(document).ready(function() {
@@ -81,8 +83,9 @@
                 "processing": true,
                 "serverSide": true,
                 ajax: {
-                    "url": "{{ route('admin.categories.index') }}",
+                    "url": "{{ route('admin.pages.index') }}",
                     "data": function(d) {
+
                         d._token = "{{ csrf_token() }}";
                     }
                 },
@@ -90,15 +93,12 @@
                         data: 'id',
                     },
                     {
-                        data: 'category_name',
+                        data: 'name',
                     },
                     {
-                        data: 'category_slug',
+                        data: 'slug',
                     },
 
-                    {
-                        data: 'status',
-                    },
                     {
                         data: 'action',
                     }
@@ -113,16 +113,15 @@
     <script>
         var urlWithId = "";
         $(document).ready(function() {
-
             $('.data-table').on("click", ".delete", function() {
-                var categoryId = $(this).data('id');
-                const deleteUrl = "{{ route('admin.category.delete', ['id' => ':id']) }}";
-                urlWithId = deleteUrl.replace(':id', categoryId);
-                $('#deleteCategoryButton').data('category-id', categoryId);
-                $('#deleteCategory').modal('show');
+                var pageId = $(this).data('id');
+                const deleteUrl = "{{ route('admin.page.delete', ['id' => ':id']) }}";
+                urlWithId = deleteUrl.replace(':id', pageId);
+                $('#deletePageButton').data('page-id', pageId);
+                $('#deletePage').modal('show');
             });
-            $('#deleteCategoryButton').click(function() {
-                var categoryId = $(this).data('category-id');
+            $('#deletePageButton').click(function() {
+                var pageId = $(this).data('page-id');
                 $.ajax({
                     type: 'DELETE',
                     url: urlWithId,
@@ -131,9 +130,8 @@
                     },
                     success: function(response) {
                         showToast(response.message);
-                        $('#deleteCategory').modal('hide');
+                        $('#deletePage').modal('hide');
                         $('#datatable-crud').DataTable().ajax.reload();
-                        $('#successAlertContainer').html(successAlert);
 
                         console.log('Delete successful');
                     },
@@ -144,7 +142,6 @@
             });
         });
     </script>
-
 
     {{-- For Status Update Script --}}
     <script>

@@ -182,7 +182,6 @@
                                                                 placeholder="House no. /building /street/area"
                                                                 rows="3"></input>
                                                             <div class="invalid-feedback" id="addressError"></div>
-                                                            <div class="invalid-feedback" id="addressError"></div>
 
                                                         </div>
                                                     </div>

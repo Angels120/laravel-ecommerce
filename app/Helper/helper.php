@@ -6,6 +6,7 @@
 
 use App\Mail\OrderEmail;
 use App\Models\Order;
+use App\Models\Page;
 use App\Models\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -82,7 +83,11 @@ class Helper{
             'userType'=>$userType,
         ];
         Mail::to($recipientEmail)->send(new OrderEmail($mailData));
+    }
 
+    public static function staticpages(){
+        $pages=Page::orderBy('name','ASC')->get();
+        return $pages;
     }
 
 }

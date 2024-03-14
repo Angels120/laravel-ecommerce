@@ -85,7 +85,6 @@
          var id = $(this).data('id');
          console.log(id);
          $('#EditCategory').modal('show');
-        console.log("clicked");
         $.ajax({
             type: 'GET',
             url: "{{ route('admin.category.edit') }}",
@@ -93,7 +92,6 @@
                 id: id
             },
             success: function(response) {
-                console.log(response);
                 $('#ideditCategory').val(response.id);
                 $('#category_name_edit').val(response.category_name);
                 $('#category_slug_edit').val(response.category_slug);

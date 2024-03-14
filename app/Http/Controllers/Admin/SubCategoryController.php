@@ -119,10 +119,11 @@ class SubCategoryController extends Controller
      */
     public function update(UpdateSubCategoryRequest $request)
     {
-        // dd($request->all());
         $subcategory = SubCategory::findOrFail($request->id ?? '');
         $validateData = $request->validated();
         $subcategory->update($validateData);
+        $subcategory->subcategory_slug = Str::slug($subcategory->subcategory_name);
+        $subcategory->save();
         return response()->json(['message' => 'SubCategory details updated successfully', 'data' => $subcategory], 200);
     }
 

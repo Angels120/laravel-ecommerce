@@ -25,10 +25,14 @@ Route::get('/auth/github/callback', [GithubController::class,  'handleGithubCall
 Route::middleware(['auth:web'])->group(function () {
     Route::get('/user/profile', [ProfileController::class,  'profile'])->name('user.profile');
     Route::post('/user/update-profile', [ProfileController::class,  'updateProfile'])->name('user.updateProfile');
+    Route::post('/user/update-address', [ProfileController::class,  'BillingAddress'])->name('user.updateAddress');
     Route::get('/user/myorder', [ProfileController::class,  'order'])->name('user.order');
     Route::get('/order-detail/{orderId}', [ProfileController::class,  'orderDetail'])->name('user.orderDetail');
     Route::get('/user/mywishlist', [ProfileController::class,  'wishlist'])->name('user.wishlist');
     Route::post('/user/mywishlist/delete', [ProfileController::class,  'removeProductFromWishlist'])->name('user.wishlist.remove');
+    Route::get('/user/change-password', [ProfileController::class,  'changePassword'])->name('user.changePassword');
+    Route::post('/user/change-password', [ProfileController::class,  'processChangePassword'])->name('user.PasswordChangePost');
+
 });
 
 //--------------------------------------Ends Here--------------------------------------------------------//
@@ -44,9 +48,9 @@ Route::post('/delete-cart', [CartController::class,  'delteItem'])->name('carts.
 //--------------------------------------Ends Here--------------------------------------------------------//
 //--------------------------------------Route for WishList--------------------------------------------------------//
 
-// Route::get('/wishlists', [HomeController::class,  'cart'])->name('wishlists.details');
-Route::post('/add-to-wishlists', [HomeController::class,  'addToWishlist'])->name('wishlists.add');
-
+Route::post('/add-to-wishlists', [HomeController::class,'addToWishlist'])->name('wishlists.add');
+Route::get('/page/{slug}', [HomeController::class,'page'])->name('footer.page');
+Route::post('/send-contact-email', [HomeController::class,'sendContactEmail'])->name('sendContactEmail');
 //--------------------------------------Ends Here--------------------------------------------------------//
 //--------------------------------------Route for Checkout--------------------------------------------------------//
 Route::get('/checkout', [CartController::class, 'checkout'])->name('checkout.details');
@@ -67,4 +71,3 @@ Route::get('/', [HomeController::class,  'index'])->name('home.page');
 Route::prefix('Product')->name('product.')->group(function () {
     Route::get('{slug}', [ProductController::class,  'productDetail'])->name('detail');
 });
-

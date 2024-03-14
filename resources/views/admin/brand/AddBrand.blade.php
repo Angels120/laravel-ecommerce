@@ -10,7 +10,7 @@
             <form action="#" method="post" id="Brand-create-form" enctype="multipart/form-data">
                 <div class="modal-body">
                     <div class="mb-3">
-                        <label for="category_name" class="control-label mb-1">Brand Name</label>
+                        <label for="brand_name" class="control-label mb-1">Brand Name</label>
                         <input id="name" name="name" type="text" class="form-control"
                             value="{{ old('name') }}" placeholder="Enter Brand Name">
                         <div class="invalid-feedback" id="BrandNameError"></div>

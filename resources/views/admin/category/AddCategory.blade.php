@@ -7,12 +7,12 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                     id="close-modal"></button>
             </div>
-            <form action="#" id="Category-create-form">
-                <div class="modal-body">
+            <div class="modal-body">
+                <form action="#" id="Category-create-form">
                     <div class="mb-3">
                         <label for="category_name" class="control-label mb-1">Category</label>
                         <input id="category_name" name="category_name" type="text" class="form-control"
-                             placeholder="Enter Category Name">
+                            placeholder="Enter Category Name">
                         <div class="invalid-feedback" id="CategoryNameError">Please enter a customer name.</div>
                     </div>
                     <div class="mb-3">
@@ -34,7 +34,8 @@
                             <button type="submit" class="btn btn-success" id="save-Category">Add Category</button>
                         </div>
                     </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -50,58 +51,14 @@
     $(document).ready(function() {
         $('#save-Category').click(function(e) {
             e.preventDefault();
-            var formData = new FormData($('#Brand-create-form')[0]);
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('admin.brand.create') }}",
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                $('#AddCategory').modal('hide');
-                showToast(response.message);
-                $('#datatable-crud').DataTable().ajax.reload();
-
-                },
-                error: function(error) {
-                    console.log(error);
-                    document.getElementById('CategoryNameError').style.display = "none";
-                    document.getElementById('BrandImageError').style.display = "none";
-                    if (error.responseJSON.errors.name) {
-                        var errMsg = document.getElementById('CategoryNameError');
-                        if (error.responseJSON.errors.name[0]) {
-
-                            errMsg.style.display = "block";
-                            errMsg.textContent = error.responseJSON.errors.name[0];
-                        }
-                    }
-                    if (error.responseJSON.errors.image) {
-                        // Only show if error is present
-                        var errMsg = document.getElementById('BrandImageError');
-                        if (error.responseJSON.errors.image[0]) {
-                            errMsg.style.display = "block";
-                            errMsg.textContent = error.responseJSON.errors.image
-                        }
-
-                    }
-
-                }
-            });
-
-        });
-        $('#save-Category').click(function(e) {
-            e.preventDefault();
-            var data = $('#Category-create-form').serialize();
+            var formData = new FormData($('#Category-create-form')[0]);
             $.ajax({
                 type: 'POST',
                 url: "{{ route('admin.category.create') }}",
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                data: data,
+                data: formData,
                 processData: false,
                 contentType: false,
                 success: function(response) {
@@ -111,19 +68,17 @@
                 },
                 error: function(error) {
                     document.getElementById('CategoryNameError').style.display = "none";
-                    if (error.responseJSON.errors) {
-                        if (error.responseJSON.errors.category_name) {
-                            var errMsg = document.getElementById('CategoryNameError');
-                            if (error.responseJSON.errors.category_name[0]) {
-                                errMsg.style.display = "block";
-                                errMsg.textContent = error.responseJSON.errors.category_name[0];
-                            }
+                    if (error.responseJSON.errors.category_name) {
+                        var errMsg = document.getElementById('CategoryNameError');
+                        if (error.responseJSON.errors.category_name[0]) {
+                            errMsg.style.display = "block";
+                            errMsg.textContent = error.responseJSON.errors.category_name[0];
                         }
                     }
-
                 }
             });
 
         });
+
     });
 </script>
