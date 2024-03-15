@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\GithubController;
 use App\Http\Controllers\Auth\GoogleController;
 use App\Http\Controllers\Auth\ProfileController;
@@ -15,6 +16,12 @@ use Laravel\Socialite\Facades\Socialite;
 
 //--------------------------------------Route for Authentications--------------------------------------------------------//
 Auth::routes();
+
+Route::post('/user/forgot-password', [ForgotPasswordController::class,  'processForgotPassword'])->name('password.forgot-process');
+Route::get('/user/reset-password/{token}', [ForgotPasswordController::class,  'resetPassword'])->name('user.resetPassword');
+Route::post('/user/process-reset-password', [ForgotPasswordController::class,  'processResetPassword'])->name('user.processresetPassword');
+
+
 Route::get('/auth/google/redirect', [GoogleController::class,  'handleGoogleRedirect'])->name('redirect.google');
 Route::get('/auth/google/callback', [GoogleController::class,  'handleGoogleCallback'])->name('callback.google');
 Route::get('/auth/github/redirect', [GithubController::class,  'handleGithubRedirect'])->name('redirect.github');
