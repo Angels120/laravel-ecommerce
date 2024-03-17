@@ -34,9 +34,14 @@
                     <div class="col-md-8 col-lg-6 col-xl-5">
                         <div class="card mt-4">
                             <div class="card-body p-4">
-                                @if (session('status'))
+                                @if (session('success'))
                                     <div class="alert alert-success" role="alert">
-                                        {{ session('status') }}
+                                        {{ session('success') }}
+                                    </div>
+                                @endif
+                                @if (session('error'))
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ session('error') }}
                                     </div>
                                 @endif
                                 <div class="text-center mt-2">
@@ -52,7 +57,7 @@
                                     Enter your email and instructions will be sent to you!
                                 </div>
                                 <div class="p-2">
-                                    <form method="POST" action="{{ route('password.email') }}">
+                                    <form method="POST" action="{{ route('password.forgot-process') }}">
                                         @csrf
                                         <div class="mb-4">
                                             <label class="form-label">Email</label>
