@@ -235,24 +235,19 @@
                                         </div>
 
 
-
                                         <div class="product-content mt-5">
                                             <h5 class="fs-14 mb-3">Product Description :</h5>
                                             <nav>
                                                 <ul class="nav nav-tabs nav-tabs-custom nav-success" id="nav-tab"
                                                     role="tablist">
                                                     <li class="nav-item">
-                                                        <a class="nav-link active" id="nav-speci-tab"
-                                                            data-bs-toggle="tab" href="#nav-speci" role="tab"
-                                                            aria-controls="nav-speci"
-                                                            aria-selected="true">Specification</a>
+                                                        <a class="nav-link active" id="nav-speci-tab" data-bs-toggle="tab" href="#nav-speci" role="tab" aria-controls="nav-speci" aria-selected="true">Specification</a>
                                                     </li>
 
                                                 </ul>
                                             </nav>
                                             <div class="tab-content border border-top-0 p-4" id="nav-tabContent">
-                                                <div class="tab-pane fade show active" id="nav-speci" role="tabpanel"
-                                                    aria-labelledby="nav-speci-tab">
+                                                <div class="tab-pane fade show active" id="nav-speci" role="tabpanel" aria-labelledby="nav-speci-tab">
                                                     <div class="table-responsive">
                                                         <table class="table mb-0">
                                                             <tbody>
@@ -276,8 +271,9 @@
                                                         </table>
                                                     </div>
                                                 </div>
-
                                             </div>
+
+
                                         </div>
                                         <!-- product-content -->
 
