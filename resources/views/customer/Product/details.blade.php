@@ -100,13 +100,24 @@
                                         </div>
 
                                         <div class="d-flex flex-wrap gap-2 align-items-center mt-3">
-                                            <div class="text-muted fs-16">
-                                                <span class="mdi mdi-star text-warning"></span>
-                                                <span class="mdi mdi-star text-warning"></span>
-                                                <span class="mdi mdi-star text-warning"></span>
-                                                <span class="mdi mdi-star text-warning"></span>
-                                                <span class="mdi mdi-star text-warning"></span>
+                                            <div class="star-rating mt-2" title="70%">
+                                                <div class="back-stars">
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                    <i class="fa fa-star" aria-hidden="true"></i>
+
+                                                    <div class="front-stars" style="width: {{ $avgRatingPer }}%">
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                    </div>
+                                                </div>
                                             </div>
+                                            <small class="pt-1">({{ ($product->product_ratings_count>1)? $product->product_ratings_count.' Reviews': $product->product_ratings_count.'Review'}}) </small>
 
                                         </div>
 
@@ -287,7 +298,8 @@
                                                             <form action="post" name="rating-form"
                                                                 id="productRatingForm">
                                                                 <h3 class="h4 pb-3">Write a Review</h3>
-                                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                                <input type="hidden" name="product_id"
+                                                                    value="{{ $product->id }}">
                                                                 <div class="row">
                                                                     <div class="col-md-6 mb-3">
                                                                         <label for="name">Username <span
@@ -295,7 +307,8 @@
                                                                         <input type="text" class="form-control"
                                                                             name="username" id="username"
                                                                             placeholder="Username">
-                                                                        <div class="invalid-feedback" id="UserNameError">Helo
+                                                                        <div class="invalid-feedback" id="UserNameError">
+                                                                            Helo
                                                                         </div>
 
                                                                     </div>
@@ -346,7 +359,7 @@
                                                                             class="text-danger">*</span></label>
                                                                     <textarea name="comment" id="comment" class="form-control" cols="30" rows="10"
                                                                         placeholder="How was your overall experience?"></textarea>
-                                                                    <div class="invalid-feedback" id="CommentError"></div>
+                                                                    <div class="invalid-feedback" id="commentError"></div>
 
                                                                 </div>
                                                                 <div>
@@ -356,10 +369,11 @@
                                                             </form>
                                                         </div>
                                                     </div>
+
                                                     <div class="col-md-12 mt-5">
                                                         <div class="overall-rating mb-3">
                                                             <div class="d-flex">
-                                                                <h1 class="h3 pe-3">4.0</h1>
+                                                                <h1 class="h3 pe-3">{{ $avgRating }}</h1>
                                                                 <div class="star-rating mt-2" title="70%">
                                                                     <div class="back-stars">
                                                                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -368,7 +382,7 @@
                                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                                         <i class="fa fa-star" aria-hidden="true"></i>
 
-                                                                        <div class="front-stars" style="width: 70%">
+                                                                        <div class="front-stars" style="width: {{ $avgRatingPer }}%">
                                                                             <i class="fa fa-star" aria-hidden="true"></i>
                                                                             <i class="fa fa-star" aria-hidden="true"></i>
                                                                             <i class="fa fa-star" aria-hidden="true"></i>
@@ -377,14 +391,20 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="pt-2 ps-2">(03 Reviews)</div>
+                                                                <div class="pt-2 ps-2">({{ ($product->product_ratings_count>1)? $product->product_ratings_count.' Reviews': $product->product_ratings_count.' Review'}})</div>
                                                             </div>
 
                                                         </div>
 
+                                                        @if ($product->product_ratings->isNotEmpty())
+
+                                                    @foreach ($product->product_ratings as $rating)
+                                                        @php
+                                                            $ratingPer=($rating->rating*100)/5;
+                                                        @endphp
 
                                                         <div class="rating-group mb-4">
-                                                            <span class="author"><strong>Mohit Singh </strong></span>
+                                                            <span class="author"><strong>{{ $rating->username }} </strong></span>
                                                             <div class="star-rating mt-2">
                                                                 <div class="back-stars">
                                                                     <i class="fa fa-star" aria-hidden="true"></i>
@@ -393,7 +413,7 @@
                                                                     <i class="fa fa-star" aria-hidden="true"></i>
                                                                     <i class="fa fa-star" aria-hidden="true"></i>
 
-                                                                    <div class="front-stars" style="width: 70%">
+                                                                    <div class="front-stars" style="width: {{ $ratingPer }}%">
                                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                                         <i class="fa fa-star" aria-hidden="true"></i>
                                                                         <i class="fa fa-star" aria-hidden="true"></i>
@@ -403,12 +423,15 @@
                                                                 </div>
                                                             </div>
                                                             <div class="my-3">
-                                                                <p>I went with the blue model
+                                                                <p>{{ $rating->comment }}
 
                                                                 </p>
                                                             </div>
                                                         </div>
+                                                        @endforeach
+                                                        @endif
                                                     </div>
+
                                                 </div>
                                             </div>
 
@@ -416,177 +439,6 @@
                                         </div>
                                         <!-- product-content -->
 
-                                        <div class="mt-5">
-                                            <div>
-                                                <h5 class="fs-14 mb-3">Ratings & Reviews</h5>
-                                            </div>
-
-                                            <div class="row gy-4 gx-0">
-                                                <div class="col-lg-4">
-                                                    <div>
-                                                        <div class="pb-3">
-                                                            <div class="bg-light px-3 py-2 rounded-2 mb-2">
-                                                                <div class="d-flex align-items-center">
-                                                                    <div class="flex-grow-1">
-                                                                        <div class="fs-16 align-middle text-warning">
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-fill"></i>
-                                                                            <i class="ri-star-half-fill"></i>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="flex-shrink-0">
-                                                                        <h6 class="mb-0">4.5 out of 5</h6>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="text-center">
-                                                                <div class="text-muted">Total <span
-                                                                        class="fw-medium">5.50k</span> reviews
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="mt-3">
-                                                            <div class="row align-items-center g-2">
-                                                                <div class="col-auto">
-                                                                    <div class="p-2">
-                                                                        <h6 class="mb-0">5 star</h6>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <div class="p-2">
-                                                                        <div
-                                                                            class="progress animated-progress progress-sm">
-                                                                            <div class="progress-bar bg-success"
-                                                                                role="progressbar" style="width: 50.16%"
-                                                                                aria-valuenow="50.16" aria-valuemin="0"
-                                                                                aria-valuemax="100">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <div class="p-2">
-                                                                        <h6 class="mb-0 text-muted">2758</h6>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- end row -->
-
-                                                            <div class="row align-items-center g-2">
-                                                                <div class="col-auto">
-                                                                    <div class="p-2">
-                                                                        <h6 class="mb-0">4 star</h6>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <div class="p-2">
-                                                                        <div
-                                                                            class="progress animated-progress progress-sm">
-                                                                            <div class="progress-bar bg-success"
-                                                                                role="progressbar" style="width: 19.32%"
-                                                                                aria-valuenow="19.32" aria-valuemin="0"
-                                                                                aria-valuemax="100">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <div class="p-2">
-                                                                        <h6 class="mb-0 text-muted">1063</h6>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- end row -->
-
-                                                            <div class="row align-items-center g-2">
-                                                                <div class="col-auto">
-                                                                    <div class="p-2">
-                                                                        <h6 class="mb-0">3 star</h6>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <div class="p-2">
-                                                                        <div
-                                                                            class="progress animated-progress progress-sm">
-                                                                            <div class="progress-bar bg-success"
-                                                                                role="progressbar" style="width: 18.12%"
-                                                                                aria-valuenow="18.12" aria-valuemin="0"
-                                                                                aria-valuemax="100">
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <div class="p-2">
-                                                                        <h6 class="mb-0 text-muted">997</h6>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- end row -->
-
-                                                            <div class="row align-items-center g-2">
-                                                                <div class="col-auto">
-                                                                    <div class="p-2">
-                                                                        <h6 class="mb-0">2 star</h6>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <div class="p-2">
-                                                                        <div
-                                                                            class="progress animated-progress progress-sm">
-                                                                            <div class="progress-bar bg-warning"
-                                                                                role="progressbar" style="width: 7.42%"
-                                                                                aria-valuenow="7.42" aria-valuemin="0"
-                                                                                aria-valuemax="100"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="col-auto">
-                                                                    <div class="p-2">
-                                                                        <h6 class="mb-0 text-muted">408</h6>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- end row -->
-
-                                                            <div class="row align-items-center g-2">
-                                                                <div class="col-auto">
-                                                                    <div class="p-2">
-                                                                        <h6 class="mb-0">1 star</h6>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col">
-                                                                    <div class="p-2">
-                                                                        <div
-                                                                            class="progress animated-progress progress-sm">
-                                                                            <div class="progress-bar bg-danger"
-                                                                                role="progressbar" style="width: 4.98%"
-                                                                                aria-valuenow="4.98" aria-valuemin="0"
-                                                                                aria-valuemax="100"></div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-auto">
-                                                                    <div class="p-2">
-                                                                        <h6 class="mb-0 text-muted">274</h6>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <!-- end row -->
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- end col -->
-
-
-                                            </div>
-                                            <!-- end Ratings & Reviews -->
-                                        </div>
-                                        <!-- end card body -->
                                     </div>
                                 </div>
                                 <!-- end col -->
@@ -662,7 +514,8 @@
             $(document).ready(function() {
                 $('#review_submit').click(function(e) {
                     e.preventDefault();
-                    var formData = new FormData($('#productRatingForm')[0]);
+                    var formData = new FormData(document.getElementById(
+                        'productRatingForm'));
                     $.ajax({
                         type: 'POST',
                         url: "{{ route('product.ratingSubmit') }}",
@@ -673,51 +526,68 @@
                         processData: false,
                         contentType: false,
                         success: function(response) {
-                            showToast(response.message);
+                            if (response.status == true) {
+                                localStorage.setItem("successMessage", response.message);
+                                window.location.reload();
+                            }
+                            if (response.status == false) {
+                                localStorage.setItem("errorMessage", response.message);
+                                window.location.reload();
+                            }
                         },
                         error: function(error) {
-                            console.log(error);
                             document.getElementById('UserNameError').style.display = "none";
                             document.getElementById('EmailError').style.display = "none";
                             document.getElementById('RatingError').style.display = "none";
                             document.getElementById('commentError').style.display = "none";
-                            if (error.responseJSON.errors.username) {
-                                var errMsg = document.getElementById('UserNameError');
-                                if (error.responseJSON.errors.username[0]) {
-                                    errMsg.style.display = "block";
-                                    errMsg.textContent = error.responseJSON.errors.username[0];
+                            if (error.responseJSON.errors) {
+                                if (error.responseJSON.errors.username) {
+                                    var errMsg = document.getElementById('UserNameError');
+                                    if (error.responseJSON.errors.username[0]) {
+                                        errMsg.style.display = "block";
+                                        errMsg.textContent = error.responseJSON.errors.username[0];
+                                    }
                                 }
-                            }
 
-                            if (error.responseJSON.errors.email) {
-                                var errMsg = document.getElementById('EmailError');
-                                if (error.responseJSON.errors.email[0]) {
-                                    errMsg.style.display = "block";
-                                    errMsg.textContent = error.responseJSON.errors.email[
-                                        0];
+                                if (error.responseJSON.errors.email) {
+                                    var errMsg = document.getElementById('EmailError');
+                                    if (error.responseJSON.errors.email[0]) {
+                                        errMsg.style.display = "block";
+                                        errMsg.textContent = error.responseJSON.errors.email[0];
+                                    }
                                 }
-                            }
-                            if (error.responseJSON.errors.rating) {
-                                var errMsg = document.getElementById('RatingError');
-                                if (error.responseJSON.errors.rating[0]) {
-                                    errMsg.style.display = "block";
-                                    errMsg.textContent = error.responseJSON.errors.rating[
-                                        0];
+                                if (error.responseJSON.errors.rating) {
+                                    var errMsg = document.getElementById('RatingError');
+                                    if (error.responseJSON.errors.rating[0]) {
+                                        errMsg.style.display = "block";
+                                        errMsg.textContent = error.responseJSON.errors.rating[0];
+                                    }
                                 }
-                            }
-                            if (error.responseJSON.errors
-                                .comment) {
-                                var errMsg = document.getElementById('commentError');
-                                if (error.responseJSON.errors.comment[
-                                        0]) {
-                                    errMsg.style.display = "block";
-                                    errMsg.textContent = error.responseJSON.errors.comment[
-                                        0];
+                                if (error.responseJSON.errors.comment) {
+                                    var errMsg = document.getElementById('commentError');
+                                    if (error.responseJSON.errors.comment[0]) {
+                                        errMsg.style.display = "block";
+                                        errMsg.textContent = error.responseJSON.errors.comment[0];
+                                    }
                                 }
                             }
                         }
                     });
                 });
+            });
+        </script>
+        <script>
+            $(document).ready(function() {
+                var errorMessage = localStorage.getItem('errorMessage');
+                var successMessage = localStorage.getItem('successMessage');
+                if (errorMessage) {
+                    showErrorToast(errorMessage);
+                    localStorage.removeItem('errorMessage');
+                }
+                if (successMessage) {
+                    showToast(successMessage);
+                    localStorage.removeItem('successMessage');
+                }
             });
         </script>
     @endsection

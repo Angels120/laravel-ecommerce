@@ -16,31 +16,33 @@ class Product extends Model
     ];
     public function category()
     {
-        return $this->belongsTo(Category::class,'category_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 
     public function subcategory()
     {
-        return $this->belongsTo(SubCategory::class,'sub_categories_id');
+        return $this->belongsTo(SubCategory::class, 'sub_categories_id');
     }
     public function brand()
     {
-        return $this->belongsTo(Brand::class,'brands_id');
+        return $this->belongsTo(Brand::class, 'brands_id');
     }
     public function removeImage($imageName)
-{
-    $images = $this->image;
+    {
+        $images = $this->image;
 
-    // Find the index of the image to remove
-    $index = array_search($imageName, $images);
+        // Find the index of the image to remove
+        $index = array_search($imageName, $images);
 
-    if ($index !== false) {
-        array_splice($images, $index, 1);
+        if ($index !== false) {
+            array_splice($images, $index, 1);
 
-        // Update the images column in the database
-        $this->update(['image' => $images]);
+            // Update the images column in the database
+            $this->update(['image' => $images]);
+        }
     }
-}
-
-
+    public function product_ratings()
+    {
+        return $this->hasMany(ProductRating::class);
+    }
 }
