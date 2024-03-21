@@ -241,13 +241,22 @@
                                                 <ul class="nav nav-tabs nav-tabs-custom nav-success" id="nav-tab"
                                                     role="tablist">
                                                     <li class="nav-item">
-                                                        <a class="nav-link active" id="nav-speci-tab" data-bs-toggle="tab" href="#nav-speci" role="tab" aria-controls="nav-speci" aria-selected="true">Specification</a>
+                                                        <a class="nav-link active" id="nav-speci-tab"
+                                                            data-bs-toggle="tab" href="#nav-speci" role="tab"
+                                                            aria-controls="nav-speci"
+                                                            aria-selected="true">Specification</a>
+                                                    </li>
+                                                    <li class="nav-item">
+                                                        <a class="nav-link" id="nav-review-tab" data-bs-toggle="tab"
+                                                            href="#nav-review" role="tab" aria-controls="nav-review"
+                                                            aria-selected="false">Review And Rating</a>
                                                     </li>
 
                                                 </ul>
                                             </nav>
                                             <div class="tab-content border border-top-0 p-4" id="nav-tabContent">
-                                                <div class="tab-pane fade show active" id="nav-speci" role="tabpanel" aria-labelledby="nav-speci-tab">
+                                                <div class="tab-pane fade show active" id="nav-speci" role="tabpanel"
+                                                    aria-labelledby="nav-speci-tab">
                                                     <div class="table-responsive">
                                                         <table class="table mb-0">
                                                             <tbody>
@@ -271,6 +280,136 @@
                                                         </table>
                                                     </div>
                                                 </div>
+                                                <div class="tab-pane fade" id="nav-review" role="tabpanel"
+                                                    aria-labelledby="nav-review-tab">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <form action="post" name="rating-form"
+                                                                id="productRatingForm">
+                                                                <h3 class="h4 pb-3">Write a Review</h3>
+                                                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                                                <div class="row">
+                                                                    <div class="col-md-6 mb-3">
+                                                                        <label for="name">Username <span
+                                                                                class="text-danger">*</span></label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="username" id="username"
+                                                                            placeholder="Username">
+                                                                        <div class="invalid-feedback" id="UserNameError">Helo
+                                                                        </div>
+
+                                                                    </div>
+                                                                    <div class="form-group col-md-6 mb-3">
+                                                                        <label for="email">Email <span
+                                                                                class="text-danger">*</span></label>
+                                                                        <input type="text" class="form-control"
+                                                                            name="email" id="email"
+                                                                            placeholder="Email">
+                                                                        <div class="invalid-feedback" id="EmailError">
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group mb-3">
+                                                                    <label for="rating">Rating <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <br>
+                                                                    <div class="rating" style="width: 10rem">
+                                                                        <input id="rating-5" type="radio"
+                                                                            name="rating" value="5" /><label
+                                                                            for="rating-5"><i
+                                                                                class="fas fa-3x fa-star"></i></label>
+                                                                        <input id="rating-4" type="radio"
+                                                                            name="rating" value="4" /><label
+                                                                            for="rating-4"><i
+                                                                                class="fas fa-3x fa-star"></i></label>
+                                                                        <input id="rating-3" type="radio"
+                                                                            name="rating" value="3" /><label
+                                                                            for="rating-3"><i
+                                                                                class="fas fa-3x fa-star"></i></label>
+                                                                        <input id="rating-2" type="radio"
+                                                                            name="rating" value="2" /><label
+                                                                            for="rating-2"><i
+                                                                                class="fas fa-3x fa-star"></i></label>
+                                                                        <input id="rating-1" type="radio"
+                                                                            name="rating" value="1" /><label
+                                                                            for="rating-1"><i
+                                                                                class="fas fa-3x fa-star"></i></label>
+
+                                                                    </div>
+                                                                    <div class="invalid-feedback" id="RatingError"></div>
+
+                                                                </div>
+                                                                <div class="form-group mb-3">
+                                                                    <label for="">How was your overall
+                                                                        experience? <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <textarea name="comment" id="comment" class="form-control" cols="30" rows="10"
+                                                                        placeholder="How was your overall experience?"></textarea>
+                                                                    <div class="invalid-feedback" id="CommentError"></div>
+
+                                                                </div>
+                                                                <div>
+                                                                    <button class="btn btn-dark"
+                                                                        id="review_submit">Submit</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 mt-5">
+                                                        <div class="overall-rating mb-3">
+                                                            <div class="d-flex">
+                                                                <h1 class="h3 pe-3">4.0</h1>
+                                                                <div class="star-rating mt-2" title="70%">
+                                                                    <div class="back-stars">
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+
+                                                                        <div class="front-stars" style="width: 70%">
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="pt-2 ps-2">(03 Reviews)</div>
+                                                            </div>
+
+                                                        </div>
+
+
+                                                        <div class="rating-group mb-4">
+                                                            <span class="author"><strong>Mohit Singh </strong></span>
+                                                            <div class="star-rating mt-2">
+                                                                <div class="back-stars">
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    <i class="fa fa-star" aria-hidden="true"></i>
+
+                                                                    <div class="front-stars" style="width: 70%">
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="my-3">
+                                                                <p>I went with the blue model
+
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
 
 
@@ -281,6 +420,7 @@
                                             <div>
                                                 <h5 class="fs-14 mb-3">Ratings & Reviews</h5>
                                             </div>
+
                                             <div class="row gy-4 gx-0">
                                                 <div class="col-lg-4">
                                                     <div>
@@ -489,6 +629,7 @@
             <!-- /.modal-dialog -->
         </div>
         <!-- /.modal -->
+    @endsection
     @section('script')
         {{-- Script for increment and decrement quantity --}}
         <script>
@@ -517,6 +658,66 @@
                 });
             });
         </script>
-    @endsection
+        <script>
+            $(document).ready(function() {
+                $('#review_submit').click(function(e) {
+                    e.preventDefault();
+                    var formData = new FormData($('#productRatingForm')[0]);
+                    $.ajax({
+                        type: 'POST',
+                        url: "{{ route('product.ratingSubmit') }}",
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                        data: formData,
+                        processData: false,
+                        contentType: false,
+                        success: function(response) {
+                            showToast(response.message);
+                        },
+                        error: function(error) {
+                            console.log(error);
+                            document.getElementById('UserNameError').style.display = "none";
+                            document.getElementById('EmailError').style.display = "none";
+                            document.getElementById('RatingError').style.display = "none";
+                            document.getElementById('commentError').style.display = "none";
+                            if (error.responseJSON.errors.username) {
+                                var errMsg = document.getElementById('UserNameError');
+                                if (error.responseJSON.errors.username[0]) {
+                                    errMsg.style.display = "block";
+                                    errMsg.textContent = error.responseJSON.errors.username[0];
+                                }
+                            }
 
-@endsection
+                            if (error.responseJSON.errors.email) {
+                                var errMsg = document.getElementById('EmailError');
+                                if (error.responseJSON.errors.email[0]) {
+                                    errMsg.style.display = "block";
+                                    errMsg.textContent = error.responseJSON.errors.email[
+                                        0];
+                                }
+                            }
+                            if (error.responseJSON.errors.rating) {
+                                var errMsg = document.getElementById('RatingError');
+                                if (error.responseJSON.errors.rating[0]) {
+                                    errMsg.style.display = "block";
+                                    errMsg.textContent = error.responseJSON.errors.rating[
+                                        0];
+                                }
+                            }
+                            if (error.responseJSON.errors
+                                .comment) {
+                                var errMsg = document.getElementById('commentError');
+                                if (error.responseJSON.errors.comment[
+                                        0]) {
+                                    errMsg.style.display = "block";
+                                    errMsg.textContent = error.responseJSON.errors.comment[
+                                        0];
+                                }
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
+    @endsection
