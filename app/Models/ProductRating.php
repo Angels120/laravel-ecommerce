@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ProductRating extends Model
 {
     use HasFactory;
+    protected $guarded = [
+        'id'
+    ];
+    public function products()
+    {
+        return $this->hasMany(Product::class);
+    }
 }

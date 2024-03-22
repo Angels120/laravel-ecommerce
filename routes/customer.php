@@ -40,6 +40,7 @@ Route::middleware(['auth:web'])->group(function () {
     Route::get('/user/change-password', [ProfileController::class,  'changePassword'])->name('user.changePassword');
     Route::post('/user/change-password', [ProfileController::class,  'processChangePassword'])->name('user.PasswordChangePost');
 
+
 });
 
 //--------------------------------------Ends Here--------------------------------------------------------//
@@ -77,4 +78,5 @@ Route::get('/', [HomeController::class,  'index'])->name('home.page');
 
 Route::prefix('Product')->name('product.')->group(function () {
     Route::get('{slug}', [ProductController::class,  'productDetail'])->name('detail');
+    Route::post('rating-submit', [ProductController::class,  'storeReview'])->name('ratingSubmit');
 });

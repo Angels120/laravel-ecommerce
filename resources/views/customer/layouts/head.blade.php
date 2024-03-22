@@ -36,7 +36,8 @@
     {{-- Custom Card For Product --}}
     <link href="{{ asset('admin_asset/css/product-card.css') }}" rel="stylesheet" type="text/css" />
 
-
+    {{-- Fab Icon cdn --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
@@ -66,7 +67,63 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
+
     <style>
+        .rating {
+            direction: rtl;
+            unicode-bidi: bidi-override;
+            color: #ddd;
+            /* Personal choice */
+            font-size: 8px;
+            margin-left: -15px;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label:hover,
+        .rating label:hover~label,
+        .rating input:checked+label,
+        .rating input:checked+label~label {
+            color: #ffc107;
+            /* Personal color choice. Lifted from Bootstrap 4 */
+            font-size: 8px;
+        }
+
+
+        .front-stars,
+        .back-stars,
+        .star-rating {
+            display: flex;
+        }
+
+        .star-rating {
+            align-items: left;
+            font-size: 1.5em;
+            justify-content: left;
+            margin-left: -5px;
+        }
+
+        .back-stars {
+            color: #CCC;
+            position: relative;
+        }
+
+        .front-stars {
+            color: #FFBC0B;
+            overflow: hidden;
+            position: absolute;
+            top: 0;
+            transition: all 0.5s;
+        }
+
+
+        .percent {
+            color: #bb5252;
+            font-size: 1.5em;
+        }
+
         .brands {
             font-family: "Roboto Condensed", sans-serif;
             font-optical-sizing: auto;
@@ -120,11 +177,6 @@
             font-weight: 400;
             font-style: normal;
         }
-
-
-
-
-
     </style>
 
 </head>
