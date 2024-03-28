@@ -76,6 +76,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('admin.productRatings.get') }}"  role="button" aria-expanded="false">
+                        <i class="ri-star-fill"></i> <span>Product Rating</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link menu-link" href="{{ route('admin.categories.index') }}"  role="button" aria-expanded="false">
                         <i class="ri-file-list-line"></i> <span>Category</span>
                     </a>
