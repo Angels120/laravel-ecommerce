@@ -15,12 +15,6 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
 
 
  {{-- <script src="{{ asset('admin_asset/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script> --}}
- <!-- apexcharts -->
- <script src="{{ asset('admin_asset/libs/apexcharts/apexcharts.min.js') }}"></script>
-
- <!-- Vector map-->
- <script src="{{ asset('admin_asset/libs/jsvectormap/js/jsvectormap.min.js') }}"></script>
- <script src="{{ asset('admin_asset/libs/jsvectormap/maps/world-merc.js') }}"></script>
 
  <!--Swiper slider js-->
  <script src="{{ asset('admin_asset/libs/swiper/swiper-bundle.min.js') }}"></script>
@@ -43,19 +37,7 @@ const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstra
 
 
 
- <!-- filepond js -->
 
- <script src="{{ asset('admin_asset/libs/filepond/filepond.min.js') }}"></script>
- <script src="{{ asset('admin_asset/libs/filepond-plugin-image-preview/filepond-plugin-image-preview.min.js') }}">
- </script>
- <script
-     src="{{ asset('admin_asset/libs/filepond-plugin-file-validate-size/filepond-plugin-file-validate-size.min.js') }}">
- </script>
- <script
-     src="{{ asset('admin_asset/libs/filepond-plugin-image-exif-orientation/filepond-plugin-image-exif-orientation.min.js') }}">
- </script>
- <script src="{{ asset('admin_asset/libs/filepond-plugin-file-encode/filepond-plugin-file-encode.min.js') }}"></script>
- <script src="{{ asset('admin_asset/js/pages/form-file-upload.init.js') }}"></script>
  <!-- include jQuery library -->
  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.js"></script>
  <script src="{{ asset('admin_asset/js/pages/datatables.init.js') }}"></script>
