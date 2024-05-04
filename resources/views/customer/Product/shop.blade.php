@@ -90,9 +90,12 @@
                                         <!-- Simple card with a link -->
                                         <a href="{{ route('product.detail', $product->slug) }}" class="card-link">
                                             <div class="card card-product">
+                                            <div class="image-card" style="height: 200px; width: 280px;">
+
                                                 <img class="card-img-top img-fluid"
                                                     src="{{ asset('uploads/products/' . $product->image[0]) }}"
                                                     alt="Card image cap" style="height: 200px; width:300px">
+                                                    </div>
                                                 <div class="card-body">
                                                     <h1 class="card-title mb-2 fs-20">{{ $product->name }}</h1>
                                                     <p class="card-text price">
@@ -135,6 +138,8 @@
                                             </div><!-- end card -->
                                         </a>
                                     </div><!-- end col -->
+
+
                                 @endif
                             @empty
                                 <div class="col-md-12">
