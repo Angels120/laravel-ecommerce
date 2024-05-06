@@ -55,6 +55,9 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     Route::post('/products/status/update/{id}', [ProductController::class, 'updateStatus'])->name('product.status.update');
     Route::delete('/products/delete/{id}', [ProductController::class,'destroy'])->name('product.delete');
     Route::get('get-subcategories/{id}', [ProductController::class,'getSubcategories'])->name('subcategories.get');
+    Route::get('product-ratings', [ProductController::class,'product_ratings'])->name('productRatings.get');
+    Route::post('/productsRating/status/update/{id}', [ProductController::class, 'updateRatingStatus'])->name('productRating.status.update');
+
     //-------------------------------------Ends Here--------------------------------------------------------//
 
 
@@ -76,7 +79,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     Route::post('/subcategories/update', [SubCategoryController::class, 'update'])->name('subcategory.update');
     Route::post('/subcategories/status/update/{id}', [SubCategoryController::class, 'updateStatus'])->name('subcategory.status.update');
     Route::delete('/subcategories/delete/{id}', [SubCategoryController::class,'destroy'])->name('subcategory.delete');
-
     //-------------------------------------Ends Here--------------------------------------------------------//
 
     //--------------------------------------Brands starts here--------------------------------------------------------//

@@ -54,11 +54,9 @@
     </button>
     <!--end back-to-top-->
 
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/2.9.2/umd/popper.min.js" integrity="sha512-2rNj2KJ+D8s1ceNasTIex6z4HWyOnEYLVC3FigGOmyQCZc2eBXKgOxQmo3oKLHyfcj53uz4QMsRCWNbLd32Q1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- JAVASCRIPT -->
     <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('admin_asset/libs/simplebar/simplebar.min.js') }}"></script>
-    <script src="{{ asset('admin_asset/libs/node-waves/waves.min.js') }}"></script>
     <script src="{{ asset('admin_asset/libs/feather-icons/feather.min.js') }}"></script>
     <script src="{{ asset('admin_asset/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
     <script src="{{ asset('admin_asset/js/plugins.js') }}"></script>
@@ -69,16 +67,6 @@
     {{-- <script src="{{ asset('admin_asset/libs/@ckeditor/ckeditor5-build-classic/build/ckeditor.js') }}"></script> --}}
     <!-- apexcharts -->
     <script src="{{ asset('admin_asset/libs/apexcharts/apexcharts.min.js') }}"></script>
-
-    <!-- Vector map-->
-    <script src="{{ asset('admin_asset/libs/jsvectormap/js/jsvectormap.min.js') }}"></script>
-    <script src="{{ asset('admin_asset/libs/jsvectormap/maps/world-merc.js') }}"></script>
-
-    <!--Swiper slider js-->
-    <script src="{{ asset('admin_asset/libs/swiper/swiper-bundle.min.js') }}"></script>
-
-    <!-- Dashboard init -->
-    <script src="{{ asset('admin_asset/js/pages/dashboard-ecommerce.init.js') }}"></script>
 
 
     <!-- init js -->
@@ -123,9 +111,6 @@
 
     <!-- Select2 -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
-
-
 </body>
 
 </html>

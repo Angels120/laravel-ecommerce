@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductRating;
 use App\Models\SubCategory;
 use Helper;
 use Illuminate\Http\Request;
@@ -335,5 +336,78 @@ class ProductController extends Controller
     {
         $subcategories = Subcategory::where('category_id', $categoryId)->get();
         return response()->json($subcategories);
+    }
+    public function product_ratings(Request $request){
+        {
+            $breadcrumb = [
+                'breadcrumbs' => [
+                    'Dashboard' => route('admin.dashboard'),
+                    'current_menu' => 'Prodcuts Ratings',
+                ],
+
+            ];
+
+            $index = 1;
+            if ($request->ajax()) {
+                $ratings = ProductRating::all();
+                return DataTables::of($ratings)
+                    ->addIndexColumn()
+                    ->editColumn('id', function ($row) use (&$index) {
+                        $currentIndex = $index;
+                        $index++;
+                        return $currentIndex;
+                    })
+                    ->editColumn('product_name', function ($row) {
+                        return $row->product->name ?? '';
+                    })
+
+                    ->editColumn('username', function ($row) {
+
+                        return $row->username ?? '';
+                    })
+                    ->editColumn('email', function ($row) {
+
+                        return $row->email ?? '';
+                    })
+                    ->editColumn('rating', function ($row) {
+
+                        return $row->rating ?? '';
+                    })
+                    ->editColumn('comments', function ($row) {
+
+                        return $row->comment ?? '';
+                    })
+
+                    ->editColumn('status', function ($row) {
+                        $status = ($row->status == 0) ? 1 : 0;
+                        $buttonColorClass = ($row->status == 0) ? 'btn-danger' : 'btn-success';
+                        $buttonText = ($row->status == 0) ? 'Inactive' : 'Active';
+
+                        return '<form action="' . route('admin.productRating.status.update', ['id' => $row->id]) . '" method="POST">
+                                    ' . csrf_field() . '
+                                    <button type="submit" class="btn btn-sm btn-status ' . $buttonColorClass . '">' . $buttonText . '</button>
+                                </form>';
+                    })
+                    ->editColumn('action', function ($row) {
+                        return '<td class="id">
+                            <a data-id="' . $row->id . '" class="btn btn-danger delete">
+                                <i class="ri-delete-bin-line"></i>
+                            </a>
+                        </td>';
+                    })
+                    ->rawColumns(['id', 'product_name', 'username', 'email', 'rating', 'comments', 'status', 'action'])
+                    ->make(true);
+            }
+
+
+            return view('admin.product.ratings', compact( 'breadcrumb'));
+        }
+    }
+    public function updateRatingStatus($id)
+    {
+        $productRating = ProductRating::findOrFail($id);
+        $productRating->status = ($productRating->status == 0) ? 1 : 0;
+        $productRating->save();
+        return response()->json(['message' => 'Rating Status updated successfully',200]);
     }
 }
