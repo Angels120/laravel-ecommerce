@@ -56,6 +56,10 @@
                     <a class="nav-link menu-link" href="{{ route('admin.pages.index') }}"  role="button" aria-expanded="false">
                         <i class="ri-pages-line"></i> <span>Pages</span>
                     </a>
+                </li><li class="nav-item">
+                    <a class="nav-link menu-link" href="{{ route('admin.banners.index') }}"  role="button" aria-expanded="false">
+                        <i class="ri-flag-2-fill"></i><span>Banner</span>
+                    </a>
                 </li>
 
 

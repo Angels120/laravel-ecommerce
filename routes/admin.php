@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\admin\BrandController;
+use App\Http\Controllers\admin\BannerController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
@@ -88,6 +89,16 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     Route::post('/brands/update', [BrandController::class,'update'])->name('brand.update');
     Route::post('/brands/status/update/{id}', [BrandController::class, 'updateStatus'])->name('brand.status.update');
     Route::delete('/brands/delete/{id}', [BrandController::class,'destroy'])->name('brand.delete');
+
+    //--------------------------------------Ends HEre--------------------------------------------------------//
+
+    //--------------------------------------Banners starts here--------------------------------------------------------//
+    Route::get('/banners', [BannerController::class,'index'])->name('banners.index');
+    Route::post('/banners/create', [BannerController::class,'store'])->name('banner.create');
+    Route::get('/banners/edit', [BannerController::class,'edit'])->name('banner.edit');
+    Route::post('/banners/update', [BannerController::class,'update'])->name('banner.update');
+    Route::post('/banners/status/update/{id}', [BannerController::class, 'updateStatus'])->name('banner.status.update');
+    Route::delete('/banners/delete/{id}', [BannerController::class,'destroy'])->name('banner.delete');
 
     //--------------------------------------Ends HEre--------------------------------------------------------//
 
