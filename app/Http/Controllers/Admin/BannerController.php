@@ -21,7 +21,6 @@ class BannerController extends Controller
         if ($request->ajax()) {
             $banners = Banner::all();
             return DataTables::of($banners)
-                ->addIndexColumn()
                 ->editColumn('id', function ($row) use (&$index) {
                     $currentIndex = $index;
                     $index++;
@@ -74,8 +73,9 @@ class BannerController extends Controller
         $request->validate([
             'name' => 'required|string|max:255|unique:banners',
             'status' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024|dimensions:min_width=1600,min_height=740',
         ]);
+
         $image = $request->file('image');
         if ($request->hasfile('image')) {
             $dbName = 'banner-image-' . time() . 'png';

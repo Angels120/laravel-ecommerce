@@ -14,7 +14,7 @@
                             <div class="col-sm-auto">
                                 <div>
                                     <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
-                                            id="create-btn" data-bs-target="#AddBrand"><i
+                                            id="create-btn" data-bs-target="#AddBanner"><i
                                             class="ri-add-line align-bottom me-1"></i> Add</button>
                                     <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
                                             class="ri-delete-bin-2-line"></i></button>
@@ -91,7 +91,7 @@
                 },
                 columns: [{
                     data: 'id',
-                },
+                    },
                     {
                         data: 'name',
                     },
@@ -117,7 +117,7 @@
         $(document).ready(function() {
             $('.data-table').on("click", ".delete", function() {
                 var brandId = $(this).data('id');
-                const deleteUrl = "{{ route('admin.brand.delete', ['id' => ':id']) }}";
+                const deleteUrl = "{{ route('admin.banner.delete', ['id' => ':id']) }}";
                 urlWithId = deleteUrl.replace(':id', brandId);
                 $('#deleteBrandButton').data('brand-id', brandId);
                 $('#deleteBrand').modal('show');
