@@ -19,7 +19,7 @@
                         <label for="Image" class="form-label">Banner Image</label>
                         <input name="image" type="file" id="BannerImage" class="form-control">
                         <div class="invalid-feedback" id="BannerImageError"></div>
-                        <span class="text-success">Image size recomended is height: 740 px width: 1600 px</span>
+                        <span class="text-success">( Image size recomended min height: 740 px min width: 1600 px )</span>
                     </div>
                     <div class="mb-3">
                         <label for="status" class="form-label">Banner Status</label>

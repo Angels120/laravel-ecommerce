@@ -95,8 +95,6 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     //--------------------------------------Banners starts here--------------------------------------------------------//
     Route::get('/banners', [BannerController::class,'index'])->name('banners.index');
     Route::post('/banners/create', [BannerController::class,'store'])->name('banner.create');
-    Route::get('/banners/edit', [BannerController::class,'edit'])->name('banner.edit');
-    Route::post('/banners/update', [BannerController::class,'update'])->name('banner.update');
     Route::post('/banners/status/update/{id}', [BannerController::class, 'updateStatus'])->name('banner.status.update');
     Route::delete('/banners/delete/{id}', [BannerController::class,'destroy'])->name('banner.delete');
 

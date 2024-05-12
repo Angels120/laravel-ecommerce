@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreBannerRequest;
 use App\Models\Banner;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -45,16 +46,13 @@ class BannerController extends Controller
                     $buttonColorClass = ($row->status == 0) ? 'btn-danger' : 'btn-success';
                     $buttonText = ($row->status == 0) ? 'Inactive' : 'Active';
 
-                    return '<form action="' . route('admin.brand.status.update', ['id' => $row->id]) . '" method="POST">
+                    return '<form action="' . route('admin.banner.status.update', ['id' => $row->id]) . '" method="POST">
                                 ' . csrf_field() . '
                                 <button type="submit" class="btn btn-sm btn-status ' . $buttonColorClass . '">' . $buttonText . '</button>
                             </form>';
                 })
                 ->editColumn('action', function ($row) {
                     return '<td class="id">
-                        <a data-id="' . $row->id . '" class="btn editBrandButton btn-info">
-                            <i class="ri-edit-2-line"></i>
-                        </a>
                         <a data-id="' . $row->id . '" class="btn btn-danger delete">
                             <i class="ri-delete-bin-line"></i>
                         </a>
@@ -67,30 +65,49 @@ class BannerController extends Controller
     }
 
 
-    public function store(Request $request)
+    public function store(StoreBannerRequest $request)
     {
+        $validatedData = $request->validated();
+ 
+        // Check if image file exists in the request
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
 
-        $request->validate([
-            'name' => 'required|string|max:255|unique:banners',
-            'status' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024|dimensions:min_width=1600,min_height=740',
-        ]);
+            // Generate a unique filename for the image
+            $dbName = 'banner-image-' . time() . '.' . $image->getClientOriginalExtension();
 
-        $image = $request->file('image');
-        if ($request->hasfile('image')) {
-            $dbName = 'banner-image-' . time() . 'png';
-            $destination = 'uploads/banners/' . $dbName;
+            // Move the uploaded image to the destination folder
             $image->move('uploads/banners/', $dbName);
-            $uploadedImageNames[] = $dbName;
+
             // Save the filename in the database
             $banner = new Banner();
-            $banner->name = $request->input('name');
-            $banner->status = $request->input('status', 0);
+            $banner->name = $validatedData['name'];
+            $banner->status = $validatedData['status'] ?? 0;
             $banner->image = $dbName;
             $banner->save();
+
+            // Return success response
             return response()->json(['message' => 'Banner created successfully']);
         }
+    }
 
-        return response()->json(['message' => 'No image uploaded'], 400);
+    public function updateStatus($id)
+    {
+        $banner = Banner::findOrFail($id);
+        $banner->status = ($banner->status == 0) ? 1 : 0;
+        $banner->save();
+        return response()->json(['message' => 'Banner Status updated successfully', 200]);
+    }
+
+    public function destroy($id)
+    {
+        $banner = Banner::findOrFail($id);
+
+        if ($banner->image) {
+            unlink('uploads/banners/' . $banner->image);
+        }
+
+        $banner->delete();
+        return response()->json(['message' => 'Banner deleted successfully']);
     }
 }

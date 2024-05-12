@@ -177,27 +177,6 @@
                                     <!-- end table-responsive -->
                                 </div>
                             </div>
-
-                            <div class="alert border-dashed alert-danger" role="alert">
-                                <div class="d-flex align-items-center">
-                                    <lord-icon src="https://cdn.lordicon.com/nkmsrxys.json" trigger="loop"
-                                        colors="primary:#121331,secondary:#f06548"
-                                        style="width: 80px; height: 80px"></lord-icon>
-                                    <div class="ms-2">
-                                        <h5 class="fs-14 text-danger fw-semibold">
-                                            Buying for a loved one?
-                                        </h5>
-                                        <p class="text-black mb-1">
-                                            Gift wrap and personalised message on card, <br />Only
-                                            for <span class="fw-semibold">Rs.9.99</span> USD
-                                        </p>
-                                        <button type="button"
-                                            class="btn ps-0 btn-sm btn-link text-danger text-uppercase">
-                                            Add Gift Wrap
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                         <!-- end stickey -->
                     </div>

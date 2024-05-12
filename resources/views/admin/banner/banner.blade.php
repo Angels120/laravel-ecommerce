@@ -16,8 +16,6 @@
                                     <button type="button" class="btn btn-success add-btn" data-bs-toggle="modal"
                                             id="create-btn" data-bs-target="#AddBanner"><i
                                             class="ri-add-line align-bottom me-1"></i> Add</button>
-                                    <button class="btn btn-soft-danger" onClick="deleteMultiple()"><i
-                                            class="ri-delete-bin-2-line"></i></button>
                                 </div>
                             </div>
 
@@ -48,7 +46,7 @@
     <!-- end row -->
 
     <!-- Modal -->
-    <div class="modal fade zoomIn" id="deleteBrand" tabindex="-1" aria-hidden="true">
+    <div class="modal fade zoomIn" id="deleteBanner" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -66,7 +64,7 @@
                     </div>
                     <div class="d-flex gap-2 justify-content-center mt-4 mb-2">
                         <button type="button" class="btn w-sm btn-light" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn w-sm btn-danger " id="deleteBrandButton">Yes, Delete
+                        <button type="button" class="btn w-sm btn-danger " id="deleteBannerButton">Yes, Delete
                             It!</button>
                     </div>
                 </div>
@@ -75,7 +73,6 @@
     </div>
     <!--end modal -->
     @include('admin.banner.AddBanner')
-    @include('admin.banner.EditBanner')
 
     <script>
         $(document).ready(function() {
@@ -116,14 +113,14 @@
         var urlWithId = "";
         $(document).ready(function() {
             $('.data-table').on("click", ".delete", function() {
-                var brandId = $(this).data('id');
+                var bannerId = $(this).data('id');
                 const deleteUrl = "{{ route('admin.banner.delete', ['id' => ':id']) }}";
-                urlWithId = deleteUrl.replace(':id', brandId);
-                $('#deleteBrandButton').data('brand-id', brandId);
-                $('#deleteBrand').modal('show');
+                urlWithId = deleteUrl.replace(':id', bannerId);
+                $('#deleteBannerButton').data('brand-id', bannerId);
+                $('#deleteBanner').modal('show');
             });
-            $('#deleteBrandButton').click(function() {
-                var brandId = $(this).data('brand-id');
+            $('#deleteBannerButton').click(function() {
+                var bannerId = $(this).data('bannerId-id');
                 $.ajax({
                     type: 'DELETE',
                     url: urlWithId,
@@ -132,7 +129,7 @@
                     },
                     success: function(response) {
                         showToast(response.message);
-                        $('#deleteBrand').modal('hide');
+                        $('#deleteBanner').modal('hide');
                         $('#datatable-crud').DataTable().ajax.reload();
 
                         console.log('Delete successful');

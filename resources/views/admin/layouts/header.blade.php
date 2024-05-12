@@ -295,7 +295,6 @@
 <script>
     function showToast(a) {
         const toastBox = document.getElementById('toast-box');
-        console.log("toast showing");
         toastBox.classList.remove('d-none');
         document.getElementById('toastContent').textContent = a;
         toastBox.classList.add('show');
