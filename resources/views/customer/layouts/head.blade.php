@@ -8,15 +8,11 @@
 
 
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ asset('admin_asset/images/logos/webmart-light.svg') }}">
+    <link rel="shortcut icon" href="{{ asset('admin_asset/images/logos/webmart-dark.png') }}">
 
-    <!-- jsvectormap css -->
-    <link href="{{ asset('admin_asset/libs/jsvectormap/css/jsvectormap.min.css') }}" rel="stylesheet" type="text/css" />
 
     <!--Swiper slider css-->
     <link href="{{ asset('admin_asset/libs/swiper/swiper-bundle.min.css') }}" rel="stylesheet" type="text/css" />
-
-
     <!-- Layout config Js -->
     <script src="{{ asset('admin_asset/js/layout.js') }}"></script>
     <!-- Bootstrap Css -->

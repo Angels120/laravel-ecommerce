@@ -16,6 +16,6 @@ class SubCategoryComposer
      */
     public function compose(View $view)
     {
-        $view->with('subcategories', SubCategory::where('status', '=', '1')->orderBy('id')->get());
+        $view->with('subcategories', SubCategory::where('status', '=', '1')->orderBy('id')->get(['id', 'subcategory_name','subcategory_slug','category_id']));
     }
 }

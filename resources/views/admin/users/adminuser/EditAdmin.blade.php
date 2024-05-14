@@ -66,7 +66,7 @@
 </div>
 
 
-{{-- Edit Verification for Brand --}}
+ <!-- Edit Verification for Brand -->
 <script>
     $(document).ready(function() {
         $('#edit-admin').click(function(e) {
@@ -85,7 +85,6 @@
                     showToast(response.message);
                     $('#EditAdmin').modal('hide');
                     $('#datatable-crud').DataTable().ajax.reload();
-                    $('#successAlertContainer').html(successAlert);
                 },
                 error: function(error) {
 
@@ -138,7 +137,7 @@
     });
 </script>
 
-{{-- ---------------------- show edit for admin  -------------------- --}}
+<!-- show edit for admin -->
 <script>
     $(document).ready(function() {
         $('.data-table').on("click", ".editAdminButton", function() {

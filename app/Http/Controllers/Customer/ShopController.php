@@ -13,12 +13,12 @@ class ShopController extends Controller
 {
     public function index(Request $request, $categorySlug = null, $subCategorySlug = null)
     {
-        if (!$categorySlug || !Category::where('category_slug', $categorySlug)->exists()) {
-            abort(404);
-        }
-        if ($subCategorySlug && !SubCategory::where('subcategory_slug', $subCategorySlug)->exists()) {
-            abort(404);
-        }
+        // if ($categorySlug || !Category::where('category_slug', $categorySlug)->exists()) {
+        //     abort(404);
+        // }
+        // if ($subCategorySlug && !SubCategory::where('subcategory_slug', $subCategorySlug)->exists()) {
+        //     abort(404);
+        // }
 
         $breadcrumb = [
             'breadcrumbs' => [
@@ -101,7 +101,7 @@ class ShopController extends Controller
         ];
         $brandsArray = [];
 
-        $brands = Brand::orderBy('name', 'ASC')->where('status', 1)->get();
+        $brands = Brand::orderBy('name', 'ASC')->where('status', 1)->get(['name', 'slug','image']);
         $products = Product::where('status', 1)->get();
         //Apply Filters
         if (!empty($brandSlug)) {

@@ -14,6 +14,7 @@ class StoreBannerRequest extends FormRequest
         return true;
     }
 
+
     /**
      * Get the validation rules that apply to the request.
      *
@@ -24,7 +25,7 @@ class StoreBannerRequest extends FormRequest
         return [
             'name' => 'required|string|max:255|unique:banners',
             'status' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:1024|dimensions:min_width=1600,min_height=740',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:3072|dimensions:min_width=1600,min_height=740',
         ];
     }
 

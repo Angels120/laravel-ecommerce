@@ -15,16 +15,9 @@
  <!-- JAVASCRIPT -->
  <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
  <script src="{{ asset('admin_asset/libs/simplebar/simplebar.min.js') }}"></script>
- <script src="{{ asset('admin_asset/libs/node-waves/waves.min.js') }}"></script>
  <script src="{{ asset('admin_asset/libs/feather-icons/feather.min.js') }}"></script>
  <script src="{{ asset('admin_asset/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
- <script src="{{ asset('admin_asset/js/plugins.js') }}"></script>
 
-
-
-
- <!-- Dashboard init -->
- <script src="{{ asset('admin_asset/js/pages/dashboard-ecommerce.init.js') }}"></script>
 
  <!-- App js -->
  <script src="{{ asset('admin_asset/js/app.js') }}"></script>

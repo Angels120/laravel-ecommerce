@@ -1,17 +1,14 @@
 <?php
 use App\Http\Controllers\admin\BrandController;
 use App\Http\Controllers\admin\BannerController;
-use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\admin\LoginController as AdminLoginController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\PageController;
 use App\Http\Controllers\Admin\ShippingController;
-use App\Http\Controllers\Admin\SizeController;
 use App\Http\Controllers\Admin\SubCategoryController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Auth;
@@ -24,10 +21,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:web','role:Super Admin
     //--------------------------------------Route for Users--------------------------------------------------------//
     Route::get('/admin-users', [UserController::class,'AdminIndex'])->name('user.index');
     Route::post('/admin-users/create', [UserController::class,'CreateAdminUser'])->name('user.create');
-    Route::get('/admin-users/edit', [UserController::class,'EditUser'])->name('user.edit');
-    Route::post('/admin-users/update', [UserController::class, 'UpdateUser'])->name('user.update');
-    Route::post('/admin-users/verify/update/{id}', [UserController::class, 'UserVerify'])->name('user.verify.update');
-    Route::delete('/admin-users/delete/{id}', [UserController::class,'DestroyUser'])->name('user.delete');
+    Route::get('/admin-users/edit', [UserController::class,'EditAdminUser'])->name('user.edit');
+    Route::post('/admin-users/update', [UserController::class, 'UpdateAdminUser'])->name('user.update');
+    Route::post('/admin-users/verify/update/{id}', [UserController::class, 'AdminVerify'])->name('user.verify.update');
+    Route::delete('/admin-users/delete/{id}', [UserController::class,'DestroyAdminUser'])->name('user.delete');
 
     Route::get('/customer-users', [UserController::class,'CustomerIndex'])->name('customer.index');
     Route::get('/customer-users/edit', [UserController::class,'EditCustomerUser'])->name('customer.edit');
