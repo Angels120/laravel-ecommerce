@@ -316,10 +316,8 @@
                     showToast(response.message);
                     $('#AddProduct').modal('hide');
                     $('#datatable-crud').DataTable().ajax.reload();
-                    $('#successAlertContainer').html(successAlert);
                 },
                 error: function(error) {
-                    console.log(error);
                     document.getElementById('ProductNameError').style.display = "none";
                     document.getElementById('ProductCategoryError').style.display = "none";
                     document.getElementById('ProductSubCategoryError').style.display =

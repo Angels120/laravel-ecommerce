@@ -3,7 +3,6 @@
  <script src="{{ asset('admin_asset/libs/bootstrap/js/bootstrap.min.js') }}"></script>
 
  <script src="{{ asset('admin_asset/js/pages/plugins/lord-icon-2.1.0.js') }}"></script>
- <script src="{{ asset('admin_asset/js/plugins.js') }}"></script>
 
 
  <!--Swiper slider js-->
@@ -13,16 +12,13 @@
 <!-- swiper.init js -->
 <script src="{{ asset('admin_asset/js/pages/swiper.init.js') }}"></script>
  <!-- Dashboard init -->
- <script src="{{ asset('admin_asset/js/pages/dashboard-ecommerce.init.js') }}"></script>
  <script src="{{ asset('admin_asset/js/pages/ecommerce-product-details.init.js') }}"></script>
 
  <script src="{{ asset('admin_asset/js/pages/ecommerce-product-checkout.init.js') }}"></script>
 
 
 
- <!-- init js -->
- <script src="{{ asset('admin_asset/js/pages/form-editor.init.js') }}"></script>
- <!-- App js -->
+<!-- App js -->
  <script src="{{ asset('admin_asset/js/app.js') }}"></script>
 
 

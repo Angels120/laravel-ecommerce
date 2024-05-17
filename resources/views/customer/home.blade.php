@@ -1,43 +1,43 @@
 @extends('customer.layouts.app')
 @section('container')
 <div class="main-content">
-    <div class="page-content px-0 m-0">
-        <div class="px-0 mb-4">
-            <div id="ProductSpecialEvent" class="carousel slide">
+    <div class="page-content px-0">
+        <div class=" position-relative mb-4 mt-n4">
+            <div id="ProductSpecialEvent" class="carousel slide" data-bs-ride="carousel" data-bs-interval="10000">
                 <div class="carousel-indicators">
                     @foreach ($banners as $key => $banner)
                         <button type="button" data-bs-target="#ProductSpecialEvent" data-bs-slide-to="{{ $key }}" {{ $key === 0 ? 'class=active' : '' }} aria-label="Slide {{ $key + 1 }}"></button>
                     @endforeach
                 </div>
                 <div class="carousel-inner">
-                    @foreach ($banners as $banner)
-
-                        <div class="carousel-item active">
+                    @foreach ($banners as $key => $banner)
+                        <div class="carousel-item {{ $key === 0 ? 'active' : '' }}">
                             <img src="{{ asset('uploads/banners/' . $banner->image) }}" class="d-block w-100" alt="...">
                             <div class="carousel-caption d-none d-md-block">
                                 <div class="mb-4">
                                     <a href="{{ route('checkout.details') }}"
                                         class="btn btn-success w-lg btn-label right ms-auto"><i
-                                            class="ri-arrow-right-line label-icon align-bottom fs-16 ms-2"></i>
-                                        Shop Now</a>
+                                            class="ri-arrow-right-line label-icon align-bottom fs-16 ms-2"></i> Shop
+                                        Now</a>
                                 </div>
-                                <h5 class="card-title" style="color: #000;">Welcome To Ecommerce website</h5>
+                                <h5 class="card-title text-success fs-20">Welcome To Ecommerce website</h5>
                             </div>
                         </div>
                     @endforeach
                 </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#ProductSpecialEvent"
-                    data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#ProductSpecialEvent"
-                    data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#ProductSpecialEvent"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#ProductSpecialEvent"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
+
         <div class="container-fluid ">
             <div>
                 <h1 class="brands">Popular Brands</h1>
@@ -97,12 +97,16 @@
                                             <div class="add-to-cart-btn">
                                                 <a class="btn btn-primary" href="javascript:void(0);"
                                                     onclick="addToCart({{ $product->id }})"><i
-                                                        class="ri-shopping-cart-2-line fs-18"> Add To Cart </i> </a>
+                                                        class="ri-shopping-cart-2-line fs-18">
+                                                        Add To
+                                                        Cart </i> </a>
                                             </div>
                                         @else
                                             <div class="add-to-cart-btn">
                                                 <a class="btn btn-danger" href="javascript:void(0);"><i
-                                                        class="ri-close-fill fs-18"></i> Out Of Stock </i> </a>
+                                                        class="ri-close-fill fs-18"></i>
+                                                    Out
+                                                    Of Stock </i> </a>
                                             </div>
                                         @endif
                                         <div class="favorite-btn">

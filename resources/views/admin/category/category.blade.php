@@ -133,9 +133,6 @@
                         showToast(response.message);
                         $('#deleteCategory').modal('hide');
                         $('#datatable-crud').DataTable().ajax.reload();
-                        $('#successAlertContainer').html(successAlert);
-
-                        console.log('Delete successful');
                     },
                     error: function(error) {
                         console.error('Delete error:', error);

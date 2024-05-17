@@ -109,7 +109,7 @@
                                                             Remove</a>
                                                     </div>
                                                     <div>
-                                                        <a href="#" class="d-block text-body p-1 px-2"><i
+                                                        <a href="#" onclick="addToWishlist({{ $item->rowId }})" class="d-block text-body p-1 px-2"><i
                                                                 class="ri-star-fill text-muted align-bottom me-1"></i>
                                                             Add Wishlist</a>
                                                     </div>

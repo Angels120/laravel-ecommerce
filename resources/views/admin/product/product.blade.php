@@ -171,7 +171,6 @@
                         showToast(response.message);
                         $('#deleteProduct').modal('hide');
                         $('#datatable-crud').DataTable().ajax.reload();
-                        $('#successAlertContainer').html(successAlert);
                     },
                     error: function(error) {
                         console.error('Delete error:', error);

@@ -17,7 +17,7 @@ class ProductComposer
      */
     public function compose(View $view)
     {
-        $view->with('products', Product::where('status', '=', '1')->orderBy('id')->get());
+        $view->with('products', Product::where('status', '=', '1')->orderBy('id')->get(['name','slug','featured']));
 
     }
 }

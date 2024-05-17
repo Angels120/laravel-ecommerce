@@ -17,7 +17,7 @@ class CategoryComposer
      */
     public function compose(View $view)
     {
-        $view->with('categories', Category::where('status', '=', '1')->orderBy('id')->get());
+        $view->with('categories',Category::where('status', 1)->get(['id', 'category_name']));
 
     }
 }

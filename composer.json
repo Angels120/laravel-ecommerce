@@ -13,11 +13,13 @@
         "laravel/socialite": "^5.11",
         "laravel/tinker": "^2.8",
         "laravel/ui": "^4.2",
+ 
         "spatie/laravel-permission": "^6.1",
         "twbs/bootstrap": "5.3.2",
         "yajra/laravel-datatables-oracle": "^10.7"
     },
     "require-dev": {
+        "barryvdh/laravel-debugbar": "^3.13",
         "fakerphp/faker": "^1.9.1",
         "laravel/pint": "^1.0",
         "laravel/sail": "^1.18",

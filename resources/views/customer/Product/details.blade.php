@@ -174,13 +174,14 @@
                                                 </div>
                                             </div>
                                         </div>
-
-
                                         <div class=" mt-4">
                                             <div class="col-lg-12">
                                                 <div class="row">
                                                     <button type="submit" class="btn btn-info btn-lg btn-block me-3"
-                                                            id="save-Category" style="width: 260px;">Buy Now
+                                                            id="save-Category" style="width: 260px;">
+                                                         <a href="{{ route('checkout.details') }}">
+                                                            Buy Now
+                                                            </a>
                                                     </button>
                                                     @if ($product->stock > 0)
                                                         <button type="submit" class="btn btn-danger btn-lg btn-block"

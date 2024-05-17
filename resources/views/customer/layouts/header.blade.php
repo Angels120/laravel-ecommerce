@@ -1,4 +1,3 @@
-<script defer src="{{ asset('admin_asset/js/notification.js') }}"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 
 <style>
@@ -33,17 +32,17 @@
         <div class="navbar-header">
             <div class="d-flex align-items-center">
                 <!-- LOGO -->
-                <div class="navbar-brand-box horizontal-logo" style="overflow: hidden;">
+                <div class="navbar-brand-box horizontal-logo">
                     <a href="{{ route('home.page') }}" class="logo logo-dark">
 
-                        <img src="{{ asset('admin_asset/images/logos/webmart-light.svg') }}" alt=""
-                            style="height:100px">
+                        <img src="{{ asset('admin_asset/images/logos/webmart-light.png') }}" alt=""
+                            style="height:70px; width: auto;">
                     </a>
 
                     <a href="{{ route('home.page') }}" class="logo logo-light">
 
-                        <img src="{{ asset('admin_asset/images/logos/webmart-dark.svg') }}" alt=""
-                            style="height: 100px;">
+                        <img src="{{ asset('admin_asset/images/logos/webmart-dark.png') }}" alt=""
+                            style="height:70px; width: auto;">
                     </a>
                 </div>
 
@@ -108,13 +107,13 @@
                     </div>
                 </div>
                 @role(['Admin', 'Super Admin'])
-                    <div class="ms-1 header-item d-none d-sm-flex">
-                        <a class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
-                            href="{{ route('admin.dashboard') }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                            title="Dashboard">
-                            <i class='ri-dashboard-line fs-22'></i>
-                        </a>
-                    </div>
+                <div class="ms-1 header-item d-none d-sm-flex">
+                    <a class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
+                        href="{{ route('admin.dashboard') }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Dashboard">
+                        <i class='ri-dashboard-line fs-22'></i>
+                    </a>
+                </div>
                 @endrole
 
 
@@ -143,45 +142,49 @@
                             <div class="p-2">
                                 @if (Cart::count() > 0)
 
-                                @foreach (Cart::content() as $item)
-                                    @php
-                                        $subtotal = $item->qty * $item->price;
+                                                            @foreach (Cart::content() as $item)
+                                                                                        @php
+                                                                                            $subtotal = $item->qty * $item->price;
 
-                                    @endphp
-                                    <div class="d-block dropdown-item dropdown-item-cart text-wrap px-3 py-2">
-                                        <div class="d-flex align-items-center">
-                                            <img src="{{ asset('uploads/products/' . ($item->options->image ?? '')) }}"
-                                                class="me-3 rounded-circle avatar-sm p-2 bg-light" alt="user-pic">
-                                            <div class="flex-1">
-                                                <h6 class="mt-0 mb-1 fs-14">
-                                                    <a href="apps-ecommerce-product-details.html" class="text-reset">{{ $item->name }}</a>
-                                                </h6>
-                                                <p class="mb-0 fs-12 text-muted">
-                                                    Quantity: <span>{{ $item->qty }} x Rs. {{ $item->price }}</span>
-                                                </p>
-                                            </div>
-                                            <div class="px-2">
-                                                <h5 class="m-0 fw-normal">Rs. <span class="cart-item-price">{{ $subtotal }}</span></h5>
-                                            </div>
-                                            <div class="ps-2">
-                                                <a href="#" onclick="deleteItem('{{ $item->rowId }}')">
-                                                <button type="button" class="btn btn-icon btn-sm btn-ghost-secondary remove-item-btn"><i
-                                                        class="ri-close-fill fs-16"></i></button></a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endforeach
-                                <div class="p-3 border-bottom-0 border-start-0 border-end-0 border-dashed border" id="checkout-elem">
-                                    <div class="d-flex justify-content-between align-items-center pb-3">
-                                        <h5 class="m-0 text-muted">Total:</h5>
-                                        <div class="px-2">
-                                            <h5 class="m-0" >Rs. {{ Cart::subtotal()}}</h5>
-                                        </div>
-                                    </div>
-                                    <a href="{{ route('checkout.details') }}" class="btn btn-success text-center w-100">
-                                        Checkout
-                                    </a>
-                                </div>
+                                                                                        @endphp
+                                                                                        <div class="d-block dropdown-item dropdown-item-cart text-wrap px-3 py-2">
+                                                                                            <div class="d-flex align-items-center">
+                                                                                                <img src="{{ asset('uploads/products/' . ($item->options->image ?? '')) }}"
+                                                                                                    class="me-3 rounded-circle avatar-sm p-2 bg-light" alt="user-pic">
+                                                                                                <div class="flex-1">
+                                                                                                    <h6 class="mt-0 mb-1 fs-14">
+                                                                                                        <a href="apps-ecommerce-product-details.html"
+                                                                                                            class="text-reset">{{ $item->name }}</a>
+                                                                                                    </h6>
+                                                                                                    <p class="mb-0 fs-12 text-muted">
+                                                                                                        Quantity: <span>{{ $item->qty }} x Rs. {{ $item->price }}</span>
+                                                                                                    </p>
+                                                                                                </div>
+                                                                                                <div class="px-2">
+                                                                                                    <h5 class="m-0 fw-normal">Rs. <span
+                                                                                                            class="cart-item-price">{{ $subtotal }}</span></h5>
+                                                                                                </div>
+                                                                                                <div class="ps-2">
+                                                                                                    <a href="#" onclick="deleteItem('{{ $item->rowId }}')">
+                                                                                                        <button type="button"
+                                                                                                            class="btn btn-icon btn-sm btn-ghost-secondary remove-item-btn"><i
+                                                                                                                class="ri-close-fill fs-16"></i></button></a>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                            @endforeach
+                                                            <div class="p-3 border-bottom-0 border-start-0 border-end-0 border-dashed border"
+                                                                id="checkout-elem">
+                                                                <div class="d-flex justify-content-between align-items-center pb-3">
+                                                                    <h5 class="m-0 text-muted">Total:</h5>
+                                                                    <div class="px-2">
+                                                                        <h5 class="m-0">Rs. {{ Cart::subtotal()}}</h5>
+                                                                    </div>
+                                                                </div>
+                                                                <a href="{{ route('checkout.details') }}" class="btn btn-success text-center w-100">
+                                                                    Checkout
+                                                                </a>
+                                                            </div>
                                 @else
                                     <div class="text-center">
                                         <div class="avatar-md mx-auto my-3">
@@ -203,8 +206,7 @@
 
                 <div class="ms-1 header-item d-none d-sm-flex">
                     <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle"
-                        data-toggle="fullscreen" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                        title="FullScreen">
+                        data-toggle="fullscreen" data-bs-toggle="tooltip" data-bs-placement="bottom" title="FullScreen">
                         <i class='bx bx-fullscreen fs-22'></i>
                     </button>
                 </div>
@@ -219,61 +221,50 @@
 
                 @auth
 
-                    <div class="dropdown ms-sm-3 header-item topbar-user">
-                        <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
-                            aria-haspopup="true" aria-expanded="false">
-                            <span class="d-flex align-items-center">
-                                @php
-                                    $userImage = auth()->user()->image ?? null;
-                                    $Name = auth()->user()->name ?? '';
-                                    $initial = strtoupper(substr($Name, 0, 1));
-                                @endphp
+                                <div class="dropdown ms-sm-3 header-item topbar-user">
+                                    <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
+                                        aria-haspopup="true" aria-expanded="false">
+                                        <span class="d-flex align-items-center">
+                                            @php
+                                                $userImage = auth()->user()->image ?? null;
+                                                $Name = auth()->user()->name ?? '';
+                                                $initial = strtoupper(substr($Name, 0, 1));
+                                            @endphp
 
-                                @if ($userImage)
-                                    <img class="rounded-circle header-profile-user"
-                                        src="{{ asset('admin_asset/images/users/avatar-1.jpg') }}" alt="Header Avatar">
-                                @else
-                                    <div class="rounded-circle header-profile-user bg-primary text-white"
-                                        style="width: 40px; height: 40px; line-height: 40px; text-align: center;">
-                                        {{ $initial }}
+                                            @if ($userImage)
+                                                <img class="rounded-circle header-profile-user"
+                                                    src="{{ asset('admin_asset/images/users/avatar-1.jpg') }}" alt="Header Avatar">
+                                            @else
+                                                <div class="rounded-circle header-profile-user bg-primary text-white"
+                                                    style="width: 40px; height: 40px; line-height: 40px; text-align: center;">
+                                                    {{ $initial }}
+                                                </div>
+                                            @endif
+
+                                            <span class="text-start ms-xl-2">
+                                                <span
+                                                    class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ auth()->user()->username ?? '' }}</span>
+                                            </span>
+                                        </span>
+                                    </button>
+                                    <div class="dropdown-menu dropdown-menu-end">
+                                        <!-- item-->
+                                        <h6 class="dropdown-header">Welcome {{ $Name }}!</h6>
+                                        <a class="dropdown-item" href="{{ route('user.profile') }}">
+                                            <i class="ri-account-circle-fill fs-16 align-middle me-1"></i>
+                                            <span class="align-middle">Profile</span>
+                                        </a>
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="{{ route('logout') }}"
+                                            onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                            <i class="ri-logout-box-fill text-muted fs-16 align-middle me-1"></i>
+                                            <span class="align-middle" data-key="t-logout">Logout</span>
+                                        </a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                        </form>
                                     </div>
-                                @endif
-
-                                <span class="text-start ms-xl-2">
-                                    <span
-                                        class="d-none d-xl-inline-block ms-1 fw-medium user-name-text">{{ auth()->user()->username ?? '' }}</span>
-                                </span>
-                            </span>
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-end">
-                            <!-- item-->
-                            <h6 class="dropdown-header">Welcome {{ $Name }}!</h6>
-                            <a class="dropdown-item" href="{{ route('user.profile') }}">
-                                <i class="ri-account-circle-fill fs-16 align-middle me-1"></i>
-                                <span class="align-middle">Profile</span>
-                            </a>
-                            <a class="dropdown-item" href="pages-faqs.html">
-                                <i class="ri-question-fill fs-16 align-middle me-1"></i>
-                                <span class="align-middle">Help</span>
-                            </a>
-                            <div class="dropdown-divider"></div>
-
-                            <a class="dropdown-item" href="pages-profile-settings.html">
-                                <span class="badge bg-success-subtle text-success mt-1 float-end">New</span>
-
-                                <i class="ri-settings-fill text-muted fs-16 align-middle me-1"></i>
-                                <span class="align-middle">Settings</span>
-                            </a>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                <i class="ri-logout-box-fill text-muted fs-16 align-middle me-1"></i>
-                                <span class="align-middle" data-key="t-logout">Logout</span>
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </div>
+                                </div>
                 @else
                     <div class="ms-1 header-item d-none d-sm-flex">
                         <a href="{{ route('login') }}" class="btn btn-icon btn-topbar btn-ghost-secondary border-end"
@@ -306,8 +297,6 @@
 
     <div id="scrollbar" style="background-color: #363e61; padding: 5px;">
         <div class="container-fluid">
-            <div id="two-column-menu">
-            </div>
             <ul class="navbar-nav d-flex align-items-center" id="navbar-nav">
                 <li class="nav-item" style="padding: 10px;">
                     <a href="#sidebarDashboards" data-bs-toggle="collapse" role="button" aria-expanded="false"
@@ -346,58 +335,53 @@
                 </li> <!-- end Dashboard Menu -->
 
                 @if (count($categories) > 0)
-                    @php
-                        $firstCategory = $categories[0];
-                    @endphp
-                    <li class="nav-item ms-2">
-                        <a href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                            class="d-flex align-items-center">
-                            <span data-key="t-layouts"
-                                style="color: white;">{{ $firstCategory->category_name }}</span>
-                            <i class="ri-arrow-down-s-fill fs-22" style="color: white;"></i>
-                        </a>
-                        <div class="collapse menu-dropdown" id="sidebarLayouts">
-                            <ul class="nav nav-sm flex-column">
-                                @foreach ($firstCategory->subcategories ?? [] as $subcategory)
-                                    @if ($subcategory->status == 1)
-                                        <li class="nav-item">
-                                            <a href="{{ route('lists', [$firstCategory->category_slug, $subcategory->subcategory_slug]) }}"
-                                                class="nav-link item-{{ $subcategory->subcategory_name }}">
-                                                {{ $subcategory->subcategory_name }}
-                                            </a>
-                                        </li>
-                                    @endif
-                                @endforeach
-                            </ul>
+                                @php
+                                    $firstCategory = $categories[0];
+                                @endphp
+                                <li class="nav-item ms-2">
+                                    <a href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                                        class="d-flex align-items-center">
+                                        <span data-key="t-layouts" style="color: white;">{{ $firstCategory->category_name }}</span>
+                                        <i class="ri-arrow-down-s-fill fs-22" style="color: white;"></i>
+                                    </a>
+                                    <div class="collapse menu-dropdown" id="sidebarLayouts">
+                                        <ul class="nav nav-sm flex-column">
+                                            @foreach ($firstCategory->subcategories ?? [] as $subcategory)
+                                                    <li class="nav-item">
+                                                        <a href="{{ route('lists', [$firstCategory->category_slug, $subcategory->subcategory_slug]) }}"
+                                                            class="nav-link item-{{ $subcategory->subcategory_name }}">
+                                                            {{ $subcategory->subcategory_name }}
+                                                        </a>
+                                                    </li>
+                                            @endforeach
+                                        </ul>
 
-                        </div>
-                    </li> <!-- end Dashboard Menu -->
+                                    </div>
+                                </li> <!-- end Dashboard Menu -->
                 @endif
                 @if (count($categories) > 1)
-                    @php
-                        $secondCategory = $categories[1];
-                    @endphp
-                    <li class="nav-item" style="margin-left: 10px;">
-                        <a href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                            class="d-flex align-items-center">
-                            <span data-key="t-layouts" style="color: white;">{{ $secondCategory->category_name }}
-                            </span><i class="ri-arrow-down-s-fill fs-22" style="color: white;"></i>
-                        </a>
-                        <div class="collapse menu-dropdown" id="sidebarLayouts">
-                            <ul class="nav nav-sm flex-column">
-                                <li class="nav-item">
-                                    @foreach ($secondCategory->subcategories ?? [] as $subcategory)
-                                        @if ($subcategory->status == 1)
-                                            <a href="{{ route('lists', [$secondCategory->category_slug, $subcategory->subcategory_slug]) }}"
-                                                class="nav-link">{{ $subcategory->subcategory_name }}</a>
-                                        @endif
-                                    @endforeach
+                                @php
+                                    $secondCategory = $categories[1];
+                                @endphp
+                                <li class="nav-item" style="margin-left: 10px;">
+                                    <a href="#sidebarLayouts" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                                        class="d-flex align-items-center">
+                                        <span data-key="t-layouts" style="color: white;">{{ $secondCategory->category_name }}
+                                        </span><i class="ri-arrow-down-s-fill fs-22" style="color: white;"></i>
+                                    </a>
+                                    <div class="collapse menu-dropdown" id="sidebarLayouts">
+                                        <ul class="nav nav-sm flex-column">
+                                            <li class="nav-item">
+                                                @foreach ($secondCategory->subcategories ?? [] as $subcategory)
+                                                        <a href="{{ route('lists', [$secondCategory->category_slug, $subcategory->subcategory_slug]) }}"
+                                                            class="nav-link">{{ $subcategory->subcategory_name }}</a>
+                                                @endforeach
 
-                                </li>
+                                            </li>
 
-                            </ul>
-                        </div>
-                    </li> <!-- end Dashboard Menu -->
+                                        </ul>
+                                    </div>
+                                </li> <!-- end Dashboard Menu -->
                 @endif
 
                 <li class="nav-item" style="padding: 10px;">
@@ -434,7 +418,7 @@
 
 
 <script>
-function deleteItem(rowId) {
+    function deleteItem(rowId) {
         $.ajax({
             url: "{{ route('carts.item.delete') }}",
             headers: {
@@ -445,11 +429,11 @@ function deleteItem(rowId) {
                 rowId: rowId,
             },
             dataType: 'json',
-            success: function(response) {
+            success: function (response) {
 
             },
         });
-}
+    }
 </script>
 
 

@@ -18,6 +18,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Helper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 
 class CartController extends Controller
 {
@@ -133,8 +134,8 @@ class CartController extends Controller
                 'current_menu' => 'Checkout',
             ],
         ];
-        $provinces = Province::orderBy('name', 'ASC')->get();
-        $cities = City::orderBy('name', 'ASC')->get();
+        $provinces = Province::orderBy('name', 'ASC')->get(['id', 'name']);
+        $cities = City::orderBy('name', 'ASC')->get(['id', 'name']);
         if (Cart::count() == 0) {
             return redirect()->route('carts.details');
         }
@@ -175,11 +176,11 @@ class CartController extends Controller
             }
         }
         $grandTotal = ($subTotal - $discount) + $totalShippingCharge;
-        return view('customer.Product.checkout',  compact('breadcrumb', 'customerAddress', 'provinces', 'discount', 'cities', 'totalShippingCharge', 'grandTotal'));
+        return view('customer.Product.checkout', compact('breadcrumb', 'customerAddress', 'provinces', 'discount', 'cities', 'subTotal', 'totalShippingCharge', 'grandTotal'));
     }
     public function getCity($provinceId)
     {
-        $provinces = City::where('province_id', $provinceId)->get();
+        $provinces = City::where('province_id', $provinceId)->get(['id', 'name']);
         return response()->json($provinces);
     }
     public function processCheckoutAddress(Request $request)
@@ -201,83 +202,128 @@ class CartController extends Controller
 
     public function processCheckoutPayment(Request $request)
     {
-        $user = Auth::user();
-        //Step 2 store Order in Order Table
         if ($request->paymentMethod == 'cod') {
-            $ShippingCharge = 0;
-            $discountCodeId = null;
-            $promoCode = null;
-            $discount = 0;
-            $subTotal = Cart::subtotal(2, '.', '');
-            $grandTotal = $subTotal + $ShippingCharge;
-            //Apply Discount
-            if (session()->has('code')) {
-                $code = session()->get('code');
-                $discountCodeId = $code->id;
-                $promoCode = $code->code;
-                if ($code->type == 'percent') {
-                    $discount = ($code->discount_amount / 100) * $subTotal;
-                } else {
-                    $discount = $code->discount_amount;
-                }
-            }
-            $shippingInfo = ShippingCharge::where('city_id', $request->city_id)->first();
-            $totalQty = 0;
-            foreach (cart::content() as $item) {
-                $totalQty += $item->qty;
-            }
-            if ($shippingInfo != null) {
-                $ShippingCharge = $totalQty * $shippingInfo->amount;
-                $grandTotal = ($subTotal - $discount) + $ShippingCharge;
-            } else {
-                $ShippingCharge = 0;
-                $grandTotal = ($subTotal - $discount) + $ShippingCharge;
-            }
+            $order = $this->priceCalculation($request);
+            $this->storeOrderItems($order);
 
-            $order = new Order;
-            $order->user_id = $user->id;
-            $order->subtotal = $subTotal;
-            $order->shipping = $ShippingCharge;
-            $order->coupon_code = $promoCode;
-            $order->coupon_code_id = $discountCodeId;
-            $order->discount = $discount;
-            $order->grand_total = $grandTotal;
-            $order->payment_status = 'not_paid';
-            $order->status = 'pending';
 
-            $order->full_name = $request->full_name;
-            $order->email = $request->email;
-            $order->phone = $request->phone;
-            $order->province_id = $request->province_id;
-            $order->city_id = $request->city_id;
-            $order->address = $request->address;
-            $order->save();
-
-            // Store order items in order items table
-            foreach (Cart::content() as $item) {
-                $orderItem = new OrderItem();
-                $orderItem->product_id = $item->id;
-                $orderItem->order_id = $order->id;
-                $orderItem->name = $item->name;
-                $orderItem->qty = $item->qty;
-                $orderItem->price = $item->price;
-                $orderItem->total = $item->price * $item->qty;
-                $orderItem->save();
-
-                //Update Product Stock
-                $productData=Product::find($item->id);
-                $currentQty=$productData->stock;
-                $updateQty=$currentQty-$item->qty;
-                $productData->stock=$updateQty;
-                $productData->save();
-            }
             //Send Order Mail
-            Helper::orderEmail($order->id,'customer');
+            Helper::orderEmail($order->id, 'customer');
             Cart::destroy();
             session()->forget('code');
-            return response()->json(['message' => 'Orders Placed successfully', 'order_id' => $order->id]);
-        } else {
+            return response()->json(['status' => true,'type'=>'cod', 'message' => 'Orders Placed successfully', 'order_id' => $order->id]);
+        }
+        if ($request->paymentMethod == 'esewa') {
+            $url = "https://uat.esewa.com.np/epay/main";
+            $site_url = url('/');
+            $merchant_code = 'epay_payment';
+            $success_url = $site_url . '/thanks-order?q=su';
+            $cancel_url = $site_url . '/thanks-order?q=fu'; // Add a cancel URL if needed
 
+            // Generate a unique transaction ID
+            $transaction_uuid = uniqid();
+            $order = $this->priceCalculation($request);
+
+            // Prepare the data to be sent to eSewa
+            $data = [
+                'amt' => $order->subtotal, // Total amount to be paid
+                'tAmt' => $order->grand_total, // Total amount to be paid (same as amt)
+                'txAmt' => 0, // Tax amount (if applicable)
+                'psc' => 0, // Service charge (if applicable)
+                'pdc' => $order->shipping, // Delivery charge (if applicable)
+                'scd' => $merchant_code, // Merchant code
+                'pid' => $transaction_uuid, // Unique transaction ID
+                'su' => $success_url, // Success URL
+                'fu' => $cancel_url, // Failure URL
+            ];
+
+            // Redirect the user to eSewa payment gateway
+            return response()->json(['status' => true,'type'=>'esewa','url'=>$url . '?' . http_build_query($data), 'message' => 'Orders Placed successfully', 'order_id' => $order->id]);
+
+        }
+
+
+         else {
+            return response()->json(['status' => false, 'message' => 'Please select atleast 1 payment options']);
+        }
+    }
+
+    public function priceCalculation($request)
+    {
+        $user = Auth::user();
+
+        $ShippingCharge = 0;
+        $discountCodeId = null;
+        $promoCode = null;
+        $discount = 0;
+        $subTotal = Cart::subtotal(2, '.', '');
+        $grandTotal = $subTotal + $ShippingCharge;
+        //Apply Discount
+        if (session()->has('code')) {
+            $code = session()->get('code');
+            $discountCodeId = $code->id;
+            $promoCode = $code->code;
+            if ($code->type == 'percent') {
+                $discount = ($code->discount_amount / 100) * $subTotal;
+            } else {
+                $discount = $code->discount_amount;
+            }
+        }
+        $shippingInfo = ShippingCharge::where('city_id', $request->city_id)->first();
+        $totalQty = 0;
+        foreach (cart::content() as $item) {
+            $totalQty += $item->qty;
+        }
+        if ($shippingInfo != null) {
+            $ShippingCharge = $totalQty * $shippingInfo->amount;
+            $grandTotal = ($subTotal - $discount) + $ShippingCharge;
+        } else {
+            $ShippingCharge = 0;
+            $grandTotal = ($subTotal - $discount) + $ShippingCharge;
+        }
+        $customerAddress = CustomerAddress::where('user_id', $user->id)->first();
+        $order = new Order;
+        $order->user_id = $user->id;
+        $order->subtotal = $subTotal;
+        $order->shipping = $ShippingCharge;
+        $order->coupon_code = $promoCode;
+        $order->coupon_code_id = $discountCodeId;
+        $order->discount = $discount;
+        $order->grand_total = $grandTotal;
+        $order->payment_status = 'not_paid';
+        $order->status = 'pending';
+
+        $order->full_name = $customerAddress->full_name;
+        $order->email = $customerAddress->email;
+        $order->phone = $customerAddress->phone;
+        $order->province_id = $customerAddress->province_id;
+        $order->city_id = $customerAddress->city_id;
+        $order->address = $customerAddress->address;
+        $order->save();
+
+
+
+        return $order;
+    }
+
+    protected function storeOrderItems($order)
+    {
+        foreach (Cart::content() as $item) {
+            $orderItem = new OrderItem();
+            $orderItem->product_id = $item->id;
+            $orderItem->order_id = $order->id;
+            $orderItem->name = $item->name;
+            $orderItem->qty = $item->qty;
+            $orderItem->price = $item->price;
+            $orderItem->total = $item->price * $item->qty;
+            $orderItem->save();
+
+            // Update Product Stock
+            $productData = Product::find($item->id);
+            $currentQty = $productData->stock;
+            $updateQty = $currentQty - $item->qty;
+            $productData->stock = $updateQty;
+            $productData->save();
         }
     }
 
@@ -408,5 +454,27 @@ class CartController extends Controller
     {
         session()->forget('code');
         return $this->getOrderSummary($request);
+    }
+
+
+    public function Esewaverify(Request $request)
+    {
+        $status = $request->q;
+
+        // dump($oid, $refId, $amt);
+
+        if ($status == 'su') {
+
+            $order = $this->priceCalculation($request);
+            $this->storeOrderItems($order);
+            return view('customer.thanks', compact('order'));
+            // return response()->json(['status' => true,'type'=>'esewa_success', 'message' => 'Orders Placed successfully', 'order_id' => $order->id]);
+
+
+        }  if ($status == 'fu') {
+            return response()->json(['status' => false, 'message' => 'Orders Failed']);
+        }
+
+
     }
 }

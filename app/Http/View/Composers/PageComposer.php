@@ -16,7 +16,7 @@ class PageComposer
      */
     public function compose(View $view)
     {
-        $view->with('pages', Page::orderBy('name','ASC')->get());
+        $view->with('pages', Page::orderBy('name','ASC')->get(['name', 'slug']));
 
     }
 }
